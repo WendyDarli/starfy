@@ -20,7 +20,13 @@ html, body {
   height: 100%;
   font-family: "Nunito", sans-serif;
   background-color: var(--black);
+
 }
+
+#appLayout {
+  --sb-width: 75px; 
+}
+
 
 input{
     font-family: "Nunito", sans-serif;

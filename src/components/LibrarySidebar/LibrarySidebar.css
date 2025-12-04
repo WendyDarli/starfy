@@ -2,16 +2,12 @@
     background-color: var(--gray-bg);
 }
 
-body{
-    --sb-width: 75px;
-}
-
 aside{
     background-color: var(--light-black);
     position: fixed;
     height: 80%;
     inset: 1 auto 0 0; 
-    margin: 10px;
+    margin: 0px 10px;
     padding: 0px 5px;
     width: var(--sb-width);
     border-radius: 10px;
@@ -71,16 +67,9 @@ aside{
 }
 
 /* reusable styles for icon bttns */
-.previous{
-    border: none;
-    cursor: pointer;
-    padding: 0px 20px;
-
-    background-color: transparent;
+.sidebarOpener{
     background-image: url('../../assets/grayIcons/previous.svg');
     background-size: 55px;
-    background-repeat: no-repeat;
-    background-position: center;
 
     transform: scaleX(-1);
     transition: ease-in-out 0.2s;
@@ -133,9 +122,7 @@ aside{
     opacity: 1;
 }
 
-.sb-expanded{
-    --sb-width: 340px;
-}
+
 
 .sb-expanded .playlistItem:hover{
     background-color: var(--weak-hover);

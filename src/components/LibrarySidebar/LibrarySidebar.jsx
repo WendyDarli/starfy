@@ -2,16 +2,18 @@ import './LibrarySidebar.css';
 import { useState } from 'react';
 
 function LibrarySidebar() {
-    const [expanded, setExpanded] = useState(false);
+    const [isExpanded, setExpanded] = useState(false);
 
 function toggleSidebar(){
     setExpanded(prev => !prev);
+    document.getElementById("appLayout").style.setProperty("--sb-width", isExpanded ? "75px" : "340px");
+
 }
 
     return(
-        <aside className={`sidebarContainer ${expanded ? 'sb-expanded' : ''}`}>
+        <aside className={`sidebarContainer ${isExpanded ? 'sb-expanded' : ''}`}>
             <div id='libraryHeader'>
-                <button onClick={toggleSidebar} className='previous'></button>
+                <button onClick={toggleSidebar} className='sidebarOpener noBgBttn'></button>
                 <p>Your Library</p>                
             </div>
 
