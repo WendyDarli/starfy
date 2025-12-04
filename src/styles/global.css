@@ -4,6 +4,8 @@
     --light-black: #121212;
     --gray-bg: #212121;
     --gray-bg-hover: #2A2A2A;
+    --strong-hover: #484848;
+    --weak-hover: #1F1F1F;
 
     --white:#fff;
     --gray-text: #9D9D9D;
@@ -17,6 +19,7 @@ html, body {
   margin: 0;
   height: 100%;
   font-family: "Nunito", sans-serif;
+  background-color: var(--black);
 }
 
 input{
