@@ -26,3 +26,22 @@ input{
 input:focus {
     outline: none;
 }
+
+.circularBttn{
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background-color: var(--gray-bg);
+    background-size: 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.circularBttn:hover{
+    background-color: var(--gray-bg-hover);
+    transform: scale(1.02);
+}
