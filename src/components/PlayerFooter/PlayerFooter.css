@@ -1,0 +1,227 @@
+.footerContainer{
+    width: 98%;
+    position: fixed;
+    bottom: 0;
+    color: var(--white);
+    padding: 0px 20px 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+#songInfoContainer{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.songCover{
+    width: 55px;
+    height: 55px;
+
+    border-radius: 5px;
+}
+
+#songName{
+    margin: 0px;
+}
+
+#songArtist{
+    margin: 0px;
+    color: var(--gray-text);
+    font-size: 14px;
+}
+
+.likeBttn{
+    background-image: url('../../assets/whiteIcons/heart.svg');
+    background-size: 20px;
+    width: 35px;
+    height: 35px;
+}
+
+.likeBttn:hover{
+    background-image: url('../../assets/blueIcons/heart.svg');
+}
+
+
+#songControls{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+
+#progressContainer{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    color: var(--gray-text);
+}
+#progressContainer{
+    font-size: 14px;
+    margin-top: -9px
+}
+
+.progress{
+    appearance: none;
+    margin: 0px 10px;
+    width: 100%;
+    background-color: var(--gray-text);
+    border-radius: 3px;
+    height: 4px;
+    cursor: pointer;
+    margin-top: -1px;
+}
+.progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 27px;
+    height: 27px;
+    background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
+    background-size: contain; 
+    border: none;
+    cursor: pointer;
+    transform: rotate(-60deg);
+    margin-top: -2px;
+    
+}
+
+/* styles for firefox */
+.progress::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    transform: rotate(-60deg); 
+}
+
+.progress:active::-webkit-slider-thumb,
+.progress:focus::-webkit-slider-thumb {
+  background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
+  background-size: contain;
+  border: none;
+}
+
+#customPlayer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shuffle{
+    background-image: url('../../assets/grayIcons/shuffle.svg');
+    height: 45px;
+    width: auto;
+    background-size: 22px;
+}
+.shuffle:hover{
+    background-image: url('../../assets/whiteIcons/shuffle.svg');
+}
+
+.prev{
+    background-image: url('../../assets/grayIcons/last_track.svg');
+    height: 33px;
+    width: auto;
+    background-size: 28px;
+}
+.prev:hover{
+    background-image: url('../../assets/whiteIcons/last_track.svg');
+}
+
+.next{
+    background-image: url('../../assets/grayIcons/last_track.svg');
+    rotate: 180deg;
+    height: 33px;
+    width: auto;
+    background-size: 28px;
+}
+.next:hover{
+    background-image: url('../../assets/whiteIcons/last_track.svg');
+}
+
+
+
+
+.playPause{
+    background-image: url(../../assets/blackIcons/play_button.svg);
+    background-color: var(--white);
+    background-position: 11px 10px;
+    background-size: 16px;
+    width: 35px;
+    height: 35px;
+}
+.playPause:hover{
+    background-color: var(--white);
+}
+
+.repeat{
+    background-image: url('../../assets/grayIcons/repeat.svg');
+    height: 45px;
+    width: auto;
+    background-size: 18px;
+}
+.repeat:hover{
+    background-image: url('../../assets/whiteIcons/repeat.svg');
+}
+
+.extraControls{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.playingViewBttn{
+    background-image: url('../../assets/grayIcons/play.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+.playingViewBttn:hover{
+    background-image: url('../../assets/whiteIcons/play.svg');
+}
+
+.lyrics{
+    background-image: url('../../assets/grayIcons/microphone.svg');
+    height: 22px;
+    width: auto;
+    background-size: 24px;
+}
+.lyrics:hover{
+    background-image: url('../../assets/whiteIcons/microphone.svg');
+}
+
+/* create logic to change icon based on volume input value */
+.muteVolume{
+    background-image: url('../../assets/grayIcons/mute.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.volumeControl{
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    background-color: var(--gray-text);
+    border-radius: 3px;
+    cursor: pointer;
+    transform: translateY(-8px);  
+}
+
+.volumeControl::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
+    background-size: contain; 
+    border: none;
+    cursor: pointer;
+    margin-top: -1px;
+    
+}
+
+
+

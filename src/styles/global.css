@@ -54,3 +54,14 @@ input:focus {
     background-color: var(--gray-bg-hover);
     transform: scale(1.02);
 }
+
+.noBgBttn{
+    background-color: transparent;
+
+    border: none;
+    cursor: pointer;
+    padding: 0px 20px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+}

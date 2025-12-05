@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 import GlobalHeader from './components/GlobalHeader/GlobalHeader.jsx'
 import LibrarySidebar from './components/LibrarySidebar/LibrarySidebar.jsx'
 import MainSection from './components/MainSection/MainSection.jsx'
+import PlayerFooter from './components/PlayerFooter/PlayerFooter.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -16,5 +17,6 @@ createRoot(document.getElementById('root')).render(
       <MainSection />      
     </div>
 
+    <PlayerFooter />
   </StrictMode>
 )
