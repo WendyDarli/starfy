@@ -1,0 +1,21 @@
+{
+    "name": "backend",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon --watch . --exec node app.js",
+        "test": "echo 'No tests' && exit 0"
+    },
+    "dependencies": {
+        "axios": "^1.13.2",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.11"
+    }
+}
