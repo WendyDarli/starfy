@@ -1,6 +1,37 @@
 import './PlayerFooter.css';
+import { useRef, useState } from 'react';
 
 function PlayerFooter() {
+  //consider moving state to global context if needed elsewhere
+  const [volumeLevel, setVolumeLevel] = useState(50); 
+  const currentVolume = useRef(volumeLevel); 
+  
+  function handleVolumeChange(e) {
+    setVolumeLevel(e.target.value);
+  };
+
+  function muteSong() {
+    if(volumeLevel > 0) {
+      currentVolume.current = volumeLevel;
+      setVolumeLevel(0);
+    } else {
+      setVolumeLevel(currentVolume.current);
+    }
+  };
+
+  function getVolumeIconClass() {
+    if(volumeLevel == 0) {
+      return 'muteVolume';
+
+    } else if(volumeLevel > 0 && volumeLevel <= 50) {
+      return 'lowVolume';
+
+    } else {
+      return 'highVolume';
+    } 
+  };
+
+
   return (
     <div className='footerContainer'>
       <div id='songInfoContainer'>
@@ -27,7 +58,7 @@ function PlayerFooter() {
         </div>
         <div id='progressContainer'>
           <p>0:00</p>
-          <input aria-label='song progress' type='range' className='progress' min={0} max={100} value={0}></input>
+          <input aria-label='song progress' type='range' className='progress' min={0} max={100} ></input>
           <p>3:45</p>
         </div>
 
@@ -37,8 +68,8 @@ function PlayerFooter() {
       <div id='extraControls'>
         <button aria-label='open playing now view' className='playingViewBttn noBgBttn'></button>
         <button aria-label='open song lyrics' className='lyrics noBgBttn'></button>
-        <button aria-label='mute song' className='muteVolume noBgBttn'></button>
-        <input aria-label='change volume' type='range' className='volumeControl' min={0} max={100} value={0}></input>
+        <button aria-label='mute song' className={`noBgBttn + ${getVolumeIconClass(volumeLevel)}`} onClick={muteSong}></button>
+        <input aria-label='change volume' type='range' className='volumeControl' min={0} max={100} value={volumeLevel} onChange={handleVolumeChange}></input>
       </div>
 
 
