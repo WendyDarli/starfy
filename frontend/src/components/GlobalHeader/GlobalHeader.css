@@ -69,4 +69,11 @@
     font-size: 17px;
 }
 
-
+.profileBttn{
+    background-size: cover;
+    background-position: center;
+    height: 45px;
+    width: 45px;
+    border: none;
+    border-radius: 50%;
+}

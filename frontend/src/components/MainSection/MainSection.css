@@ -5,6 +5,7 @@
     color: var(--white);
     padding: 10px 20px;
     background-color: var(--light-black );
+    height: 81vh;
 }
 
 .sb-expanded ~ .mainSectionContainer{

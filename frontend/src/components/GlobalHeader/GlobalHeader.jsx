@@ -1,7 +1,11 @@
 import './GlobalHeader.css';
 import starfyIcon from '../../assets/whiteIcons/starfy.svg';
 
-function GlobalHeader ({ setDisplaySection }){
+function GlobalHeader ({ setDisplaySection, user }){
+
+    const buttonStyle = {
+    backgroundImage: `url(${user.images?.[0]?.url})`
+    }
     return (
         <div className='headerContainer'>
             <img id='starfyIcon' src={starfyIcon} alt='starfy Icon'></img>
@@ -14,7 +18,7 @@ function GlobalHeader ({ setDisplaySection }){
                 </form>                
             </div>
 
-            <button onClick={() => setDisplaySection('profile')}>Profile</button>
+            <button className='profileBttn' style={buttonStyle} onClick={() => setDisplaySection('profile')}></button>
         </div>
     )
 };

@@ -71,3 +71,8 @@ input:focus {
     color: var(--blue);
     cursor: pointer;
 }
+
+.grayText{
+    color: var(--gray-text);
+    margin: 5px 0px;
+}
