@@ -1,12 +1,12 @@
 import './GlobalHeader.css';
 import starfyIcon from '../../assets/whiteIcons/starfy.svg';
 
-function GlobalHeader (){
+function GlobalHeader ({ setDisplaySection }){
     return (
         <div className='headerContainer'>
             <img id='starfyIcon' src={starfyIcon} alt='starfy Icon'></img>
             <div id='middleHeader'>
-                <button className=' circularBttn homeBttn' onClick={() => window.location.href = "/"} ></button>
+                <button className=' circularBttn homeBttn' onClick={() => setDisplaySection('home')} ></button>
                 <form>
                     <button id='searchBttn' type='submit'></button>
                     <input  id='searchInput' type='text' placeholder='What do you want to play?'></input>
@@ -14,7 +14,7 @@ function GlobalHeader (){
                 </form>                
             </div>
 
-            <button>Profile</button>
+            <button onClick={() => setDisplaySection('profile')}>Profile</button>
         </div>
     )
 };

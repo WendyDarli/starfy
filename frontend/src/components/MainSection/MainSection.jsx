@@ -1,11 +1,10 @@
 import './MainSection.css';
 
-function MainSection() {
+function MainSection({ children }) {
 
     return (
         <main className='mainSectionContainer'>
-            {/* decides which component to render based in the route */}
-            <p>Main Content</p>
+            {children}
         </main>
     );
 }
