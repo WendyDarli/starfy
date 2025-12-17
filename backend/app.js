@@ -12,7 +12,13 @@ app.use(cors());
 
 
 app.get('/login', (req, res) => {
-    const scope = 'user-read-private user-read-email'; //data app needs access to
+    const scope = `
+        user-read-private
+        user-read-email
+        playlist-read-private
+        playlist-read-collaborative
+        user-library-read
+        `; //data app needs access to
     const auth_query_parameters = new URLSearchParams({
         response_type: 'code',
         client_id: client_id,
