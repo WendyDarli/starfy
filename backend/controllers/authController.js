@@ -74,4 +74,24 @@ async function login_callback_get(req, res){
     } 
 }
 
-module.exports =  { login_get, login_callback_get };
+//check if user is authenticated by fetching spotify profile
+async function isAuthenticated_get(req, res){
+    try{
+        //TODO: check expiry before use
+        //if expired use refresh token to get a new access token
+        const accessToken = req.user.tokens.access_token;
+
+        //fetch user profile using acces token
+        const response = await axios.get('https://api.spotify.com/v1/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        res.json(response.data);
+
+    } catch(err){
+        res.status(err.response?.status || 500).json({ error: 'User not authenticated.' });
+    }
+    
+}
+
+module.exports =  { login_get, login_callback_get, isAuthenticated_get };

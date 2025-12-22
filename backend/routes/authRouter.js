@@ -6,4 +6,6 @@ router.get('/login', authController.login_get);
 
 router.get('/callback', authController.login_callback_get);
 
+router.get('/isAuthenticated', authController.isAuthenticated_get);
+
 module.exports = router;

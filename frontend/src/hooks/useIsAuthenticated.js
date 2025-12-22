@@ -4,19 +4,19 @@ import { useState, useEffect } from 'react';
 export default function useIsAuthenticated(){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const token = new URLSearchParams(window.location.search).get('access_token');
-
-        if(token){
-            localStorage.setItem('access_token', token);
-            setIsAuthenticated(true);
-            window.history.replaceState({}, document.title, "/");
-            return;
-        }
-
-        setIsAuthenticated(!!localStorage.getItem('access_token'));
-
-    }, []) 
     
+    useEffect(() => {
+        fetch('http://127.0.0.1:3000/isAuthenticated', {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(data => setIsAuthenticated(true))
+        .catch(err => {
+            setIsAuthenticated(false)
+        });
+
+    }, []);
+ 
     return isAuthenticated;
 };
