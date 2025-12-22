@@ -10,11 +10,12 @@ export default function useIsAuthenticated(){
             method: 'GET',
             credentials: 'include',
         })
-        .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error('Not authenticated');
+                return res.json();
+            })
         .then(data => setIsAuthenticated(true))
-        .catch(err => {
-            setIsAuthenticated(false)
-        });
+        .catch(err => setIsAuthenticated(false));
 
     }, []);
  

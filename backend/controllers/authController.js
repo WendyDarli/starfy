@@ -1,5 +1,6 @@
 const axios = require('axios');
 require('dotenv').config();
+const redisClient = require('../redis');
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
@@ -60,7 +61,7 @@ async function login_callback_get(req, res){
         await redisClient.set(
             `tokens:user:${userId}`,
             JSON.stringify({access_token, refresh_token, expires_in})
-            );
+        );
 
         res.redirect('http://127.0.0.1:5173');
 
