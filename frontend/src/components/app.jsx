@@ -8,15 +8,14 @@ import PlayerFooter from './PlayerFooter/PlayerFooter.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
-import useIsAuthenticated from '../hooks/useIsAuthenticated.js';
+import useAuth from '../hooks/useAuth.js';
 import useDisplaySection from '../hooks/useDisplaySection.js';
-import useFetchUserData from '../hooks/useFetchUserData.js';
 import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js'
 
 export default function App() {
-    const isAuthenticated = useIsAuthenticated();
+    const { isAuthenticated, user } = useAuth();
     const { displaySection, setDisplaySection, ActiveComponent } = useDisplaySection();
-    const user = useFetchUserData();
+    
     const library = useFetchUserLibrary();
     const [activeId, setActiveId] = useState(null);
 
