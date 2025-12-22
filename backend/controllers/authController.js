@@ -21,15 +21,20 @@ async function login_get(req, res){
         scope: scope,
         redirect_uri: redirect_uri
     });
-
     res.redirect(`https://accounts.spotify.com/authorize/?${auth_query_parameters.toString()}`);
 }
 
 async function login_callback_get(req, res){
+    //fetches tokens from spotify
+    //fetches user profile using access_token
+    //creates redis userID using spotify profile ID
+    //saves auth tokens and userId in redis 
+    //redirects to main page
+
     const code = req.query.code || null;
 
     try{
-        const response = await axios({
+        const tokensResponse = await axios({
             method: 'post',
             url: 'https://accounts.spotify.com/api/token',
             data: new URLSearchParams({
@@ -42,11 +47,30 @@ async function login_callback_get(req, res){
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
-        const { access_token, refresh_token, expires_in } = response.data;
+        const { access_token, refresh_token, expires_in } = tokensResponse.data;
 
-        res.redirect(`http://localhost:5173/?access_token=${access_token}&refresh_token=${refresh_token}`);
-    } catch (error) {
-        res.send(error);
+        const profileResponse = await axios.get("https://api.spotify.com/v1/me", {
+            headers: { Authorization: `Bearer ${access_token}` }
+        });
+        const userId = profileResponse.data.id;
+        req.session.userId = userId;
+        
+
+        //store tokens in redis
+        await redisClient.set(
+            `tokens:user:${userId}`,
+            JSON.stringify({access_token, refresh_token, expires_in})
+            );
+
+        res.redirect('http://127.0.0.1:5173');
+
+
+    } catch (error){
+          return res
+            .status(error.response?.status || 500)
+            .json({
+                message: error.response?.data?.error || 'Authentication failed',
+            });
     } 
 }
 
