@@ -1,6 +1,7 @@
 const express = require('express');
 const authRouter = require('./routes/authRouter');
 const cors = require('cors');
+const attachUser = require('./attachUser');
 require('dotenv').config();
 
 //redis
