@@ -36,7 +36,7 @@ function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
 
                 
                 <button className={`playlistItem ${activeId === library.tracks.href ? 'active' : ''}`} 
-                        onClick={() => setActiveId(library.tracks.href)}>
+                        onClick={() => {setDisplaySection('playlist'); setActiveId(library.tracks.href)}}>
 
                     <img className='playlistImg' src={likedSongsCover} alt='Liked Songs'/>
                     <span className='playlistInfo'>
@@ -49,7 +49,7 @@ function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
                 {library.playlists.map(playlist => (
                     <button className={`playlistItem ${activeId === playlist.id ? 'active' : ''}`} 
                             key={playlist.id} 
-                            onClick={() => setActiveId(playlist.id)}>
+                            onClick={() => {setDisplaySection('playlist'); setActiveId(playlist.id)}}>
 
                         <img className='playlistImg' src={playlist.images?.[0]?.url || defaultCover} alt={playlist.name}/>
                         <span className='playlistInfo'>
