@@ -9,39 +9,21 @@ const [library, setLibrary] = useState({
 });
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (!token) return;
+    fetch('http://127.0.0.1:3000/playlists', {
+      method: 'GET',
+      credentials: 'include',
+    })
+    .then(res => {
+      if(!res.ok) throw new Error('Error fetching user playlists.');
+      return res.json();
+    })
+    .then(data => {
+      setLibrary(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
 
-    Promise.all([
-      fetch("https://api.spotify.com/v1/me/playlists", {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then(res => res.json()),
-
-      fetch("https://api.spotify.com/v1/me/tracks", {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then(res => res.json()),
-
-      fetch("https://api.spotify.com/v1/me/episodes", {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then(res => res.json()),
-    ])
-      .then(([playlists, tracks, episodes]) => {
-        setLibrary({
-           episodes: {
-              href: episodes.href,
-              total: episodes.total,
-            },
-          tracks: {
-            href: tracks.href,
-            total: tracks.total,
-          },
-          playlists: playlists.items,
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        setLibrary(l => ({ ...l, loading: false }));
-      });
   }, []);
 
   return library;

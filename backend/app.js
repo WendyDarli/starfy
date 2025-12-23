@@ -1,5 +1,6 @@
 const express = require('express');
 const authRouter = require('./routes/authRouter');
+const libraryRouter = require('./routes/libraryRouter');
 const cors = require('cors');
 const attachUser = require('./attachUser');
 require('dotenv').config();
@@ -34,6 +35,7 @@ app.use(
 
 app.use(attachUser);
 app.use('/', authRouter);
+app.use('/', libraryRouter), 
 
 app.use((err, req, res, next) => {
   console.error(err);
