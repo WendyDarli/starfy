@@ -1,0 +1,82 @@
+.playlistHeader{
+    display: flex;
+    align-items: center;
+    background: linear-gradient(#78b0e4 45%, var(--light-black) 85%);
+    padding: 30px 20px;
+    padding-bottom: 300px;
+    border-radius: 10px;
+}
+
+.playlistCover{
+    height: 250px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.playlistTitle{
+    font-size: 60px;
+    margin: 0;
+}
+
+.songsHeader{
+    display: grid;
+    grid-template-columns: 13px 3fr 2fr 2fr 50px;
+    gap: 16px;
+    justify-items: start;
+    color: var(--gray-text);
+    padding: 0px 15px;
+}
+
+.songsHeader > p {
+    margin: 25px 0px 0px 0px;
+}
+
+.songsContainer{
+    position: relative;
+    top: -265px;
+    background-color: #12121295;
+    padding: 10px 20px;
+}
+
+.songContainer{
+    display: grid;
+    grid-template-columns: 13px 3fr 2fr 2fr 50px;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 16px;
+    padding: 0px 15px;
+    color: var(--gray-text); 
+    border-radius: 5px;   
+}
+
+.songContainer:hover{
+    background-color: var(--gray-bg-hover);
+}
+
+.songImg{
+    height: 40px;
+    border-radius: 5px;
+}
+
+.songNameContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.songNameContainer > div > p{
+    margin: 0;
+}
+
+.playPausePlaylist{
+    background-color: var(--blue);
+    padding: 27px;
+    background-image: url(../../assets/blackIcons/play_button.svg);
+    background-color: var(--blue);
+    background-position: 19px 18px;    
+    background-size: 20px;
+}
+
+.playPausePlaylist:hover{
+    background-color: var(--white);
+}
