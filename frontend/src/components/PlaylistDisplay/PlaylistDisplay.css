@@ -33,7 +33,7 @@
 
 .songsContainer{
     position: relative;
-    top: -265px;
+    margin-top: -265px;
     background-color: #12121295;
     padding: 10px 20px;
 }
@@ -79,4 +79,10 @@
 
 .playPausePlaylist:hover{
     background-color: var(--white);
+}
+
+.clockIcon{
+    height: 18px;
+    display: block;
+    margin: 25px 0px 0px 0px;
 }

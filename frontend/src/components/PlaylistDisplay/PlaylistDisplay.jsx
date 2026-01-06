@@ -1,5 +1,7 @@
 // this should receive a state from bttn with playlist id
 import './PlaylistDisplay.css';
+import clockIcon from '../../assets/grayIcons/clock.svg';
+
 
 function PlaylistDisplay({ activeId }){
     return(
@@ -22,7 +24,7 @@ function PlaylistDisplay({ activeId }){
                         <p>title</p>
                         <p>Album</p>
                         <p>Date added</p>
-                        <p>Dur</p>           
+                        <img className="clockIcon" src={clockIcon}/>
                     </div>
                         <hr></hr>
                     <div>

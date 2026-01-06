@@ -4,7 +4,8 @@
     transition: margin-left ease-in-out 0.1s;
     color: var(--white);
     background-color: var(--light-black );
-    height: 81vh;
+    height: 82vh;
+    overflow-y: auto;
 }
 
 .sb-expanded ~ .mainSectionContainer{
