@@ -7,6 +7,8 @@ function PlaylistDisplay({ activeId }) {
     const [playlistSongs, setPlaylistSongs] = useState([]);
 
     useEffect(() => {
+        setPlaylistSongs([]);
+        console.log(activeId);
         fetch(`http://127.0.0.1:3000/playlist/${activeId}`,{
             credentials: 'include',
         })
@@ -14,12 +16,25 @@ function PlaylistDisplay({ activeId }) {
             if(!res.ok) throw new Error('Error fetching user playlists.');
             return res.json();
         })
-        .then(data => {           
-            setPlaylistSongs(data);
+        .then(data => {
+            const normalized = data.map(item =>
+        activeId === 'episodes'
+          ? { ...item.episode,
+              showOrArtist: item.episode.show?.name,
+              albumOrShow: item.episode.show?.name,
+              images: item.episode.images || [],
+              added_at: item.added_at,
+            }
+          : { ...item.track,              
+              showOrArtist: item.track.artists[0]?.name,
+              albumOrShow: item.track.album?.name,
+              images: item.track.album?.images || [],
+              added_at: item.added_at,
+            }
+      );
+            setPlaylistSongs(normalized);
         })
-        .catch(err => {
-            console.log(err);
-        })
+        .catch(err => { console.log(err); })
     }, [activeId])
 
     function formatDate(dateString){
@@ -61,23 +76,22 @@ function PlaylistDisplay({ activeId }) {
                         <hr></hr>
                     <div>
                         { playlistSongs.length <= 0 && <p>This playlist is empty.</p> }
-                        { playlistSongs.length >= 1 && playlistSongs.map((song, index) => (
-                            <div className='songContainer' key={song.track.id}>
+                        { playlistSongs.map((item, index) => (
+                            <div className='songContainer' key={item.id}>
                                 <p>{index + 1}</p>
                                 <div className='songNameContainer'>
-                                    <img src={song.track.album.images[0].url} className='songImg'></img>
+                                    <img src={item.images?.[0]?.url} className='songImg'></img>
                                     <div>
-                                        <a href='' className='whiteLink'>{song.track.name}</a>
-                                        <a href=''>{song.track.artists[0].name}</a>
+                                        <a href='' className='whiteLink'>{item.name}</a>
+                                        <a href=''>{item.showOrArtist}</a>
                                     </div>
                                 </div>
-                                <a href=''>{song.track.album.name}</a>
-                                <p>{formatDate(song.added_at)}</p>
-                                <p>{formatDuration(song.track.duration_ms)}</p>
+                                <a href=''>{item.albumOrShow}</a>
+                                <p>{formatDate(item.added_at)}</p>
+                                <p>{formatDuration(item.duration_ms)}</p>
                             </div>
-                            
                         ))}
-
+                        
                     </div>
                 </div>
             </div>

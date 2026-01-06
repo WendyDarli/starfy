@@ -24,7 +24,7 @@ function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
 
                 {library.episodes.total > 0 && 
                     <button className={`playlistItem ${activeId === library.episodes.href ? 'active' : ''}`} 
-                            onClick={() => {setDisplaySection('playlist'); setActiveId(library.episodes.href)}} >
+                            onClick={() => {setDisplaySection('playlist'); setActiveId('episodes')}} >
 
                         <img className='playlistImg' src={episodesCover} alt='Episodes'/>
                         <span className='playlistInfo'>
@@ -36,7 +36,7 @@ function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
 
                 
                 <button className={`playlistItem ${activeId === library.tracks.href ? 'active' : ''}`} 
-                        onClick={() => {setDisplaySection('playlist'); setActiveId(library.tracks.href)}}>
+                        onClick={() => {setDisplaySection('playlist'); setActiveId('tracks')}}>
 
                     <img className='playlistImg' src={likedSongsCover} alt='Liked Songs'/>
                     <span className='playlistInfo'>

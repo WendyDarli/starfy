@@ -34,14 +34,24 @@ async function playlists_get(req, res){
 }
 
 async function songs_get(req, res){
-    try{
-        const playlistId = req.params.id
+    try{ 
+        const playlistId = req.params.id;
         const accessToken = req.user.tokens.access_token;
         const headers = { Authorization: `Bearer ${accessToken}` };
 
-        const playlistRes = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`, { headers })
+        switch(playlistId) {
+            case 'tracks':
+                const tracksRes = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', { headers });
+                return res.json(tracksRes.data.items);
 
-        res.json(playlistRes.data.items);
+            case 'episodes':
+                const episodesRes = await axios.get('https://api.spotify.com/v1/me/episodes?limit=50', { headers });
+                return res.json(episodesRes.data.items);
+
+            default:
+                const playlistRes = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`, { headers });
+                return res.json(playlistRes.data.items);
+        }
         
     } catch(error){
         return res
@@ -50,9 +60,6 @@ async function songs_get(req, res){
             message: error.response?.data?.error || 'Error fetching user playlist songs.',
         });
     }
-
-    
-
 }
 
 module.exports = { playlists_get, songs_get };
