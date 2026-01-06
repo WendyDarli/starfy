@@ -9,7 +9,7 @@ const [library, setLibrary] = useState({
 });
 
   useEffect(() => {
-    fetch('http://127.0.0.1:3000/playlists', {
+    fetch('http://127.0.0.1:3000/library', {
       method: 'GET',
       credentials: 'include',
     })
