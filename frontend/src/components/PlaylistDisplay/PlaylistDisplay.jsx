@@ -2,14 +2,24 @@
 import { useEffect, useState } from 'react';
 import './PlaylistDisplay.css';
 import clockIcon from '../../assets/grayIcons/clock.svg';
+import ColorThief from 'colorthief';
+import { useRef } from 'react';
 
 function PlaylistDisplay({ activeId }) {
     const [playlistSongs, setPlaylistSongs] = useState([]);
     const [playlistInfo, setPlaylistInfo] = useState({});
 
+    const coverSrc =
+        activeId === 'tracks'
+            ? '/src/assets/liked_songs_cover.png'
+            : activeId === 'episodes'
+            ? '/src/assets/episodes_cover.png'
+            : playlistInfo?.images?.[0]?.url || '/src/assets/playlists_default_cover.png';
+
+
+    console.log(playlistSongs);
     useEffect(() => {
         setPlaylistSongs([]);
-        console.log(activeId);
 
         fetch(`http://127.0.0.1:3000/playlist/${activeId}`,{
             credentials: 'include',
@@ -54,11 +64,45 @@ function PlaylistDisplay({ activeId }) {
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
 
+    // colorthief for playlist bg color
+    const imgRef = useRef(null);
+    const [bgColor, setBgColor] = useState('rgb(18,18,18)');
+
+    useEffect(() => {
+        const img = imgRef.current;
+        if (!img) return;
+
+        const colorThief = new ColorThief();
+
+        const extractColor = () => {
+            if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+            return;
+            }
+
+            try {
+                const [r, g, b] = colorThief.getColor(img);
+                setBgColor(`rgb(${r}, ${g}, ${b})`);
+            } catch (err) {
+                console.warn('Color extraction failed:', err);
+                setBgColor('rgb(18,18,18)');
+            }
+        };
+
+        img.complete ? extractColor() : img.onload = extractColor;
+
+        return () => img.onload = null;
+    }, [coverSrc]);
+   
 
     return(
         <div>
-            <div className='playlistHeader'>
-                <img src='\src\assets\jeff.jpeg' className="playlistCover"></img>
+            <div className='playlistHeader' style={{ background: `linear-gradient(${bgColor} 45%, #121212 85% )` }}>
+                <img
+                ref={imgRef}
+                crossOrigin='anonymous'
+                src={coverSrc}
+                className="playlistCover"
+                />
                 <div>
                     <p>playlist</p>
                     { activeId === 'tracks' && <h1 className='playlistTitle'>Liked Songs</h1> }
