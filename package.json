@@ -10,5 +10,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "dependencies": {
+    "colorthief": "^2.6.0"
   }
 }
