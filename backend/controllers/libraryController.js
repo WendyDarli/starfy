@@ -38,19 +38,48 @@ async function songs_get(req, res){
         const playlistId = req.params.id;
         const accessToken = req.user.tokens.access_token;
         const headers = { Authorization: `Bearer ${accessToken}` };
+        const me = await axios.get('https://api.spotify.com/v1/me', { headers });
 
         switch(playlistId) {
             case 'tracks':
                 const tracksRes = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', { headers });
-                return res.json(tracksRes.data.items);
+                return res.json({
+                    playlist: {
+                    id: 'tracks',
+                    name: 'Liked Songs',
+                    images: [],
+                    owner: me.data.display_name,
+                    total: tracksRes.data.total,
+                    },
+                    items: tracksRes.data.items,
+                });
 
             case 'episodes':
                 const episodesRes = await axios.get('https://api.spotify.com/v1/me/episodes?limit=50', { headers });
-                return res.json(episodesRes.data.items);
+                return res.json({
+                    playlist: {
+                    id: 'episodes',
+                    name: 'Your Episodes',
+                    images: [],
+                    owner: me.data.display_name,
+                    total: episodesRes.data.total,
+                    },
+                    items: episodesRes.data.items,
+                });
 
             default:
-                const playlistRes = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`, { headers });
-                return res.json(playlistRes.data.items);
+                const playlistData = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, { headers });
+                const playlistTracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`, { headers });
+                return res.json({
+                playlist: {
+                id: playlistData.data.id,
+                name: playlistData.data.name,
+                images: playlistData.data.images,
+                owner: playlistData.data.owner?.display_name,
+                total: playlistData.data.tracks.total,
+                },
+                items: playlistTracks.data.items,
+            });
         }
         
     } catch(error){

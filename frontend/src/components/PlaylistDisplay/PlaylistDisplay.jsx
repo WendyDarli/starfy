@@ -5,10 +5,12 @@ import clockIcon from '../../assets/grayIcons/clock.svg';
 
 function PlaylistDisplay({ activeId }) {
     const [playlistSongs, setPlaylistSongs] = useState([]);
+    const [playlistInfo, setPlaylistInfo] = useState({});
 
     useEffect(() => {
         setPlaylistSongs([]);
         console.log(activeId);
+
         fetch(`http://127.0.0.1:3000/playlist/${activeId}`,{
             credentials: 'include',
         })
@@ -17,22 +19,24 @@ function PlaylistDisplay({ activeId }) {
             return res.json();
         })
         .then(data => {
-            const normalized = data.map(item =>
-        activeId === 'episodes'
-          ? { ...item.episode,
-              showOrArtist: item.episode.show?.name,
-              albumOrShow: item.episode.show?.name,
-              images: item.episode.images || [],
-              added_at: item.added_at,
-            }
-          : { ...item.track,              
-              showOrArtist: item.track.artists[0]?.name,
-              albumOrShow: item.track.album?.name,
-              images: item.track.album?.images || [],
-              added_at: item.added_at,
-            }
-      );
+
+            const normalized = data.items.map(item =>
+                activeId === 'episodes'
+                ? { ...item.episode,
+                    showOrArtist: item.episode.show?.name,
+                    albumOrShow: item.episode.show?.name,
+                    images: item.episode.images || [],
+                    added_at: item.added_at,
+                    }
+                : { ...item.track,              
+                    showOrArtist: item.track.artists[0]?.name,
+                    albumOrShow: item.track.album?.name,
+                    images: item.track.album?.images || [],
+                    added_at: item.added_at,
+                    }
+            );
             setPlaylistSongs(normalized);
+            setPlaylistInfo(data.playlist || {});
         })
         .catch(err => { console.log(err); })
     }, [activeId])
@@ -57,8 +61,10 @@ function PlaylistDisplay({ activeId }) {
                 <img src='\src\assets\jeff.jpeg' className="playlistCover"></img>
                 <div>
                     <p>playlist</p>
-                    <h1 className='playlistTitle' >Playlist name</h1>
-                    <p>owner • 333 songs</p>
+                    { activeId === 'tracks' && <h1 className='playlistTitle'>Liked Songs</h1> }
+                    { activeId === 'episodes' && <h1 className='playlistTitle'>Your Episodes</h1> }
+                    { activeId !== 'tracks' && activeId !== 'episodes' && <h1 className='playlistTitle' >{playlistInfo.name}</h1> }
+                    <p>{playlistInfo.owner} • {playlistInfo.total} songs</p>
                 </div>                
             </div>
 
