@@ -13,61 +13,10 @@
     margin-right: 20px;
     object-fit: cover;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
-
 }
 
 .playlistTitle{ 
     font-size: 60px;
-    margin: 0;
-}
-
-.songsHeader{
-    display: grid;
-    grid-template-columns: 13px 3fr 2fr 2fr 50px;
-    gap: 16px;
-    justify-items: start;
-    color: var(--gray-text);
-    padding: 0px 15px;
-}
-
-.songsHeader > p {
-    margin: 25px 0px 0px 0px;
-}
-
-.songsContainer{
-    position: relative;
-    margin-top: -265px;
-    background-color: #12121295;
-    padding: 10px 20px;
-}
-
-.songContainer{
-    display: grid;
-    grid-template-columns: 13px 3fr 2fr 2fr 50px;
-    grid-auto-flow: column;
-    align-items: center;
-    gap: 16px;
-    padding: 0px 15px;
-    color: var(--gray-text); 
-    border-radius: 5px;   
-}
-
-.songContainer:hover{
-    background-color: var(--gray-bg-hover);
-}
-
-.songImg{
-    height: 40px;
-    border-radius: 5px;
-}
-
-.songNameContainer{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.songNameContainer > div > p{
     margin: 0;
 }
 
@@ -84,8 +33,9 @@
     background-color: var(--white);
 }
 
-.clockIcon{
-    height: 18px;
-    display: block;
-    margin: 25px 0px 0px 0px;
+.songsContainer{
+    position: relative;
+    margin-top: -265px;
+    background-color: #12121295;
+    padding: 10px 20px;
 }
