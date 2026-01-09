@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get('/library', libraryController.playlists_get);
  
-router.get('/playlist/:id', libraryController.songs_get);
+router.post('/playlist/', libraryController.songs_post);
 
 module.exports = router;

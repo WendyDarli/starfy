@@ -33,14 +33,16 @@ async function playlists_get(req, res){
     }
 }
 
-async function songs_get(req, res){
+async function songs_post(req, res){
     try{ 
-        const playlistId = req.params.id;
+        const id = req.body.id;
+        const type = req.body.type;
+
         const accessToken = req.user.tokens.access_token;
         const headers = { Authorization: `Bearer ${accessToken}` };
         const me = await axios.get('https://api.spotify.com/v1/me', { headers });
 
-        switch(playlistId) {
+        switch(type) {
             case 'tracks':
                 const tracksRes = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', { headers });
                 return res.json({
@@ -67,9 +69,9 @@ async function songs_get(req, res){
                     items: episodesRes.data.items,
                 });
 
-            default:
-                const playlistData = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, { headers });
-                const playlistTracks = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`, { headers });
+            case 'playlist':
+                const playlistData = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, { headers });
+                const playlistTracks = await axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?limit=50`, { headers });
                 return res.json({
                 playlist: {
                 id: playlistData.data.id,
@@ -91,4 +93,4 @@ async function songs_get(req, res){
     }
 }
 
-module.exports = { playlists_get, songs_get };
+module.exports = { playlists_get, songs_post };

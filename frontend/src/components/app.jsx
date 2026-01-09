@@ -10,7 +10,7 @@ import LoginModal from './LoginModal/LoginModal.jsx';
 //HOOKS
 import useAuth from '../hooks/useAuth.js';
 import useDisplaySection from '../hooks/useDisplaySection.js';
-import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js'
+import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js';
 
 export default function App() {
     const { isAuthenticated, user } = useAuth();
@@ -27,7 +27,7 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar library={library} setDisplaySection={setDisplaySection} activeId={activeId} setActiveId={setActiveId} />
                 <MainSection  >
-                    <ActiveComponent key={displaySection} user={user} activeId={activeId} />
+                    <ActiveComponent key={displaySection} user={user} activeId={activeId} setActiveId={setActiveId} />
                 </MainSection>  
             </div>
 

@@ -7,15 +7,24 @@ import TracksHeader from '../TracksHeader/TracksHeader.jsx';
 import TrackListHeader from '../TrackListHeader/TrackListHeader.jsx';
 
 
-function PlaylistDisplay({ activeId }) {
+function PlaylistDisplay({ activeId, setActiveId }) {
     const [playlistSongs, setPlaylistSongs] = useState([]);
     const [playlistInfo, setPlaylistInfo] = useState({});
+    console.log('activeId:', activeId); //album, artist, song changing active id correctly
 
     useEffect(() => {
         setPlaylistSongs([]);
 
-        fetch(`http://127.0.0.1:3000/playlist/${activeId}`,{
+        fetch(`http://127.0.0.1:3000/playlist`,{
+            method: 'POST',
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                id: activeId.id, 
+                type: activeId.type
+             }),
         })
         .then(res => {
             if(!res.ok) throw new Error('Error fetching user playlists.');
@@ -52,7 +61,7 @@ function PlaylistDisplay({ activeId }) {
                 <button className='circularBttn playPause playPausePlaylist'></button>
                 <TracksHeader showAlbum={false} showDateAdded={false} />
                  <hr></hr>
-                <TrackList songs={playlistSongs} />
+                <TrackList songs={playlistSongs} setActiveId={setActiveId} />
 
             </div>
         </div>

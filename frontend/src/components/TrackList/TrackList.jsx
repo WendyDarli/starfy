@@ -1,6 +1,6 @@
 import './TrackList.css';
 
-function TrackList({ songs }) {
+function TrackList({ songs, setActiveId }) {
 
     function formatDate(dateString){
         const date = new Date(dateString);
@@ -25,13 +25,13 @@ function TrackList({ songs }) {
                         <div className='songNameContainer'>
                             <img src={item.images?.[0]?.url} className='songImg'></img>
                             <div>
-                                <a href='' className='whiteLink'>{item.name}</a>
-                                <a href=''>{item.showOrArtist}</a>
+                                <a href='' className='whiteLink' onClick={() => setActiveId({id: item.id, type: 'song'})}>{item.name}</a>
+                                <a href='' onClick={() => setActiveId({id: item.artists[0]?.id, type: 'artist'})}>{item.showOrArtist}</a>
                             </div>
                         </div>
                         
                         {/* add props to disable album and some other details */}
-                        <a href=''>{item.albumOrShow}</a> 
+                        <a href='' onClick={() => setActiveId({id: item.album?.id, type: 'album'})}>{item.albumOrShow}</a> 
                         <p>{formatDate(item.added_at)}</p>
                         <p>{formatDuration(item.duration_ms)}</p>
                     </div>
