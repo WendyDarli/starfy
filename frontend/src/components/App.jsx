@@ -27,7 +27,7 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar library={library} setDisplaySection={setDisplaySection} activeId={activeId} setActiveId={setActiveId} />
                 <MainSection  >
-                    <ActiveComponent key={displaySection} user={user} activeId={activeId} setActiveId={setActiveId} />
+                    <ActiveComponent key={displaySection} user={user} activeId={activeId} setActiveId={setActiveId} setDisplaySection={setDisplaySection} />
                 </MainSection>  
             </div>
 

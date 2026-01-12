@@ -1,11 +1,12 @@
 .songsHeader{
     display: grid;
-    grid-template-columns: 13px 3fr 2fr 2fr 50px;
+    grid-template-columns: 13px 3fr minmax(0, 2fr) minmax(0, 2fr) 50px;
     gap: 16px;
     justify-items: start;
     color: var(--gray-text);
     padding: 0px 15px;
 }
+
 
 .songsHeader > p {
     margin: 25px 0px 0px 0px;
@@ -14,5 +15,5 @@
 .clockIcon{
     height: 18px;
     display: block;
-    margin: 25px 0px 0px 0px;
+    margin: 25px 0px 0px 5px;
 }
