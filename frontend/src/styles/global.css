@@ -46,10 +46,12 @@ a{
 a:hover{
     color: var(--white);
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .whiteLink{
     color: var(--white);
+    cursor: pointer;
 }
 
 hr{

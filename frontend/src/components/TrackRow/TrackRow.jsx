@@ -47,8 +47,9 @@ function TrackRow({ item, index, activeId, handleSongClick, headerImages }) {
               <span key={a.id}>
                 <a onClick={() => handleSongClick('playlist', a.id, 'artist')}>
                   {a.name}
+                  {i < artists.length - 1 && ', '}
                 </a>
-                {i < artists.length - 1 && ', '}
+                
               </span>
             ))}
           </span>
