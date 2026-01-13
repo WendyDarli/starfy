@@ -9,7 +9,6 @@ import PlaylistHeader from '../PlaylistHeader/PlaylistHeader.jsx';
 
 function PlaylistDisplay({ setDisplaySection, activeId, setActiveId }) {
     const [playlistInfo, setPlaylistInfo] = useState({});
-    console.log('activeId:', activeId); //album, artist, song changing active id correctly
 
     useEffect(() => {
         setPlaylistInfo({});
@@ -29,7 +28,6 @@ function PlaylistDisplay({ setDisplaySection, activeId, setActiveId }) {
             return res.json();
         })
         .then(data => {
-            console.log('Fetched playlist data:', data);
             setPlaylistInfo(data);
         })
         .catch(err => { console.log(err); })
@@ -38,13 +36,11 @@ function PlaylistDisplay({ setDisplaySection, activeId, setActiveId }) {
     return(
         <div>
             <PlaylistHeader activeId={activeId} header={playlistInfo.header} />
-
             <div className='songsContainer'>
                 <button className='circularBttn playPause playPausePlaylist'></button>
                 <TracksHeader tracksHeader={playlistInfo.tracksHeader} activeId={activeId} />
                  <hr></hr>
                 <TrackList songs={playlistInfo.tracks} activeId={activeId} setActiveId={setActiveId} setDisplaySection={setDisplaySection} />
-
             </div>
         </div>
     )

@@ -12,7 +12,6 @@ function playlistHeader( { activeId, header } ) {
             : header?.images?.[0]?.url || '/src/assets/playlists_default_cover.png';
 
     const isArtist = activeId.type === 'artist';
-
     let followersText = '';
     let label = '';
 
@@ -65,8 +64,7 @@ function playlistHeader( { activeId, header } ) {
     return(
         <div className='playlistHeader' 
             style={{ background: `linear-gradient(${bgColor} 45%, #121212 85% )` }}> 
-            <img
-            ref={imgRef}
+            <img ref={imgRef}
             crossOrigin='anonymous'
             src={coverSrc} 
             alt='Playlist Cover'
@@ -75,7 +73,7 @@ function playlistHeader( { activeId, header } ) {
             <div>
                 <p>{header?.title}</p>
                 <h1 className='playlistTitle'>{header?.name}</h1>
-                <p> {header?.owner} {followersText} {label} </p> {/* OwnerName - total songs / Artist Name - total songs / total followers / artist name - album - duration */}
+                <p> {header?.owner} {followersText} {label} </p>
             </div>                
         </div>
     );

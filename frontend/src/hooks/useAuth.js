@@ -10,15 +10,15 @@ export default function useAuth(){
             method: 'GET',
             credentials: 'include',
         })
-            .then(res => {
-                if (!res.ok) throw new Error('Not authenticated');
-                return res.json();
-            })
+        .then(res => {
+            if (!res.ok) throw new Error('Not authenticated');
+            return res.json();
+        })
         .then(data => {
             setIsAuthenticated(true);
             setUser(data);
         })
-        .catch(err =>{
+        .catch(err => {
             setIsAuthenticated(false);
             console.log(err);
         });
