@@ -1,7 +1,8 @@
 import './GlobalHeader.css';
 import starfyIcon from '../../assets/whiteIcons/starfy.svg';
+import { Link } from 'react-router';
 
-function GlobalHeader ({ setDisplaySection, user }){
+function GlobalHeader ({ user }){
 
     const buttonStyle = {
     backgroundImage: `url(${user.images?.[0]?.url})`
@@ -10,7 +11,7 @@ function GlobalHeader ({ setDisplaySection, user }){
         <div className='headerContainer'>
             <img id='starfyIcon' src={starfyIcon} alt='starfy Icon'></img>
             <div id='middleHeader'>
-                <button className=' circularBttn homeBttn' onClick={() => setDisplaySection('home')} ></button>
+                <Link className='circularBttn homeBttn'  to='/home'></Link>
                 <form>
                     <button id='searchBttn' type='submit'></button>
                     <input  id='searchInput' type='text' placeholder='What do you want to play?'></input>
@@ -18,7 +19,7 @@ function GlobalHeader ({ setDisplaySection, user }){
                 </form>                
             </div>
 
-            <button className='profileBttn' style={buttonStyle} onClick={() => setDisplaySection('profile')}></button>
+            <Link className='profileBttn' style={buttonStyle} to='/profile'></Link>
         </div>
     )
 };

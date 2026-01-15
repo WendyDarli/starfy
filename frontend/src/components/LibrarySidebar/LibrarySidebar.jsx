@@ -1,11 +1,13 @@
 import './LibrarySidebar.css';
 import { useState } from 'react';
+import { Link, useParams } from 'react-router';
 import defaultCover from '../../assets/playlists_default_cover.png';
 import likedSongsCover from '../../assets/liked_songs_cover.png'
 import episodesCover from '../../assets/episodes_cover.png';
 
-function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
+function LibrarySidebar({ library }) {
     const [isExpanded, setExpanded] = useState(false);
+    const { id } = useParams();
 
     function toggleSidebar(){
         setExpanded(prev => !prev);
@@ -23,41 +25,34 @@ function LibrarySidebar({ library, setDisplaySection, activeId, setActiveId }) {
             <nav>
 
                 {library.episodes.total > 0 && 
-                    <button className={`playlistItem ${activeId === library.episodes.href ? 'active' : ''}`} 
-                            onClick={() => {setDisplaySection('playlist'); setActiveId({id: 'episodes', type: 'episodes'})}} >
-
+                    <Link className={`playlistItem ${id === 'episodes' ? 'active' : ''}`} to={'/collection/episodes'} >
                         <img className='playlistImg' src={episodesCover} alt='Episodes'/>
                         <span className='playlistInfo'>
                             <p className='playlistName active'>Your Episodes</p>
-                            <p className='playlistAuthor'>Playlist</p>   
+                            <p className='playlistAuthor'>Playlist</p>
                         </span>
-                    </button>
+                    </Link>
                 }
 
                 
-                <button className={`playlistItem ${activeId === library.tracks.href ? 'active' : ''}`} 
-                        onClick={() => {setDisplaySection('playlist'); setActiveId({id: 'tracks', type: 'tracks'})}}>
-
+                <Link className={`playlistItem ${id === 'tracks' ? 'active' : ''}`} to={`collection/tracks`} >
                     <img className='playlistImg' src={likedSongsCover} alt='Liked Songs'/>
                     <span className='playlistInfo'>
                         <p className='playlistName'>Liked Songs</p>
                             <p className='playlistAuthor'>Playlist • {library.tracks.total} songs</p>   
                     </span>    
-                </button>
+                </Link>
                 
 
                 {library.playlists.map(playlist => (
-                    <button className={`playlistItem ${activeId === playlist.id ? 'active' : ''}`} 
-                            key={playlist.id} 
-                            onClick={() => {setDisplaySection('playlist'); setActiveId({id: playlist.id, type: 'playlist'})}}>
-
+                    <Link className={`playlistItem ${id === playlist.id ? 'active' : ''}`} to={`playlist/${playlist.id}`} key={playlist.id} >
                         <img className='playlistImg' src={playlist.images?.[0]?.url || defaultCover} alt={playlist.name}/>
                         <span className='playlistInfo'>
                             <p className='playlistName'>{playlist.name}</p>
                             <p className='playlistAuthor'>Playlist • {playlist.owner.display_name}</p>   
                         </span>
                         
-                    </button>
+                    </Link>
                 ))}
             </nav>
         </aside>

@@ -1,6 +1,7 @@
 import './TrackRow.css';
+import { Link } from 'react-router';
 
-function TrackRow({ item, index, activeId, handleSongClick, headerImages }) {
+function TrackRow({ item, index, showAlbum }) {
     function formatDate(dateString){
         if(!dateString) return '';
         const date = new Date(dateString);
@@ -15,55 +16,34 @@ function TrackRow({ item, index, activeId, handleSongClick, headerImages }) {
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-  const media = item.track ?? item.episode ?? item;
-  const albumOrShow = media.album ?? media.show ?? item;
-  const imageUrl =
-    albumOrShow.images?.[0]?.url ?? headerImages?.[0]?.url ?? null;
-
-  const artists =
-    media.artists ??
-    (media.show ? [{ id: media.show.id, name: media.show.name }] : []);
-
-  const showAlbum =
-    activeId.type === 'playlist' || activeId.type === 'tracks';
-
   return (
     <div className="songContainer">
       <p>{index + 1}</p>
 
       <div className="songNameContainer">
-        <img src={imageUrl} className="songImg" alt="" />
+        <img src={item.imageUrl} className="songImg" alt="" />
 
         <div>
-          <a
-            className="whiteLink"
-            onClick={() => handleSongClick('playlist', media.id, 'song')}
-          >
-            {media.name}
-          </a>
+          <Link to={`/song/${item.id}`} className="whiteLink"> {item.name} </Link>
 
           <span className="songArtists">
-            {artists.map((a, i) => (
+            {item.artists.map((a, i) => (
               <span key={a.id}>
-                <a onClick={() => handleSongClick('playlist', a.id, 'artist')}>
+                <Link to={`/artist/${a.id}`}>
                   {a.name}
-                  {i < artists.length - 1 && ', '}
-                </a>
-                
+                  {i < item.artists.length - 1 && ', '}
+                </Link>
               </span>
             ))}
           </span>
         </div>
       </div>
 
-      {showAlbum && (
-        <a onClick={() => handleSongClick('playlist', albumOrShow.id, 'album')}>
-          {albumOrShow.name}
-        </a>
-      )}
+      {showAlbum 
+      ? ( <Link to={`/album/${item.albumOrShow.id}`}> {item.albumOrShow.name} </Link> ) : <p></p>}
 
       <p>{formatDate(item.added_at)}</p>
-      <p>{formatDuration(media.duration_ms)}</p>
+      <p>{formatDuration(item.duration_ms)}</p>
     </div>
   );
 };

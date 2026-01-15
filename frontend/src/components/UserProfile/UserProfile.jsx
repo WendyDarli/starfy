@@ -1,6 +1,8 @@
 import './UserProfile.css';
+import { useOutletContext } from 'react-router';
 
-function UserProfile({ user }) {
+function UserProfile() {
+    const { user } = useOutletContext();
     if (!user) return <div>Loading...</div>; 
     return (
         <div className='profileContainer'>

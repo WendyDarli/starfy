@@ -2,16 +2,17 @@ import './PlaylistHeader.css';
 import { useEffect, useRef, useState } from 'react';
 import ColorThief from 'colorthief';
 
-function playlistHeader( { activeId, header } ) {
+
+function PlaylistHeader( { header, type, id } ) {
     
     const coverSrc =
-        activeId.type === 'tracks'
+        id === 'tracks'
             ? '/src/assets/liked_songs_cover.png'
-            : activeId.type === 'episodes'
+            : id === 'episodes'
             ? '/src/assets/episodes_cover.png'
             : header?.images?.[0]?.url || '/src/assets/playlists_default_cover.png';
 
-    const isArtist = activeId.type === 'artist';
+    const isArtist = type === 'artist';
     let followersText = '';
     let label = '';
 
@@ -79,4 +80,4 @@ function playlistHeader( { activeId, header } ) {
     );
 };
 
-export default playlistHeader;
+export default PlaylistHeader;

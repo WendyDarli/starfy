@@ -1,10 +1,11 @@
 import './TracksHeader.css';
 import clockIcon from '../../assets/grayIcons/clock.svg';
 
-function TracksHeader({ tracksHeader, activeId }) {
+
+function TracksHeader({ tracksHeader, type }) {
     return (
         <div className="songsHeader"> 
-            {activeId.type === 'artist' 
+            {type === 'artist' 
                 ? <p>Popular</p>
                 : <>
                     <p>#</p>

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 //COMPONENTS
 import GlobalHeader from './GlobalHeader/GlobalHeader.jsx';
 import LibrarySidebar from './LibrarySidebar/LibrarySidebar.jsx';
@@ -9,25 +7,22 @@ import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
 import useAuth from '../hooks/useAuth.js';
-import useDisplaySection from '../hooks/useDisplaySection.js';
 import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js';
+import { Outlet } from 'react-router';
 
 export default function App() {
     const { isAuthenticated, user } = useAuth();
-    const { displaySection, setDisplaySection, ActiveComponent } = useDisplaySection();
-    
     const library = useFetchUserLibrary();
-    const [activeId, setActiveId] = useState(null);
 
     return (
         <>
-            <GlobalHeader setDisplaySection={setDisplaySection} user={user}/>
+            <GlobalHeader user={user}/>
             {!isAuthenticated && <LoginModal />}
             
             <div id='appLayout'>
-                <LibrarySidebar library={library} setDisplaySection={setDisplaySection} activeId={activeId} setActiveId={setActiveId} />
-                <MainSection  >
-                    <ActiveComponent key={displaySection} user={user} activeId={activeId} setActiveId={setActiveId} setDisplaySection={setDisplaySection} />
+                <LibrarySidebar library={library}/>
+                <MainSection>
+                    <Outlet context={{user}}/>
                 </MainSection>  
             </div>
 
