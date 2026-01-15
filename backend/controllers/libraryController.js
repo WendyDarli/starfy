@@ -1,6 +1,7 @@
 const axios = require('axios');
 
-async function playlists_get(req, res){
+//fetches user playlists for sidebar
+async function library_get(req, res){
     try {
         const accessToken = req.user.tokens.access_token;
         const headers = { Authorization: `Bearer ${accessToken}` };
@@ -12,15 +13,15 @@ async function playlists_get(req, res){
         ]);
 
         const response = {
-        episodes: {
-            href: episodesRes.data.href,
-            total: episodesRes.data.total,
+            episodes: {
+                href: episodesRes.data.href,
+                total: episodesRes.data.total,
         },
-        tracks: {
-            href: tracksRes.data.href,
-            total: tracksRes.data.total,
+            tracks: {
+                href: tracksRes.data.href,
+                total: tracksRes.data.total,
         },
-        playlists: playlistsRes.data.items,
+            playlists: playlistsRes.data.items,
         };
 
         res.json(response);
@@ -33,6 +34,16 @@ async function playlists_get(req, res){
     }
 }
 
+//user library related fetches
+async function tracks_get(){
+
+};
+
+async function episodes_get(){
+
+};
+
+//move this logic into respective handlers
 async function songs_post(req, res){
     try{ 
         const id = req.body.id;
@@ -74,14 +85,25 @@ async function songs_post(req, res){
                     showDateAdded,
                 },
                 tracks: {
-                    items,
+                    items
                 },
             };
         };
 
-        switch(type) {
+        switch(id) {
             case 'tracks': {
                 const tracksRes = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', { headers });
+                const items = tracksRes.data.items.map(i => ({
+                    ...i.track,
+                    artists: i.track.artists.map(a => ({
+                        name: a.name,
+                        id:a.id
+                    })),
+                    added_at: i.added_at,
+                    albumOrShow: i.track.album, 
+                    imageUrl: i.track.album.images[0].url 
+                }));
+                            
                 const response = buildPlaylistResponse({
                     title: 'Playlist',
                     name: 'Liked Songs',
@@ -92,7 +114,7 @@ async function songs_post(req, res){
                     isArtistPage: false,
                     showAlbum: true,
                     showDateAdded: true,
-                    items: tracksRes.data.items,
+                    items: items
                 });
 
                 return res.json(response);
@@ -110,12 +132,18 @@ async function songs_post(req, res){
                     isArtistPage: false,
                     showAlbum: false,
                     showDateAdded: true,
-                    items: episodesRes.data.items,
+                    items: episodesRes.data.items.map(i => ({
+                        ...i.episode,
+                        added_at: i.added_at,
+                        
+                    })),
                 });
                 return res.json(response);
             }
+        }
 
-            case 'playlist':
+        switch(type) {
+            case 'playlist': {
                 const playlistData = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, { headers });
                 const playlistTracks = await axios.get(`https://api.spotify.com/v1/playlists/${id}/tracks?limit=50`, { headers });
                 const response = buildPlaylistResponse({
@@ -131,6 +159,7 @@ async function songs_post(req, res){
                     items: playlistTracks.data.items,
                 });
                 return res.json(response);
+            }
 
             case 'album': {
                 const albumData = await axios.get(`https://api.spotify.com/v1/albums/${id}`, { headers });
@@ -148,8 +177,8 @@ async function songs_post(req, res){
                     items: albumTracks.data.items,
                 });
                 return res.json(response);
-            }    
-            
+            }
+
             case 'artist': {
                 const artistData = await axios.get(`https://api.spotify.com/v1/artists/${id}`, { headers });
                 const artistTopTracks = await axios.get(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`, { headers });
@@ -166,7 +195,8 @@ async function songs_post(req, res){
                     items: artistTopTracks.data.tracks,
                 });
                 return res.json(response);
-            }                
+            }    
+
             case 'song': {
                 const songData = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, { headers });
                 const response = buildPlaylistResponse({
@@ -191,6 +221,7 @@ async function songs_post(req, res){
             default:
                 return res.status(400).json({ message: 'Invalid type parameter.' });
         }
+
         
     } catch(error){
         return res
@@ -201,4 +232,4 @@ async function songs_post(req, res){
     }
 }
 
-module.exports = { playlists_get, songs_post };
+module.exports = { library_get, tracks_get, episodes_get, songs_post };
