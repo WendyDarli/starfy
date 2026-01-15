@@ -9,6 +9,7 @@ const albumsRouter = require('./albumsRouter');
 const songsRouter = require('./songsRouter');
 
 router.use('/library', libraryRouter);
+router.use('/collection', libraryRouter)
 router.use('/playlist', playlistsRouter);
 router.use('/album', albumsRouter);
 router.use('/artist', artistsRouter);

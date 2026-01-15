@@ -21,11 +21,9 @@ function CollectionDisplay() {
 
     useEffect(() => {
         setPlaylistInfo({});
-        fetch(`http://127.0.0.1:3000/api/${type}/${id}`,{
-            method: 'POST',
+        fetch(`http://127.0.0.1:3000/${type}/${id}`,{
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, type }),
         })
         .then(res => {
             if(!res.ok) throw new Error('Error fetching user playlists.');

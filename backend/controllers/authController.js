@@ -1,6 +1,6 @@
 const axios = require('axios');
 require('dotenv').config();
-const { fetchSpotifyProfile } = require('../fetchSpotifyProfile')
+const { fetchSpotifyProfile } = require('../utils/fetchSpotifyProfile')
 const redisClient = require('../redis');
 
 const client_id = process.env.CLIENT_ID;
