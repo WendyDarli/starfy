@@ -4,7 +4,7 @@ import ColorThief from 'colorthief';
 
 
 function PlaylistHeader( { header, type, id } ) {
-    
+
     const coverSrc =
         id === 'tracks'
             ? '/src/assets/liked_songs_cover.png'
@@ -13,19 +13,27 @@ function PlaylistHeader( { header, type, id } ) {
             : header?.images?.[0]?.url || '/src/assets/playlists_default_cover.png';
 
     const isArtist = type === 'artist';
+    const isShow = type === 'show';
     let followersText = '';
     let label = '';
 
-    if (isArtist && header?.followers != null) {
-        followersText = ` • ${formatFollowers(header.followers)}`;
-        label = 'Followers';
-    } else if (!isArtist && header?.total != null) {
-        followersText = ` • ${header.total}`;
-        label = 'Songs';
-    } else {
-        followersText = '';
-        label = '';
-    };
+    switch(true) {
+        case isArtist && header?.followers != null:
+            followersText = ` • ${formatFollowers(header.followers)}`;
+            label = 'Followers';
+            break;
+        case isShow && header?.total != null:
+            followersText = ` • ${header.total}`;
+            label = 'Episodes';
+            break;
+        case !isArtist && header?.total != null:
+            followersText = ` • ${header.total}`;
+            label = 'Songs';
+            break;
+        default:
+            followersText = '';
+            label = '';
+    }
     
     function formatFollowers(num) {
         if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + 'M';

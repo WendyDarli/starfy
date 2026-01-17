@@ -19,7 +19,9 @@ const router = createBrowserRouter([
       { path: 'collection/:id', element: <CollectionDisplay key='collection'/> },
       { path: 'artist/:id', element: <CollectionDisplay key='artist'/> },
       { path: 'album/:id', element: <CollectionDisplay key='album'/> },
+      { path: 'show/:id', element: <CollectionDisplay key='show'/> },
       { path: 'song/:id', element: <CollectionDisplay key='song'/> },
+      { path: 'episode/:id', element: <CollectionDisplay key='episode'/> },
     ],
   },
 ]);

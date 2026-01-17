@@ -16,8 +16,9 @@ function CollectionDisplay() {
         useMatch('/playlist/:id')?.pathnameBase && 'playlist' ||
         useMatch('/artist/:id')?.pathnameBase && 'artist' ||
         useMatch('/album/:id')?.pathnameBase && 'album' ||
-        useMatch('/song/:id')?.pathnameBase && 'song';
-        console.log( 'sending to backend: ', type, id );
+        useMatch('/song/:id')?.pathnameBase && 'song' ||
+        useMatch('episode/:id')?.pathnameBase && 'episode' ||
+        useMatch('show/:id')?.pathnameBase && 'show';
 
     useEffect(() => {
         setPlaylistInfo({});

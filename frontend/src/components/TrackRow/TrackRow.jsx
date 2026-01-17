@@ -2,6 +2,8 @@ import './TrackRow.css';
 import { Link } from 'react-router';
 
 function TrackRow({ item, index, showAlbum }) {
+  const isEpisode = item.type === 'episode';
+
     function formatDate(dateString){
         if(!dateString) return '';
         const date = new Date(dateString);
@@ -24,12 +26,12 @@ function TrackRow({ item, index, showAlbum }) {
         <img src={item.imageUrl} className="songImg" alt="" />
 
         <div>
-          <Link to={`/song/${item.id}`} className="whiteLink"> {item.name} </Link>
+          <Link to={isEpisode ? `/episode/${item.id}` : `/song/${item.id}`} className="whiteLink"> {item.name} </Link>
 
           <span className="songArtists">
             {item.artists.map((a, i) => (
               <span key={a.id}>
-                <Link to={`/artist/${a.id}`}>
+                <Link to={isEpisode ? `/show/${a.id}` : `/song/${a.id}`}>
                   {a.name}
                   {i < item.artists.length - 1 && ', '}
                 </Link>
