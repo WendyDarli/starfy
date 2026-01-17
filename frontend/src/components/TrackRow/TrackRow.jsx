@@ -31,7 +31,7 @@ function TrackRow({ item, index, showAlbum }) {
           <span className="songArtists">
             {item.artists.map((a, i) => (
               <span key={a.id}>
-                <Link to={isEpisode ? `/show/${a.id}` : `/song/${a.id}`}>
+                <Link to={isEpisode ? `/show/${a.id}` : `/artist/${a.id}`}>
                   {a.name}
                   {i < item.artists.length - 1 && ', '}
                 </Link>
