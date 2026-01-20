@@ -9,14 +9,16 @@ const albumsRouter = require('./albumsRouter');
 const showsRouter = require('./showsRouter');
 const songsRouter = require('./songsRouter');
 const episodesRouter = require('./episodesRouter');
+const searchRouter = require('./searchRouter');
 
 router.use('/library', libraryRouter);
-router.use('/collection', libraryRouter)
+router.use('/collection', libraryRouter);
 router.use('/playlist', playlistsRouter);
 router.use('/album', albumsRouter);
 router.use('/show', showsRouter );
 router.use('/artist', artistsRouter);
 router.use('/song', songsRouter);
 router.use('/episode', episodesRouter);
+router.use('/search', searchRouter);
 
 module.exports = router;

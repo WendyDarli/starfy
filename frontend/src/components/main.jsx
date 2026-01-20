@@ -5,6 +5,7 @@ import App from './App.jsx';
 import Home from './Home/Home.jsx';
 import UserProfile from './UserProfile/UserProfile.jsx';
 import CollectionDisplay from './CollectionDisplay/CollectionDisplay.jsx';
+import SearchResults from './SearchResults/SearchResults.jsx';
 
 
 const router = createBrowserRouter([
@@ -14,7 +15,6 @@ const router = createBrowserRouter([
     children: [
       { path: 'home', element: <Home /> },
       { path: 'profile', element: <UserProfile /> },
-      //add index for collection and playlist
       { path: 'playlist/:id', element: <CollectionDisplay key='playlist'/> },
       { path: 'collection/:id', element: <CollectionDisplay key='collection'/> },
       { path: 'artist/:id', element: <CollectionDisplay key='artist'/> },
@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       { path: 'show/:id', element: <CollectionDisplay key='show'/> },
       { path: 'song/:id', element: <CollectionDisplay key='song'/> },
       { path: 'episode/:id', element: <CollectionDisplay key='episode'/> },
+      { path: 'search/:query', element: <SearchResults key='search'/> },
     ],
   },
 ]);
