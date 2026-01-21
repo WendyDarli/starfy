@@ -1,8 +1,10 @@
 import './TracksHeader.css';
 import clockIcon from '../../assets/grayIcons/clock.svg';
 import getColumns from '../../utils/uiColumns';
+import useUrlParams from '../../hooks/useUrlParams.js'
 
-function TracksHeader({ type, id }) {
+function TracksHeader() {
+    const { id, type } = useUrlParams();
     const columns = getColumns(id, type);
 
     return (

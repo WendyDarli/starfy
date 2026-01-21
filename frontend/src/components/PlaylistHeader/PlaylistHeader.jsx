@@ -1,10 +1,10 @@
 import './PlaylistHeader.css';
 import { useEffect, useRef, useState } from 'react';
 import ColorThief from 'colorthief';
+import useUrlParams from '../../hooks/useUrlParams.js'
 
-
-function PlaylistHeader( { header, type, id } ) {
-
+function PlaylistHeader( { header } ) {
+    const { id, type } = useUrlParams();
     const coverSrc =
         id === 'tracks'
             ? '/src/assets/liked_songs_cover.png'

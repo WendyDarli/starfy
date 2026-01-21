@@ -1,6 +1,6 @@
 // this should receive a state from bttn with playlist id
 import { useEffect, useState } from 'react';
-import { useMatch, useParams } from 'react-router';
+import useUrlParams from '../../hooks/useUrlParams.js'
 import './CollectionDisplay.css';
 
 import TrackList from '../TrackList/TrackList.jsx';
@@ -9,21 +9,8 @@ import PlaylistHeader from '../PlaylistHeader/PlaylistHeader.jsx';
 
 function CollectionDisplay() {
     const [playlistInfo, setPlaylistInfo] = useState({});
-
-    const { id } = useParams();
-
-    //logic task, use an array function to make this more clear
-
-    const type = 
-        useMatch('/collection/:id')?.pathnameBase && 'collection' ||
-        useMatch('/playlist/:id')?.pathnameBase && 'playlist' ||
-        useMatch('/artist/:id')?.pathnameBase && 'artist' ||
-        useMatch('/album/:id')?.pathnameBase && 'album' ||
-        useMatch('/song/:id')?.pathnameBase && 'song' ||
-        useMatch('episode/:id')?.pathnameBase && 'episode' ||
-        useMatch('show/:id')?.pathnameBase && 'show';
-
-
+    const { id, type } = useUrlParams();
+    
     useEffect(() => {
         setPlaylistInfo({});
         fetch(`http://127.0.0.1:3000/${type}/${id}`,{
@@ -42,12 +29,12 @@ function CollectionDisplay() {
     
     return(
         <div>
-            <PlaylistHeader header={playlistInfo.header} type={type} id={id} />
+            <PlaylistHeader header={playlistInfo.header} />
             <div className='songsContainer'>
                 <button className='circularBttn playPause playPausePlaylist'></button>
-                <TracksHeader type={type} id={id}/>
+                <TracksHeader/>
                 <hr></hr>
-                <TrackList type={type} id={id} songs={playlistInfo.tracks}/>
+                <TrackList songs={playlistInfo.tracks}/>
             </div>
         </div>
     )

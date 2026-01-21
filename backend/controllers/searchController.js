@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { formatSpotifyData } = require('../utils/formatSpotifyData');
 //import { formatSpotifyData } from '../utils/formatSpotifyData';
 
 async function search_get(req, res) {
@@ -18,8 +19,21 @@ async function search_get(req, res) {
         });
 
         //format data
+        const items = searchResultsRes.data.tracks.items.map(track => ({
+            ...track,
+            artists: track.artists.map(a => ({
+                name: a.name,
+                id:a.id
+            })),
+            albumOrShow: track.album, 
+            imageUrl: track.album.images[0].url ?? null
+        }));
+
+        const response = formatSpotifyData({
+            items: items
+        });
+        res.json(response);
         
-        res.json(searchResultsRes.data.tracks);
     }catch(err) {
         return res
             .status(err.response?.status || 500)

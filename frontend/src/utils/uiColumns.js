@@ -9,6 +9,7 @@ const UI_COLUMNS_BY_TYPE = {
   collection_episodes: ['date_added'],
   tracks: ['album', 'date_added'],
   episodes: ['date_added'],
+  search: ['album']
 }
 
 const getColumns = (id, type) => {

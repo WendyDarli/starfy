@@ -1,11 +1,13 @@
 import './TrackRow.css';
 import { Link } from 'react-router';
 import getColumns from '../../utils/uiColumns';
+import useUrlParams from '../../hooks/useUrlParams.js'
 
-function TrackRow({ item, index, id, type }) {
+function TrackRow({ item, index }) {
   const isEpisode = item.type === 'episode';
+  const { id, type } = useUrlParams();
   const columns = getColumns(id, type);
-
+  
     function formatDate(dateString){
         if(!dateString) return '';
         const date = new Date(dateString);

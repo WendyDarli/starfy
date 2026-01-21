@@ -4,15 +4,11 @@ import './SearchResults.css';
 
 //components
 import TrackList from '../TrackList/TrackList';
+import TracksHeader from '../TracksHeader/TracksHeader.jsx';
 
 function SearchResults(){
     const [searchResults, setSearchResults] = useState([]);
     const { query } = useParams();
-
-    //temporary
-    const header = {
-        showAlbum: false,
-    } 
 
     useEffect(() => {
         fetch(`http://127.0.0.1:3000/search/${query}`, {
@@ -31,13 +27,16 @@ function SearchResults(){
 
     console.log(searchResults);
     return(
-        <div>
+        <div className='searchContainer'>
             <h1>Search Results</h1>
-            <TrackList songs={searchResults} header={header}/>
+            <TracksHeader/>
+            <hr></hr>
+            <TrackList songs={searchResults.tracks}/>
+
         </div>
 
 
-        //track row
+        
     )
 }
 

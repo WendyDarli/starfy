@@ -1,7 +1,7 @@
 .playlistHeader{
     display: flex;
     align-items: center;
-    padding: 30px 20px;
+    padding: var(--main-section-padding);
     padding-bottom: 300px;
     border-radius: 10px;
 }
