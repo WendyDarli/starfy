@@ -24,9 +24,6 @@ async function song_get(req, res){
             owner: songData.data.artists?.[0]?.name,
             total: null,
             followers: null,
-            isArtistPage: false,
-            showAlbum: false,
-            showDateAdded: false,
             items: items,
         });
         return res.json(response);

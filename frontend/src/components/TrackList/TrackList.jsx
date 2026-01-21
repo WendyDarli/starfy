@@ -1,7 +1,7 @@
 import './TrackList.css';
 import TrackRow from '../TrackRow/TrackRow.jsx';
 
-function TrackList({ songs, header }) {    
+function TrackList({ songs, type, id }) {    
     return (
         <div>
             { songs?.items?.length <= 0 && <p>This playlist is empty.</p> }
@@ -10,7 +10,8 @@ function TrackList({ songs, header }) {
                     key={item.track?.id ?? index}
                     item={item}
                     index={index}
-                    showAlbum={header?.showAlbum}
+                    type={type} 
+                    id={id}
                 />
             ))}
         </div>

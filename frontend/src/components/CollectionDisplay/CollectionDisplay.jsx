@@ -11,6 +11,9 @@ function CollectionDisplay() {
     const [playlistInfo, setPlaylistInfo] = useState({});
 
     const { id } = useParams();
+
+    //logic task, use an array function to make this more clear
+
     const type = 
         useMatch('/collection/:id')?.pathnameBase && 'collection' ||
         useMatch('/playlist/:id')?.pathnameBase && 'playlist' ||
@@ -19,6 +22,7 @@ function CollectionDisplay() {
         useMatch('/song/:id')?.pathnameBase && 'song' ||
         useMatch('episode/:id')?.pathnameBase && 'episode' ||
         useMatch('show/:id')?.pathnameBase && 'show';
+
 
     useEffect(() => {
         setPlaylistInfo({});
@@ -41,9 +45,9 @@ function CollectionDisplay() {
             <PlaylistHeader header={playlistInfo.header} type={type} id={id} />
             <div className='songsContainer'>
                 <button className='circularBttn playPause playPausePlaylist'></button>
-                <TracksHeader tracksHeader={playlistInfo.tracksHeader} type={type}/>
+                <TracksHeader type={type} id={id}/>
                 <hr></hr>
-                <TrackList songs={playlistInfo.tracks} header={playlistInfo.tracksHeader}/>
+                <TrackList type={type} id={id} songs={playlistInfo.tracks}/>
             </div>
         </div>
     )

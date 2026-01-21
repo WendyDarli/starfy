@@ -28,9 +28,6 @@ async function playlist_get(req, res){
             owner: playlistData.data.owner?.display_name,
             total: playlistTracks.data.total,
             followers: null,
-            isArtistPage: false,
-            showAlbum: true,
-            showDateAdded: true,
             items: items,
         });
         return res.json(response);

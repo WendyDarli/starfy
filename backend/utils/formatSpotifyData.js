@@ -7,12 +7,6 @@ function formatSpotifyData({
 
     //specific to artists
     followers,
-
-    //ui options
-    isArtistPage = false, 
-    showAlbum = true, 
-    showDateAdded = true, 
-
     items,
 }) {
     return {
@@ -23,11 +17,6 @@ function formatSpotifyData({
             owner,
             total,
             followers,
-        },
-        tracksHeader: {
-            isArtistPage,
-            showAlbum,
-            showDateAdded,
         },
         tracks: {
             items

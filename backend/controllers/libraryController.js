@@ -61,9 +61,6 @@ async function tracks_get(req, res){
             owner: me.data.display_name,
             total: tracksRes.data.total,
             followers: null,
-            isArtistPage: false,
-            showAlbum: true,
-            showDateAdded: true,
             items: items
         });
         return res.json(response);

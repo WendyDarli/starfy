@@ -28,9 +28,6 @@ async function album_get(req, res){
             owner: albumData.data.artists?.[0]?.name,
             total: albumTracks.data.total,
             followers: null,
-            isArtistPage: false,
-            showAlbum: false,
-            showDateAdded: false,
             items: items
         });
         return res.json(response);

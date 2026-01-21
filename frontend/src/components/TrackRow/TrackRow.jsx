@@ -1,8 +1,10 @@
 import './TrackRow.css';
 import { Link } from 'react-router';
+import getColumns from '../../utils/uiColumns';
 
-function TrackRow({ item, index, showAlbum }) {
+function TrackRow({ item, index, id, type }) {
   const isEpisode = item.type === 'episode';
+  const columns = getColumns(id, type);
 
     function formatDate(dateString){
         if(!dateString) return '';
@@ -41,8 +43,9 @@ function TrackRow({ item, index, showAlbum }) {
         </div>
       </div>
 
-      {showAlbum 
-      ? ( <Link to={`/album/${item.albumOrShow.id}`}> {item.albumOrShow.name} </Link> ) : <p></p>}
+      {columns.includes('album')
+      ? ( <Link to={`/album/${item.albumOrShow.id}`}> {item.albumOrShow.name} </Link> ) 
+      : <p></p>}
 
       <p>{formatDate(item.added_at)}</p>
       <p>{formatDuration(item.duration_ms)}</p>

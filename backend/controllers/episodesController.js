@@ -24,9 +24,6 @@ async function episode_get(req, res){
             owner: episodeData.data.show.publisher,
             total: null,
             followers: null,
-            isArtistPage: false,
-            showAlbum: false,
-            showDateAdded: false,
             items: items,
         });
         return res.json(response);

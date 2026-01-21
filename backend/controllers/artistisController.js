@@ -28,9 +28,6 @@ async function artist_get(req, res){
             owner: artistData.data.name,
             total: null,
             followers: artistData.data.followers.total,
-            isArtistPage: true,
-            showAlbum: false,
-            showDateAdded: false,
             items: items,
         });
         return res.json(response);

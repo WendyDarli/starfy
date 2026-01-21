@@ -25,9 +25,6 @@ async function show_get(req, res){
             owner: showData.data.publisher,
             total: showEpisodes.data.total || items.length,
             followers: null,
-            isArtistPage: false,
-            showAlbum: false,
-            showDateAdded: false,
             items: items,
         });
         return res.json(response);
