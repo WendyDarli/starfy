@@ -1,10 +1,10 @@
 const axios = require('axios');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
-//import { formatSpotifyData } from '../utils/formatSpotifyData';
 
 async function search_get(req, res) {
     try{
         const query = req.params.query;
+        const page = parseInt(req.query._page) || 0;
         const accessToken = req.user.tokens.access_token;
         const headers = { Authorization: `Bearer ${accessToken}` };
 
@@ -14,7 +14,7 @@ async function search_get(req, res) {
                 q: query, 
                 type: 'track',
                 limit: 20,
-                offset: 0
+                offset: page * 20
             }
         });
 

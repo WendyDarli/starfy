@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { usePagination } from '../../hooks/usePagination.js';
 import { useParams } from 'react-router';
 import './SearchResults.css';
 
@@ -7,36 +8,33 @@ import TrackList from '../TrackList/TrackList';
 import TracksHeader from '../TracksHeader/TracksHeader.jsx';
 
 function SearchResults(){
-    const [searchResults, setSearchResults] = useState([]);
+    const {data, paginationTriggerRef, loading, loadInitialResults } = usePagination(fetchSearchResults); 
     const { query } = useParams();
 
-    useEffect(() => {
-        fetch(`http://127.0.0.1:3000/search/${query}`, {
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(res => {
-            if(!res.ok) throw new Error('Error searching songs.');
-            return res.json();
-        })
-        .then(data => {
-            setSearchResults(data);
-        })
-        .catch(err => { console.log(err); })
-    },[query]);
+    //fetches initial data
+    async function fetchSearchResults(page){
+        const res = await fetch(`http://127.0.0.1:3000/search/${query}?_page=${page}`, {
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!res.ok) throw new Error('Error searching songs.');
+                 const data = await res.json();
+        return data;     
+    };
 
-    console.log(searchResults);
+    useEffect(() => {
+        loadInitialResults();
+    }, [query]);
+
     return(
         <div className='searchContainer'>
             <h1>Search Results</h1>
+            {loading && <p>Loading...</p>}
             <TracksHeader/>
             <hr></hr>
-            <TrackList songs={searchResults.tracks}/>
-
-        </div>
-
-
-        
+            <TrackList songs={data.tracks}/>
+            <div ref={paginationTriggerRef }/>
+        </div>        
     )
 }
 
