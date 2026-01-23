@@ -14,7 +14,7 @@ function GlobalHeader ({ user }){
         <div className='headerContainer'>
             <img id='starfyIcon' src={starfyIcon} alt='starfy Icon'></img>
             <div id='middleHeader'>
-                <Link className='circularBttn homeBttn'  to='/home'></Link>
+                <Link className='circularBttn homeBttn'  to='/'></Link>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
