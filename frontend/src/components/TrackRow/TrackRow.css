@@ -31,3 +31,12 @@
   display: inline;
   margin-right: 4px;
 }
+
+.grayLink{
+    color: var(--gray-text);
+    cursor: pointer;
+}
+
+.grayLink:hover{
+    text-decoration: underline;
+}

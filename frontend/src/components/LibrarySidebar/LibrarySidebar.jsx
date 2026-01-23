@@ -28,7 +28,7 @@ function LibrarySidebar({ library }) {
                     <Link className={`playlistItem ${id === 'episodes' ? 'active' : ''}`} to={'/collection/episodes'} >
                         <img className='playlistImg' src={episodesCover} alt='Episodes'/>
                         <span className='playlistInfo'>
-                            <p className='playlistName active'>Your Episodes</p>
+                            <p className={`playlistName ${id === 'episodes' ? 'active' : ''}`}>Your Episodes</p>
                             <p className='playlistAuthor'>Playlist</p>
                         </span>
                     </Link>
@@ -38,7 +38,7 @@ function LibrarySidebar({ library }) {
                 <Link className={`playlistItem ${id === 'tracks' ? 'active' : ''}`} to={`collection/tracks`} >
                     <img className='playlistImg' src={likedSongsCover} alt='Liked Songs'/>
                     <span className='playlistInfo'>
-                        <p className='playlistName'>Liked Songs</p>
+                        <p className={`playlistName ${id === 'tracks' ? 'active' : ''}`}>Liked Songs</p>
                             <p className='playlistAuthor'>Playlist • {library.tracks.total} songs</p>   
                     </span>    
                 </Link>
@@ -48,7 +48,7 @@ function LibrarySidebar({ library }) {
                     <Link className={`playlistItem ${id === playlist.id ? 'active' : ''}`} to={`playlist/${playlist.id}`} key={playlist.id} >
                         <img className='playlistImg' src={playlist.images?.[0]?.url || defaultCover} alt={playlist.name}/>
                         <span className='playlistInfo'>
-                            <p className='playlistName'>{playlist.name}</p>
+                            <p className={`playlistName ${id === playlist.id ? 'active' : ''}`}>{playlist.name}</p>
                             <p className='playlistAuthor'>Playlist • {playlist.owner.display_name}</p>   
                         </span>
                         

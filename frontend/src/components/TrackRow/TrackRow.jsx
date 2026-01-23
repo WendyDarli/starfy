@@ -35,7 +35,7 @@ function TrackRow({ item, index }) {
           <span className="songArtists">
             {item.artists.map((a, i) => (
               <span key={a.id}>
-                <Link to={isEpisode ? `/show/${a.id}` : `/artist/${a.id}`}>
+                <Link to={isEpisode ? `/show/${a.id}` : `/artist/${a.id}`} className="grayLink">
                   {a.name}
                   {i < item.artists.length - 1 && ', '}
                 </Link>
@@ -46,7 +46,7 @@ function TrackRow({ item, index }) {
       </div>
 
       {columns.includes('album')
-      ? ( <Link to={`/album/${item.albumOrShow.id}`}> {item.albumOrShow.name} </Link> ) 
+      ? ( <Link to={`/album/${item.albumOrShow?.id}`} className="grayLink"> {item.albumOrShow?.name} </Link> ) 
       : <p></p>}
 
       <p>{formatDate(item.added_at)}</p>
