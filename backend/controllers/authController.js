@@ -49,7 +49,7 @@ async function login_callback_get(req, res){
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
-        const { access_token, refresh_token, expires_in } = tokensResponse.data;
+        const { access_token, refresh_token } = tokensResponse.data;
 
         const profileResponse = await fetchSpotifyProfile(access_token);
         const userId = profileResponse.id;
@@ -57,10 +57,8 @@ async function login_callback_get(req, res){
         
 
         //store tokens in redis
-        await redisClient.set(
-            `tokens:user:${userId}`,
-            JSON.stringify({access_token, refresh_token, expires_in})
-        );
+        await redisClient.set(`tokens:user:${userId}:access_token`, access_token, { EX: 3600 });
+        await redisClient.set(`tokens:user:${userId}:refresh_token`, refresh_token);
 
         res.redirect('http://127.0.0.1:5173');
 
