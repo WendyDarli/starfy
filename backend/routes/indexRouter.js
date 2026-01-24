@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+//controllers
+const authController = require('../controllers/authController');
+const authGuard = require('../controllers/authGuard');
+
 //routers
 const libraryRouter = require('./libraryRouter');
 const playlistsRouter = require('./playlistsRouter');
@@ -11,6 +15,10 @@ const songsRouter = require('./songsRouter');
 const episodesRouter = require('./episodesRouter');
 const searchRouter = require('./searchRouter');
 
+router.get('/login', authController.login_get);
+router.get('/callback', authController.login_callback_get);
+router.use(authGuard);
+router.get('/isAuthenticated', authController.isAuthenticated_get);
 router.use('/library', libraryRouter);
 router.use('/collection', libraryRouter);
 router.use('/playlist', playlistsRouter);

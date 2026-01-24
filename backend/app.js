@@ -1,9 +1,6 @@
 const express = require('express');
-const authRouter = require('./routes/authRouter');
-const libraryRouter = require('./routes/libraryRouter');
 const indexRouter = require('./routes/indexRouter');
 const cors = require('cors');
-const attachUser = require('./attachUser');
 require('dotenv').config();
 
 //redis
@@ -23,7 +20,7 @@ app.use(cors({
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
-    secret: process.env.REDIS_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -34,8 +31,6 @@ app.use(
   })
 );
 
-app.use(attachUser);
-app.use('/', authRouter);
 app.use ('/', indexRouter),
 
 app.use((err, req, res, next) => {
