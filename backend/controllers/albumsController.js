@@ -1,14 +1,12 @@
-const axios = require('axios');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const spotifyApi = require('../config/axiosConfig');
 
 async function album_get(req, res){
     try{
         const id = req.params.id;
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-        
-        const albumData = await axios.get(`https://api.spotify.com/v1/albums/${id}`, { headers });
-        const albumTracks = await axios.get(`https://api.spotify.com/v1/albums/${id}/tracks?limit=50`, { headers });
+                
+        const albumData = await spotifyApi.get(`/albums/${id}`);
+        const albumTracks = await spotifyApi.get(`/albums/${id}/tracks?limit=50`);
         
         const items = albumTracks.data.items.map(i => ({
             ...i,
@@ -36,7 +34,7 @@ async function album_get(req, res){
         return res
         .status(err.response?.status || 500)
         .json({
-            message: err.response?.data?.error || 'Error fetching user playlist songs.',
+            message: err.response?.data?.error || err.message || 'Error fetching albums.',
         });
     };
 };

@@ -2,6 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 const { fetchSpotifyProfile } = require('../utils/fetchSpotifyProfile')
 const redisClient = require('../redis');
+const spotifyApi = require('../config/axiosConfig')
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
@@ -75,18 +76,13 @@ async function login_callback_get(req, res){
 //check if user is authenticated by fetching spotify profile
 async function isAuthenticated_get(req, res){
     try{
-        //TODO: check expiry before use
-        //if expired use refresh token to get a new access token
-        const accessToken = req.user.tokens.access_token;
-
-        //fetch user profile using access token
-        const profile = await fetchSpotifyProfile(accessToken);
-        res.json(profile);
+        const profile = await spotifyApi.get('/me');
+        res.json(profile.data);
 
     } catch(err){
         res.status(err.response?.status || 500).json({ error: 'User not authenticated.' });
-    }
-    
+        next();
+    }  
 }
 
 module.exports =  { login_get, login_callback_get, isAuthenticated_get };

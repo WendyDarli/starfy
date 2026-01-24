@@ -1,15 +1,12 @@
-const axios = require('axios');
+const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
 async function search_get(req, res) {
     try{
         const query = req.params.query;
         const page = parseInt(req.query._page) || 0;
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-
-        const searchResultsRes = await axios.get('https://api.spotify.com/v1/search', {
-            headers,
+        
+        const searchResultsRes = await spotifyApi.get('/search', {
             params: {
                 q: query, 
                 type: 'track',

@@ -1,14 +1,11 @@
-const axios = require('axios');
+const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
 async function artist_get(req, res){
     try{
-        const id = req.params.id;
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-        
-        const artistData = await axios.get(`https://api.spotify.com/v1/artists/${id}`, { headers });
-        const artistTopTracks = await axios.get(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`, { headers });
+        const id = req.params.id;        
+        const artistData = await spotifyApi.get(`/artists/${id}`);
+        const artistTopTracks = await spotifyApi.get(`/artists/${id}/top-tracks?market=US`);
         
         const items = artistTopTracks.data.tracks.map(i => ({
             ...i,

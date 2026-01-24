@@ -1,16 +1,13 @@
-const axios = require('axios');
+const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
 //fetches user playlists for sidebar
 async function library_get(req, res){
     try {
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-
         const [playlistsRes, tracksRes, episodesRes] = await Promise.all([
-        axios.get('https://api.spotify.com/v1/me/playlists', { headers }),
-        axios.get('https://api.spotify.com/v1/me/tracks', { headers }),
-        axios.get('https://api.spotify.com/v1/me/episodes', { headers }),
+            spotifyApi.get('/me/playlists'),
+            spotifyApi.get('/me/tracks'),
+            spotifyApi.get('/me/episodes'),
         ]);
 
         const response = {
@@ -38,11 +35,9 @@ async function library_get(req, res){
 //user library related fetches
 async function tracks_get(req, res){
     try{
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-        const me = await axios.get('https://api.spotify.com/v1/me', { headers });
+        const me = await spotifyApi.get('/me');
 
-        const tracksRes = await axios.get('https://api.spotify.com/v1/me/tracks?limit=50', { headers });
+        const tracksRes = await spotifyApi.get('/me/tracks?limit=50');
         const items = tracksRes.data.items.map(i => ({
             ...i.track,
             artists: i.track.artists.map(a => ({
@@ -77,11 +72,9 @@ async function tracks_get(req, res){
 
 async function episodes_get(req, res){
     try{
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-        const me = await axios.get('https://api.spotify.com/v1/me', { headers });
+        const me = await spotifyApi.get('/me');
         
-        const episodesRes = await axios.get('https://api.spotify.com/v1/me/episodes?limit=50', { headers });
+        const episodesRes = await spotifyApi.get('/me/episodes?limit=50');
         const items = episodesRes.data.items.map(i => ({
             ...i.episode,
             artists: [i.episode.show].map(a => ({

@@ -1,13 +1,10 @@
-const axios = require('axios');
+const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
 async function song_get(req, res){
     try{
         const id = req.params.id;
-        const accessToken = req.user.tokens.access_token;
-        const headers = { Authorization: `Bearer ${accessToken}` };
-        
-        const songData = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, { headers });
+        const songData = await spotifyApi.get(`/tracks/${id}`);
         
         const items = [{
             ...songData.data,
