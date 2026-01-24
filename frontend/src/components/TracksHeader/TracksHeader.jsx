@@ -9,13 +9,13 @@ function TracksHeader() {
 
     return (
         <div className="songsHeader">   
-            {columns.includes('popular') 
+            {columns?.includes('popular') 
                 ? <p>Popular</p>
                 : <>
                     <p>#</p>
                     <p>title</p>
-                    {columns.includes('album') ? <p>Album</p> : <p></p>}
-                    {columns.includes('date_added') ? <p>Date added</p> : <p></p>}
+                    {columns?.includes('album') ? <p>Album</p> : <p></p>}
+                    {columns?.includes('date_added') ? <p>Date added</p> : <p></p>}
                     <img className="clockIcon" src={clockIcon} />
                 </>
             }

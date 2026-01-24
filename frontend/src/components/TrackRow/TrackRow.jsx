@@ -45,7 +45,7 @@ function TrackRow({ item, index }) {
         </div>
       </div>
 
-      {columns.includes('album')
+      {columns?.includes('album')
       ? ( <Link to={`/album/${item.albumOrShow?.id}`} className="grayLink"> {item.albumOrShow?.name} </Link> ) 
       : <p></p>}
 
