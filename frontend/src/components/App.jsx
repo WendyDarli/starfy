@@ -7,6 +7,7 @@ import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
 import { useState } from 'react';
+import { useState } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js';
 import { Outlet } from 'react-router';
