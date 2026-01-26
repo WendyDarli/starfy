@@ -19,7 +19,6 @@
 .songCover{
     width: 55px;
     height: 55px;
-
     border-radius: 5px;
 }
 
@@ -31,6 +30,7 @@
     margin: 0px;
     color: var(--gray-text);
     font-size: 14px;
+    display: inline;
 }
 
 .likeBttn{
