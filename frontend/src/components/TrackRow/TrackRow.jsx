@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import getColumns from '../../utils/uiColumns';
 import useUrlParams from '../../hooks/useUrlParams.js'
 import { useOutletContext } from 'react-router';
+import formatDuration from '../../utils/formatDuration.js'
 import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
 import pauseIcon from '../../assets/whiteIcons/pause.svg';
@@ -13,13 +14,6 @@ function TrackRow({ item, index }) {
   const { currentSong, setCurrentSong, isPlaying, setIsPlaying } = useOutletContext();
   const { id, type } = useUrlParams();
   const columns = getColumns(id, type);
-  
-    function formatDate(dateString){
-        if(!dateString) return '';
-        const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'short', day: 'numeric' };
-        return date.toLocaleDateString(undefined, options);
-    };
   const [ isHovered, setIsHovered ] = useState(false);
   let isThisTheActiveSong = currentSong?.id === item?.id;
 

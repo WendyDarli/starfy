@@ -1,5 +1,8 @@
 import './PlayerFooter.css';
 import { useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+import defaultSongCover from '../../assets/playlists_default_cover.png';
+import formatDuration from '../../utils/formatDuration';
 
 function PlayerFooter() {
   //consider moving state to global context if needed elsewhere
@@ -59,7 +62,7 @@ function PlayerFooter() {
         <div id='progressContainer'>
           <p>0:00</p>
           <input aria-label='song progress' type='range' className='progress' min={0} max={100} ></input>
-          <p>3:45</p>
+          <p>{formatDuration(currentSong?.duration_ms)}</p>
         </div>
 
         
