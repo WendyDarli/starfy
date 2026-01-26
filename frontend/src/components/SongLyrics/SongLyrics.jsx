@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router';
 import './SongLyrics.css';
 
