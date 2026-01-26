@@ -57,6 +57,11 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       </div>
 
       <div id='extraControls'>
+        <button aria-label='open song lyrics' className='lyrics noBgBttn'
+          onClick={() => {
+          url.pathname === '/lyrics' ? navigate(-1) : navigate('/lyrics');
+        }}
+        ></button>
         <SongVolumeControls audio={audioRef.current}/>
       </div>
 
