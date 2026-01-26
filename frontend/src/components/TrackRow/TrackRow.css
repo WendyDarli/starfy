@@ -40,3 +40,19 @@
 .grayLink:hover{
     text-decoration: underline;
 }
+
+.trackRowPlayBttn{
+    position: relative;
+    left: -8px;
+    background-color: #d2b48c00;
+    border: none;
+    color: var(--white);
+}
+
+.trackRowPlayBttn > img{
+    height: 14px;
+}
+
+.rowPlayIcon{
+    height: 12px;
+}

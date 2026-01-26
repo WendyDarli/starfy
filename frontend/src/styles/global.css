@@ -98,3 +98,7 @@ hr{
     color: var(--gray-text);
     margin: 5px 0px;
 }
+
+.active{
+    color: var(--blue);
+}
