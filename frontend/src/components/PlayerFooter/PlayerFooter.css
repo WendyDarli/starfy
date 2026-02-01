@@ -229,7 +229,7 @@
     border: none;
     cursor: pointer;
     margin-top: -1px;
-    opacity: 0;
+    
 }
 
 .volumeControl:hover::-webkit-slider-thumb{
@@ -266,4 +266,32 @@
     background-image: url('../../assets/whiteIcons/high_volume.svg');
 }
 
+/* add here classes and their icon and hover icon for volume button */
+.muteVolume{
+    background-image: url('../../assets/grayIcons/mute.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
 
+.lowVolume{
+    background-image: url('../../assets/grayIcons/low_volume.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.lowVolume:hover{
+    background-image: url('../../assets/whiteIcons/low_volume.svg');
+}
+
+.highVolume{
+    background-image: url('../../assets/grayIcons/high_volume.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.highVolume:hover{
+    background-image: url('../../assets/whiteIcons/high_volume.svg');
+}
