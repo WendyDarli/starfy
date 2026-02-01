@@ -3,12 +3,12 @@ import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import formatDuration from '../../utils/formatDuration';
 
-  const [volumeLevel, setVolumeLevel] = useState(50); 
-  const currentVolume = useRef(volumeLevel); 
 //components
 import SongInfo from './SongInfo';
 import SongControls from './SongControls';
 import SongProgress from './SongProgress';
+import SongVolumeControls from './SongVolumeControls';
+
 function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
 
   //playback
@@ -19,24 +19,11 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
   //audio
   const audioRef = useRef(null);
 
-  
-  function handleVolumeChange(e) {
-    setVolumeLevel(e.target.value);
-  };
   useEffect(() => {
     if(audioRef.current){
       !isPlaying ? audioRef.current.pause() : audioRef.current.play();
     };
   }, [isPlaying]);
-
-  function muteSong() {
-    if(volumeLevel > 0) {
-      currentVolume.current = volumeLevel;
-      setVolumeLevel(0);
-    } else {
-      setVolumeLevel(currentVolume.current);
-    }
-  };
 
   function handleTimeUpdate(e){
     if(!isSeeking){
@@ -44,17 +31,9 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
     }
   };
 
-  function getVolumeIconClass() {
-    if(volumeLevel == 0) {
-      return 'muteVolume';
-
-    } else if(volumeLevel > 0 && volumeLevel <= 50) {
-      return 'lowVolume';
-
-    } else {
-      return 'highVolume';
-    } 
-  };
+  function handleAudioEnded(){
+    setIsPlaying(false)
+  };  
 
   const audioHandlers = {
     onTimeUpdate: handleTimeUpdate,
@@ -78,10 +57,7 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       </div>
 
       <div id='extraControls'>
-        <button aria-label='open playing now view' className='playingViewBttn noBgBttn'></button>
-        <button aria-label='open song lyrics' className='lyrics noBgBttn'></button>
-        <button aria-label='mute song' className={`noBgBttn + ${getVolumeIconClass(volumeLevel)}`} onClick={muteSong}></button>
-        <input aria-label='change volume' type='range' className='volumeControl' min={0} max={100} value={volumeLevel} onChange={handleVolumeChange}></input>
+        <SongVolumeControls audio={audioRef.current}/>
       </div>
 
 
