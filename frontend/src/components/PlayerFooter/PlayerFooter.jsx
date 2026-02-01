@@ -8,7 +8,13 @@ import formatDuration from '../../utils/formatDuration';
 //components
 import SongInfo from './SongInfo';
 import SongControls from './SongControls';
+import SongProgress from './SongProgress';
 function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
+
+  //playback
+  const [ currTime, setCurrTime ] = useState(0); 
+  const [ newTime, setNewTime ] = useState(0);
+  const [ isSeeking, setIsSeeking ] = useState(false);
 
   //audio
   const audioRef = useRef(null);
@@ -60,14 +66,15 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       <SongInfo currentSong={currentSong} />
 
       <div id='songControls'>
-        <div id='progressContainer'>
-          <p>0:00</p>
-          <input aria-label='song progress' type='range' className='progress' min={0} max={100} ></input>
-          <p>{formatDuration(currentSong?.duration_ms)}</p>
-        </div>
-
         <audio  ref={audioRef} src={currentSong.audioUrl} autoPlay {...audioHandlers}></audio>
         <SongControls audio={audioRef.current} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
+        <SongProgress audio={audioRef.current} 
+          setNewTime={setNewTime}
+          newTime={newTime} 
+          isSeeking={isSeeking}
+          setCurrTime={setCurrTime}
+          currTime={currTime}
+          setIsSeeking={setIsSeeking}/>
       </div>
 
       <div id='extraControls'>
