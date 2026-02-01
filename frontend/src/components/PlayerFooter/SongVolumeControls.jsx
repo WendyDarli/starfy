@@ -1,8 +1,11 @@
 import {useState, useRef, useEffect} from 'react';
+
 function SongVolumeControls({ audio }){
     const [volumeLevel, setVolumeLevel] = useState(0.5);
+    const [isHoldingDown, setIsHoldingDown] = useState(false);
 
     const previousVolume = useRef(volumeLevel); //remember value before mute
+    const inputRef = useRef(null);
 
     useEffect(() => {
         if(!audio) return;
@@ -10,7 +13,23 @@ function SongVolumeControls({ audio }){
 
     }, [volumeLevel]);
 
+    function updateVolumePaint(){
+        if(!inputRef.current) return;
 
+        const color = isHoldingDown ? '#A2C7FF' : '#FFFFFF';
+        const percent = volumeLevel * 100;
+        inputRef.current.style.background =`linear-gradient(to right, 
+            ${color} ${percent}%, 
+            #121212 ${percent}%`;  
+    }
+    useEffect(updateVolumePaint, [volumeLevel, isHoldingDown]);
+
+    const handleHoverPaint ={
+        onMouseDown: () => setIsHoldingDown(true),
+        onMouseEnter: () => setIsHoldingDown(true),
+        onMouseUp: () => setIsHoldingDown(false),
+        onMouseLeave: () => setIsHoldingDown(false),
+    }
 
     function handleVolumeChange(e) {
         setVolumeLevel(parseFloat(e.target.value));
@@ -49,9 +68,11 @@ function SongVolumeControls({ audio }){
             <input 
                 aria-label='change volume' 
                 type='range'
+                ref={inputRef}
                 className='volumeControl' 
                 min={0} max={1} step={0.1} value={volumeLevel} 
                 onChange={handleVolumeChange}
+                {...handleHoverPaint}
             />
         </>
     );

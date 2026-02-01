@@ -209,8 +209,6 @@
     background-image: url('../../assets/whiteIcons/microphone.svg');
 }
 
-/* create logic to change icon based on volume input value */
-
 
 .volumeControl{
     appearance: none;
@@ -222,7 +220,7 @@
     transform: translateY(-8px);  
 }
 
-.volumeControl::-webkit-slider-thumb {
+.volumeControl::-webkit-slider-thumb{
     -webkit-appearance: none;
     width: 15px;
     height: 15px;
@@ -231,9 +229,12 @@
     border: none;
     cursor: pointer;
     margin-top: -1px;
-    
+    opacity: 0;
 }
 
+.volumeControl:hover::-webkit-slider-thumb{
+    opacity: 100%;
+}
 
 /* add here classes and their icon and hover icon for volume button */
 .muteVolume{
