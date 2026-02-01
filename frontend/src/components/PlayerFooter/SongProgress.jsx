@@ -2,7 +2,26 @@ import { useEffect, useRef, useState } from 'react';
 
 function SongProgress({ audio, currTime, setCurrTime, newTime, setNewTime, isSeeking, setIsSeeking }){
 
+  const sliderRef = useRef(null);
   const duration = audio?.duration || 0;
+  const currentDisplayTime = isSeeking ? newTime : currTime;
+  const percent = duration > 0 ? (currentDisplayTime / duration) * 100 : 0;
+
+  useEffect(() => {
+    if (sliderRef.current) {
+      const acceleratedPercent = percent === 0 ? 0 : Math.min(percent + 1.5, 100);
+      sliderRef.current.style.background = `linear-gradient(to right, 
+      transparent 0%, 
+          transparent 6px, 
+          #ffffff 6px, 
+          #A2C7FF ${acceleratedPercent}%, 
+          #121212 ${acceleratedPercent}%, 
+          #121212 calc(100% - 6px), 
+          transparent calc(100% - 6px), 
+          transparent 100%)`;
+    }
+  }, [percent]);
+
     function handleSeekStart(){
       setIsSeeking(true);
     };
@@ -45,6 +64,7 @@ function SongProgress({ audio, currTime, setCurrTime, newTime, setNewTime, isSee
       <div id='progressContainer'>
           <p>{formatTime(currTime)}</p>
         <input
+          ref={sliderRef}
           aria-label='song progress'
           type='range'
           className='progress'

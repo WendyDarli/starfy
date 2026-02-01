@@ -64,27 +64,34 @@
     margin-top: -9px
 }
 
+
 .progress{
+    -webkit-appearance: none;
     appearance: none;
     margin: 0px 10px;
     width: 100%;
-    background-color: var(--gray-text);
+    background-color: var(--gray-bg);
     border-radius: 3px;
     height: 4px;
     cursor: pointer;
     margin-top: -1px;
 }
+
 .progress::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 27px;
-    height: 27px;
+    width: 24px;
+    height: 24px;
     background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
-    background-size: contain; 
+    background-size: contain;
     border: none;
     cursor: pointer;
     transform: rotate(-60deg);
     margin-top: -2px;
-    
+    opacity: 0;
+}
+
+.progress:hover::-webkit-slider-thumb{
+    opacity: 100%;
 }
 
 /* styles for firefox */
@@ -144,8 +151,8 @@
 
 
 
-
-.playPause{
+/* make global */
+.play{
     background-image: url(../../assets/blackIcons/play_button.svg);
     background-color: var(--white);
     background-position: 11px 10px;
@@ -153,6 +160,15 @@
     width: 35px;
     height: 35px;
 }
+.pause{
+    background-image: url(../../assets/blackIcons/pause.svg);
+    background-color: var(--white);
+    background-position: 9px 10px;
+    background-size: 16px;
+    width: 35px;
+    height: 35px;
+}
+
 .playPause:hover{
     background-color: var(--white);
 }
@@ -248,3 +264,5 @@
 .highVolume:hover{
     background-image: url('../../assets/whiteIcons/high_volume.svg');
 }
+
+
