@@ -7,12 +7,21 @@ import formatDuration from '../../utils/formatDuration';
   const currentVolume = useRef(volumeLevel); 
 //components
 import SongInfo from './SongInfo';
+import SongControls from './SongControls';
 function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
+
+  //audio
+  const audioRef = useRef(null);
 
   
   function handleVolumeChange(e) {
     setVolumeLevel(e.target.value);
   };
+  useEffect(() => {
+    if(audioRef.current){
+      !isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    };
+  }, [isPlaying]);
 
   function muteSong() {
     if(volumeLevel > 0) {
@@ -20,6 +29,12 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       setVolumeLevel(0);
     } else {
       setVolumeLevel(currentVolume.current);
+    }
+  };
+
+  function handleTimeUpdate(e){
+    if(!isSeeking){
+      setCurrTime(e.currentTarget.currentTime);
     }
   };
 
@@ -35,31 +50,24 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
     } 
   };
 
+  const audioHandlers = {
+    onTimeUpdate: handleTimeUpdate,
+    onEnded: handleAudioEnded,
+  };
 
   return (
     <div className='footerContainer'>
       <SongInfo currentSong={currentSong} />
 
       <div id='songControls'>
-        <audio>
-          <source src="path/to/audio/file.mp3" type="audio/mpeg" />`          
-        </audio>
-
-
-        <div id='customPlayer'>
-          <button aria-label='shuffle' className='shuffle noBgBttn'></button>
-          <button aria-label='previous song' className='prev noBgBttn'></button>
-          <button aria-label='play or pause song' className='circularBttn playPause'></button>
-          <button aria-label='next song' className='next noBgBttn'></button>
-          <button aria-label='repeat Song' className='repeat noBgBttn'></button>
-        </div>
         <div id='progressContainer'>
           <p>0:00</p>
           <input aria-label='song progress' type='range' className='progress' min={0} max={100} ></input>
           <p>{formatDuration(currentSong?.duration_ms)}</p>
         </div>
 
-        
+        <audio  ref={audioRef} src={currentSong.audioUrl} autoPlay {...audioHandlers}></audio>
+        <SongControls audio={audioRef.current} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
       </div>
 
       <div id='extraControls'>
