@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
@@ -34,4 +35,22 @@ async function song_get(req, res){
     };
 };
 
-module.exports = { song_get };
+async function song_audio_get(req, res, next){
+    try{
+        if(!req.params.isrc) return
+        const isrcId = req.params.isrc;
+ 
+        const audioRes = await axios.get(`https://api.deezer.com/track/isrc:${isrcId}`);
+        const previewUrl = audioRes.data.preview;
+
+       res.json(previewUrl)
+
+    } catch(err){
+        console.error('error in the song_audio_get ', err.message)
+        console.log("Deezer API Error:", audioRes.data.error.message);
+
+    }
+
+}
+
+module.exports = { song_get, song_audio_get };
