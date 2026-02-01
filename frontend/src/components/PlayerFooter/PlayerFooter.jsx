@@ -1,13 +1,14 @@
 import './PlayerFooter.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import defaultSongCover from '../../assets/playlists_default_cover.png';
 import formatDuration from '../../utils/formatDuration';
 
-function PlayerFooter() {
-  //consider moving state to global context if needed elsewhere
   const [volumeLevel, setVolumeLevel] = useState(50); 
   const currentVolume = useRef(volumeLevel); 
+//components
+import SongInfo from './SongInfo';
+function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
+
   
   function handleVolumeChange(e) {
     setVolumeLevel(e.target.value);
@@ -37,14 +38,7 @@ function PlayerFooter() {
 
   return (
     <div className='footerContainer'>
-      <div id='songInfoContainer'>
-        <img src="src\assets\jeff.jpeg" alt="Song Cover" className='songCover' />
-        <div className='songInfo'>
-          <p id='songName'>Song Name</p>
-          <p id='songArtist'>Artist Name</p>
-        </div>
-        <button aria-label='Like Song' className='likeBttn noBgBttn'></button>        
-      </div>
+      <SongInfo currentSong={currentSong} />
 
       <div id='songControls'>
         <audio>
