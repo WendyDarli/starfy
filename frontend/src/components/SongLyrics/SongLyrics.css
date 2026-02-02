@@ -1,0 +1,18 @@
+.lyricsContainer{
+    padding: var(--main-section-padding);
+    display: flex;
+    flex-direction: column;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lyricsLine{
+    font-size: 35px;
+    text-align: start;
+    width: 100%;
+}
+
+.noLyrics{
+    text-align: center;
+}

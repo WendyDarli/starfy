@@ -15,7 +15,7 @@ import useCurrentSong from '../hooks/useCurrentSong.js';
 export default function App() {
     const { isAuthenticated, user } = useAuth();
     const library = useFetchUserLibrary();
-    const { currentSong, setCurrentSong, isPlaying, setIsPlaying } = useCurrentSong();
+    const { currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics} = useCurrentSong();
     
 
     return (
@@ -26,7 +26,7 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar library={library}/>
                 <MainSection>
-                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying }}/>
+                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics }}/>
                 </MainSection>  
             </div>
 

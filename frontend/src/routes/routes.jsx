@@ -6,7 +6,6 @@ import CollectionDisplay from '../components/CollectionDisplay/CollectionDisplay
 import SearchResults from '../components/SearchResults/SearchResults.jsx';
 import SongLyrics from '../components/SongLyrics/SongLyrics.jsx';
 
-
 const routes = [
   {
     path: '/',
@@ -23,7 +22,7 @@ const routes = [
       { path: 'song/:id', element: <CollectionDisplay key='song'/> },
       { path: 'episode/:id', element: <CollectionDisplay key='episode'/> },
       { path: 'search/:query', element: <SearchResults key='search'/> },
-      { path: '/lyrics', element: <SongLyrics/> },
+      { path: 'lyrics', element: <SongLyrics/> },
     ],
   },
 ];
