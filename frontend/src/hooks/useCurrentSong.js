@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function useCurrentSong(){
     const [ isPlaying, setIsPlaying ] = useState(false); //true or false
+    const [ lyrics, setLyrics ] = useState(null); 
     const [ currentSong, setCurrentSong ] = useState({
         artistsName: [],
         songName: '',
@@ -11,6 +12,7 @@ function useCurrentSong(){
         albumName: '',
         external_ids: '',
         audioUrl: null,
+        index: null,
     });
 
     const durationSeconds =  Math.floor(currentSong.duration_ms / 1000);
@@ -30,9 +32,48 @@ function useCurrentSong(){
         .catch(err => console.error("Fetch audio url error in hook: ", err));
     }, [currentSong?.id]);
 
+    //fetch lyrics
+    useEffect(() => {
+        const controller = new AbortController();
+        setLyrics(null);
+
+        if(currentSong?.id) {
+
+            const params = new URLSearchParams({
+                artist_name: currentSong?.artistsName?.[0]?.name,
+                track_name: currentSong?.songName,
+                album_name: currentSong?.albumName,
+                duration: durationSeconds
+            });
+
+            fetch(`http://127.0.0.1:3000/lyrics?${params.toString()}`,{
+            credentials: 'include',
+            signal: controller.signal,
+            })
+            .then(res => {
+                if(!res.ok) throw new Error('error fetching lyrics');
+                return res.json();
+            })
+            .then(data => {
+                setLyrics(data);
+                console.log('receied lyrics from backend: ', data)
+            }
+            )
+            .catch((err) => {
+                if(err.name === 'AbortError') return;
+
+                if(process.env.NODE_ENV !== 'produciton' ){
+                    console.error('Fetch error:', err);
+                }
+                setLyrics(null);
+            })
+        }
+
+        return () => controller.abort();
+    }, [currentSong?.id]);
 
 
-    return {currentSong, setCurrentSong, isPlaying, setIsPlaying};
+    return {currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics};
 };
 
 export default useCurrentSong;

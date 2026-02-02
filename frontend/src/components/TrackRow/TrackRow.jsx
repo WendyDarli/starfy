@@ -19,7 +19,7 @@ function TrackRow({ item, index }) {
 
   const currentSongObj = {
     artistsName: item.artists,
-    name: item.name,
+    songName: item.name,
     id: item.id,
     img: item.imageUrl,
     duration_ms: item.duration_ms,
