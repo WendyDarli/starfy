@@ -1,10 +1,12 @@
 import './TrackRow.css';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import getColumns from '../../utils/uiColumns';
-import useUrlParams from '../../hooks/useUrlParams.js'
 import { useOutletContext } from 'react-router';
+import useUrlParams from '../../hooks/useUrlParams.js'
+
+import getColumns from '../../utils/uiColumns';
 import formatDuration from '../../utils/formatDuration.js'
+
 import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
 import pauseIcon from '../../assets/whiteIcons/pause.svg';

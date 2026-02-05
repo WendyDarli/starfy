@@ -1,7 +1,6 @@
 import './PlayerFooter.css';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import formatDuration from '../../utils/formatDuration';
 
 //components
 import SongInfo from './SongInfo';

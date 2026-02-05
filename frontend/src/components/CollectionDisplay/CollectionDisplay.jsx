@@ -11,11 +11,11 @@ function CollectionDisplay() {
     const [playlistInfo, setPlaylistInfo] = useState({});
     const { id, type } = useUrlParams();
     
+    //fetch playlists metadata
     useEffect(() => {
         setPlaylistInfo({});
         fetch(`http://127.0.0.1:3000/${type}/${id}`,{
             credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
         })
         .then(res => {
             if(!res.ok) throw new Error('Error fetching user playlists.');
