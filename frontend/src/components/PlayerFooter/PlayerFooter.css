@@ -31,6 +31,7 @@
     margin: 0px;
     color: var(--gray-text);
     font-size: 14px;
+    display: inline;
 }
 
 .likeBttn{
@@ -229,14 +230,13 @@
     border: none;
     cursor: pointer;
     margin-top: -1px;
-    opacity: 0;
+    
 }
 
 .volumeControl:hover::-webkit-slider-thumb{
     opacity: 100%;
 }
 
-/* add here classes and their icon and hover icon for volume button */
 .muteVolume{
     background-image: url('../../assets/grayIcons/mute.svg');
     height: 20px;
