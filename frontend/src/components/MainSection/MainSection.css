@@ -4,7 +4,7 @@
     transition: margin-left ease-in-out 0.1s;
     color: var(--white);
     background-color: var(--light-black );
-    height: 82vh;
+    height: 84.5vh;
     overflow-y: auto;
 }
 

@@ -62,7 +62,7 @@ function handlePlayClick() {
     if (isHovered) {
       return <img src={playIcon} alt='play' />;
     }
-    return index + 1;
+    return <p className={`trackNumber ${isThisTheActiveSong ? 'active' : ''}`}>{index + 1}</p>;
   };
 
   return (

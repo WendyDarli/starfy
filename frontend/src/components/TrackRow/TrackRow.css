@@ -56,3 +56,7 @@
 .rowPlayIcon{
     height: 12px;
 }
+
+.trackRowNumber.active{
+    color: var(--blue);
+}

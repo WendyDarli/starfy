@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 function SongProgress({ audio, currTime, setCurrTime, newTime, setNewTime, isSeeking, setIsSeeking }){
 
@@ -15,8 +15,8 @@ function SongProgress({ audio, currTime, setCurrTime, newTime, setNewTime, isSee
           transparent 6px, 
           #ffffff 6px, 
           #A2C7FF ${acceleratedPercent}%, 
-          #121212 ${acceleratedPercent}%, 
-          #121212 calc(100% - 6px), 
+          #2A2A2A ${acceleratedPercent}%, 
+          #2A2A2A calc(100% - 6px), 
           transparent calc(100% - 6px), 
           transparent 100%)`;
     }

@@ -20,7 +20,7 @@ function SongVolumeControls({ audio }){
         const percent = volumeLevel * 100;
         inputRef.current.style.background =`linear-gradient(to right, 
             ${color} ${percent}%, 
-            #121212 ${percent}%`;  
+            #2A2A2A ${percent}%`;  
     }
     useEffect(updateVolumePaint, [volumeLevel, isHoldingDown]);
 
