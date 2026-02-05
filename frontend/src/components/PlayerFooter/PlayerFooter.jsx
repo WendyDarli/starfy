@@ -10,6 +10,8 @@ import SongProgress from './SongProgress';
 import SongVolumeControls from './SongVolumeControls';
 
 function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
+  const navigate = useNavigate();
+  const url = useLocation();
 
   //playback
   const [ currTime, setCurrTime ] = useState(0); 
@@ -40,6 +42,10 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
     onEnded: handleAudioEnded,
   };
 
+  function handleLyricsPath(){
+    url.pathname === '/lyrics' ? navigate(-1) : navigate('/lyrics');
+  };
+
   return (
     <div className='footerContainer'>
       <SongInfo currentSong={currentSong} />
@@ -57,6 +63,9 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       </div>
 
       <div id='extraControls'>
+        <button aria-label='open song lyrics' className='lyrics noBgBttn'
+          onClick={handleLyricsPath}
+        ></button>
         <SongVolumeControls audio={audioRef.current}/>
       </div>
 

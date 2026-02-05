@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function useCurrentSong(){
     const [ isPlaying, setIsPlaying ] = useState(false); //true or false
+    const [ lyrics, setLyrics ] = useState(null); 
     const [ currentSong, setCurrentSong ] = useState({
         artistsName: [],
         songName: '',
@@ -32,7 +33,7 @@ function useCurrentSong(){
 
 
 
-    return {currentSong, setCurrentSong, isPlaying, setIsPlaying};
+    return {currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics};
 };
 
 export default useCurrentSong;

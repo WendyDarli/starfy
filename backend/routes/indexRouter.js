@@ -14,6 +14,7 @@ const showsRouter = require('./showsRouter');
 const songsRouter = require('./songsRouter');
 const episodesRouter = require('./episodesRouter');
 const searchRouter = require('./searchRouter');
+const lyricsRouter = require('./lyricsRouter')
 
 router.get('/login', authController.login_get);
 router.get('/callback', authController.login_callback_get);
@@ -28,5 +29,6 @@ router.use('/artist', artistsRouter);
 router.use('/song', songsRouter);
 router.use('/episode', episodesRouter);
 router.use('/search', searchRouter);
+router.use('/lyrics', lyricsRouter);
 
 module.exports = router;
