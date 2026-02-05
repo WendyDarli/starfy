@@ -183,6 +183,10 @@
 .repeat:hover{
     background-image: url('../../assets/whiteIcons/repeat.svg');
 }
+.repeat.active{
+    background-image: url('../../assets/blueIcons/repeat.svg');
+}
+
 
 .extraControls{
     display: flex;

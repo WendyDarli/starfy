@@ -32,9 +32,30 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
     }
   };
 
+  const [settings, setSettings] = useState({
+    isOnRepeat: false,
+    isShufflePlaylist: false,
+  });
+
+
+  const toggleSetting = (key) => {
+    setSettings(prev => ({
+      ...prev,
+      [key]: typeof prev[key] === 'boolean' ? !prev[key] : prev[key]
+    }));
+  };
+
   function handleAudioEnded(){
-    setIsPlaying(false)
-  };  
+
+    if(settings.isOnRepeat){
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+    //define its fate
+    //will repeat?
+    //will play random song
+    //will play next song?
+  };
 
   const audioHandlers = {
     onTimeUpdate: handleTimeUpdate,
@@ -51,7 +72,13 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
 
       <div id='songControls'>
         <audio  ref={audioRef} src={currentSong.audioUrl} autoPlay {...audioHandlers}></audio>
-        <SongControls audio={audioRef.current} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
+        <SongControls 
+          audio={audioRef.current} 
+          isPlaying={isPlaying} 
+          setIsPlaying={setIsPlaying}
+          settings={settings}
+          toggleSetting={toggleSetting}
+        />
         <SongProgress audio={audioRef.current} 
           setNewTime={setNewTime}
           newTime={newTime} 
