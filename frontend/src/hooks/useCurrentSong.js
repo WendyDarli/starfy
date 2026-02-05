@@ -12,6 +12,7 @@ function useCurrentSong(){
         albumName: '',
         external_ids: '',
         audioUrl: null,
+        index: null,
     });
 
     const durationSeconds =  Math.floor(currentSong.duration_ms / 1000);

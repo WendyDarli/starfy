@@ -15,16 +15,17 @@ function TrackRow({ item, index }) {
   const { id, type } = useUrlParams();
   const columns = getColumns(id, type);
   const [ isHovered, setIsHovered ] = useState(false);
-  let isThisTheActiveSong = currentSong?.id === item?.id;
+  let isThisTheActiveSong = currentSong?.id === item?.id && currentSong?.index === index;
 
   const currentSongObj = {
     artistsName: item.artists,
-    name: item.name,
+    songName: item.name,
     id: item.id,
     img: item.imageUrl,
     duration_ms: item.duration_ms,
     albumName: item.albumOrShow?.name,
-    external_ids: item.external_ids?.isrc || '', //for future deezer api
+    external_ids: item.external_ids?.isrc || '',
+    index: index
   };
 
   const nexSong = index + 1;

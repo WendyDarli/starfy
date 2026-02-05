@@ -7,13 +7,12 @@ function TrackList({ songs }) {
             { songs?.items?.length <= 0 && <p>This playlist is empty.</p> }
             { songs?.items?.map((item, index) => (
                 <TrackRow
-                    key={item.track?.id ?? index}
+                    key={`${item.id }-${item.added_at}`}
                     item={item}
                     index={index}
                 />
             ))}
         </div>
-        
   );
 };
 export default TrackList;
