@@ -6,17 +6,20 @@ import PlayerFooter from './PlayerFooter/PlayerFooter.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
+import { useState } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js';
 import { Outlet } from 'react-router';
 import useCurrentSong from '../hooks/useCurrentSong.js';
+import usePrevAndNextSong from '../hooks/usePrevAndNextSong.js';
+
 
 export default function App() {
+    const [ songsList, setSongsList ] = useState(null);
     const { isAuthenticated, user } = useAuth();
     const library = useFetchUserLibrary();
     const { currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics} = useCurrentSong();
-    
-
+    const { nextSong, previousSong } = usePrevAndNextSong(currentSong, songsList);
     return (
         <>
             <GlobalHeader user={user}/>
@@ -25,11 +28,11 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar library={library}/>
                 <MainSection>
-                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics }}/>
+                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics, setSongsList }}/>
                 </MainSection>  
             </div>
 
-            <PlayerFooter currentSong={currentSong} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>        
+            <PlayerFooter currentSong={currentSong} setCurrentSong={setCurrentSong} isPlaying={isPlaying} setIsPlaying={setIsPlaying} nextSong={nextSong} previousSong={previousSong}/>        
         </>
 
     );

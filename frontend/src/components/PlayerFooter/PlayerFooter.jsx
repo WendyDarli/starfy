@@ -8,7 +8,7 @@ import SongControls from './SongControls';
 import SongProgress from './SongProgress';
 import SongVolumeControls from './SongVolumeControls';
 
-function PlayerFooter({currentSong, isPlaying, setIsPlaying}) { 
+function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong}) { 
   const navigate = useNavigate();
   const url = useLocation();
 
@@ -17,12 +17,32 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
   const [ newTime, setNewTime ] = useState(0);
   const [ isSeeking, setIsSeeking ] = useState(false);
 
-  //audio
   const audioRef = useRef(null);
 
+  //sync isPlaying state with audio element
   useEffect(() => {
-    if(audioRef.current){
-      !isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if(isPlaying){
+        audio.play();
+    } else {
+        audio.pause();
+    };
+
+    const updateIsPlaying = () => {
+      setIsPlaying(!audio.paused && !audio.ended && audio.readyState > 2);
+    };
+    updateIsPlaying();
+
+    audio.addEventListener('play', updateIsPlaying);
+    audio.addEventListener('pause', updateIsPlaying);
+    audio.addEventListener('ended', updateIsPlaying);
+
+    return () => {
+      audio.removeEventListener('play', updateIsPlaying);
+      audio.removeEventListener('pause', updateIsPlaying);
+      audio.removeEventListener('ended', updateIsPlaying);
     };
   }, [isPlaying]);
 
@@ -33,28 +53,38 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
   };
 
   const [settings, setSettings] = useState({
-    isOnRepeat: false,
-    isShufflePlaylist: false,
+      isOnRepeat: false,
+      isShufflePlaylist: false,
   });
 
-
+  //define if is onReapeat or shuffle
   const toggleSetting = (key) => {
-    setSettings(prev => ({
+      setSettings(prev => ({
       ...prev,
       [key]: typeof prev[key] === 'boolean' ? !prev[key] : prev[key]
-    }));
+      }));
   };
+
+  useEffect(() => {
+    // If we have a song object but the audioUrl is missing/null skip
+    if (currentSong && !currentSong.isLoadingAudio && currentSong.audioUrl === null) {
+      setCurrentSong(nextSong); 
+    }
+  }, [currentSong]);
 
   function handleAudioEnded(){
 
     if(settings.isOnRepeat){
       audioRef.current.currentTime = 0;
       audioRef.current.play();
+    } else if(settings.isShufflePlaylist){
+
+      //shuffle logic would go here
+      console.log("shuffle playlist");
+    } else {
+      audioRef.current.pause();
+      setCurrentSong(nextSong);
     }
-    //define its fate
-    //will repeat?
-    //will play random song
-    //will play next song?
   };
 
   const audioHandlers = {
@@ -71,13 +101,16 @@ function PlayerFooter({currentSong, isPlaying, setIsPlaying}) {
       <SongInfo currentSong={currentSong} />
 
       <div id='songControls'>
-        <audio  ref={audioRef} src={currentSong.audioUrl} autoPlay {...audioHandlers}></audio>
+        <audio  ref={audioRef} src={currentSong?.audioUrl} autoPlay {...audioHandlers}></audio>
         <SongControls 
           audio={audioRef.current} 
           isPlaying={isPlaying} 
           setIsPlaying={setIsPlaying}
           settings={settings}
           toggleSetting={toggleSetting}
+          setCurrentSong={setCurrentSong}
+          nextSong={nextSong}
+          previousSong={previousSong}
         />
         <SongProgress audio={audioRef.current} 
           setNewTime={setNewTime}

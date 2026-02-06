@@ -30,10 +30,6 @@ function TrackRow({ item, index }) {
     index: index
   };
 
-  const nexSong = index + 1;
-  const previousSong = index - 1;
-
-
   function formatDate(dateString){
       if(!dateString) return '';
       const date = new Date(dateString);
@@ -41,16 +37,14 @@ function TrackRow({ item, index }) {
       return date.toLocaleDateString(undefined, options);
   };
 
-
-
-function handlePlayClick() {
-  if (!currentSong || currentSong.id !== item.id) {
-    setCurrentSong(currentSongObj);
-    setIsPlaying(true);
-  } else {
-    setIsPlaying(!isPlaying);
+  function handlePlayClick() {
+    if (!currentSong || currentSong.id !== item.id) {
+      setCurrentSong(currentSongObj);
+      setIsPlaying(true);
+    } else {
+      setIsPlaying(!isPlaying);
+    };
   }
-}
 
   function handleIconChange(){
     if (isThisTheActiveSong && isPlaying && isHovered) {
