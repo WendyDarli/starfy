@@ -131,6 +131,9 @@
 .shuffle:hover{
     background-image: url('../../assets/whiteIcons/shuffle.svg');
 }
+.shuffle.active{
+    background-image: url('../../assets/blueIcons/shuffle.svg');
+}
 
 /* possible single class */
 .prev{

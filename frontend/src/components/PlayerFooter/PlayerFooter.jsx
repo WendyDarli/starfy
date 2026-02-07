@@ -8,7 +8,7 @@ import SongControls from './SongControls';
 import SongProgress from './SongProgress';
 import SongVolumeControls from './SongVolumeControls';
 
-function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong}) { 
+function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong}) { 
   const navigate = useNavigate();
   const url = useLocation();
 
@@ -24,16 +24,10 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
     const audio = audioRef.current;
     if (!audio) return;
 
-    if(isPlaying){
-        audio.play();
-    } else {
-        audio.pause();
-    };
-
     const updateIsPlaying = () => {
-      setIsPlaying(!audio.paused && !audio.ended && audio.readyState > 2);
-    };
-    updateIsPlaying();
+    const playing = !audio.paused && !audio.ended && audio.readyState > 2;
+    setIsPlaying(prev => (prev !== playing ? playing : prev));
+  };
 
     audio.addEventListener('play', updateIsPlaying);
     audio.addEventListener('pause', updateIsPlaying);
@@ -45,6 +39,19 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
       audio.removeEventListener('ended', updateIsPlaying);
     };
   }, [isPlaying]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+
+  }, []);
+
 
   function handleTimeUpdate(e){
     if(!isSeeking){
@@ -74,13 +81,18 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
 
   function handleAudioEnded(){
 
+    
+    //repeat
     if(settings.isOnRepeat){
       audioRef.current.currentTime = 0;
       audioRef.current.play();
-    } else if(settings.isShufflePlaylist){
 
-      //shuffle logic would go here
-      console.log("shuffle playlist");
+    //shuffle
+    } else if(settings.isShufflePlaylist){
+      audioRef.current.pause();
+      setCurrentSong(randomSong);
+    
+    //normal next
     } else {
       audioRef.current.pause();
       setCurrentSong(nextSong);

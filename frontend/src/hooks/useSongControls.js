@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from "react";
 
-//define prev and next song info based on current song id and songs array
-function usePrevAndNextSong(currentSong, songsList ){
-    const items = songsList || null;
+//define prev and next and shuffle song info based on current song id and songs array
+function useSongControls(currentSong, songsList ){
+    const items = songsList ||null;
 
     const mapSongToObj = (song, index) => song ? {
         artistsName: song.artists,
@@ -14,6 +14,13 @@ function usePrevAndNextSong(currentSong, songsList ){
         external_ids: song.external_ids?.isrc || '',
         index,
     } : null;
+
+    const randomSong = useMemo(() => {
+        if (!items || items.length === 0) return null;
+        const randomIndex = Math.floor(Math.random() * items.length);
+
+        return mapSongToObj(items[randomIndex], randomIndex);
+    }, [currentSong, items]);
 
     const nextSong = useMemo(() => {
         if (!currentSong || !items) return null;
@@ -30,8 +37,8 @@ function usePrevAndNextSong(currentSong, songsList ){
 
         return mapSongToObj(items[prevSongIndex], prevSongIndex);
     }, [currentSong, items]);
-    
-    return { nextSong, previousSong };
+
+    return { nextSong, previousSong, randomSong };
 };
 
-export default usePrevAndNextSong;
+export default useSongControls;

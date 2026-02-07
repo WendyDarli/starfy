@@ -11,7 +11,7 @@ import useAuth from '../hooks/useAuth.js';
 import useFetchUserLibrary from '../hooks/useFetchUserLibrary.js';
 import { Outlet } from 'react-router';
 import useCurrentSong from '../hooks/useCurrentSong.js';
-import usePrevAndNextSong from '../hooks/usePrevAndNextSong.js';
+import useSongControls from '../hooks/useSongControls.js';
 
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
     const { isAuthenticated, user } = useAuth();
     const library = useFetchUserLibrary();
     const { currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics} = useCurrentSong();
-    const { nextSong, previousSong } = usePrevAndNextSong(currentSong, songsList);
+    const { nextSong, previousSong, randomSong } = useSongControls(currentSong, songsList);
     return (
         <>
             <GlobalHeader user={user}/>
@@ -32,7 +32,15 @@ export default function App() {
                 </MainSection>  
             </div>
 
-            <PlayerFooter currentSong={currentSong} setCurrentSong={setCurrentSong} isPlaying={isPlaying} setIsPlaying={setIsPlaying} nextSong={nextSong} previousSong={previousSong}/>        
+            <PlayerFooter 
+                currentSong={currentSong} 
+                setCurrentSong={setCurrentSong} 
+                isPlaying={isPlaying} 
+                setIsPlaying={setIsPlaying} 
+                nextSong={nextSong} 
+                previousSong={previousSong} 
+                randomSong={randomSong} 
+            />  
         </>
 
     );
