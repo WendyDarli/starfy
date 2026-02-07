@@ -64,13 +64,12 @@ function useCurrentSong(){
             })
             .then(data => {
                 setLyrics(data);
-                console.log('receied lyrics from backend: ', data)
             }
             )
             .catch((err) => {
                 if(err.name === 'AbortError') return;
 
-                if(process.env.NODE_ENV !== 'produciton' ){
+                if(process.env.NODE_ENV !== 'production' ){
                     console.error('Fetch error:', err);
                 }
                 setLyrics(null);

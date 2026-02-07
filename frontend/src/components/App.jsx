@@ -40,6 +40,7 @@ export default function App() {
                 nextSong={nextSong} 
                 previousSong={previousSong} 
                 randomSong={randomSong} 
+                lyrics={lyrics}
             />  
         </>
 

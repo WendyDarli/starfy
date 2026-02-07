@@ -8,7 +8,7 @@ import SongControls from './SongControls';
 import SongProgress from './SongProgress';
 import SongVolumeControls from './SongVolumeControls';
 
-function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong}) { 
+function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong, lyrics}) { 
   const navigate = useNavigate();
   const url = useLocation();
 
@@ -80,7 +80,6 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
   }, [currentSong]);
 
   function handleAudioEnded(){
-
     
     //repeat
     if(settings.isOnRepeat){
@@ -134,9 +133,16 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
       </div>
 
       <div id='extraControls'>
-        <button aria-label='open song lyrics' className='lyrics noBgBttn'
-          onClick={handleLyricsPath}
-        ></button>
+        <button 
+          disabled={!lyrics}
+          aria-label='open song lyrics' 
+          className={`lyrics noBgBttn ${url.pathname === '/lyrics' ? 'active' : ''}
+          ${lyrics ? '' : 'disabled'}`}
+          onClick={() => {
+            handleLyricsPath();
+            console.log('lyrics: ', lyrics);
+          }}
+        />
         <SongVolumeControls audio={audioRef.current}/>
       </div>
 
