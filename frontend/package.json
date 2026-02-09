@@ -11,6 +11,8 @@
         "test": "echo 'No tests' && exit 0"
     },
     "dependencies": {
+        "@tanstack/react-query": "^5.90.20",
+        "@tanstack/react-query-devtools": "^5.91.3",
         "colorthief": "^2.6.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
