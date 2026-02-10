@@ -8,7 +8,7 @@ async function playlist_get(req, res){
             params: { fields: 'name,images,owner.display_name,tracks.total' }
         });
         const playlistTracks = await spotifyApi.get(`/playlists/${id}/tracks?limit=50`, {
-            params: { fields: 'items(track(id,name,artists(name,id),album(images)))' }
+            params: { fields: 'items(added_at,track(id,name,artists(name,id),album(id,name,images),duration_ms,external_ids))' }
         });
         
         const items = playlistTracks.data.items.map(i => ({

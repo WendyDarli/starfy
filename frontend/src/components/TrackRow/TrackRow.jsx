@@ -26,7 +26,7 @@ function TrackRow({ item, index }) {
     img: item.imageUrl,
     duration_ms: item.duration_ms,
     albumName: item.albumOrShow?.name,
-    external_ids: item.external_ids?.isrc || '',
+    external_ids: item.external_ids?.isrc || null, //issue here
     index: index
   };
 

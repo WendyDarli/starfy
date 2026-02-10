@@ -7,6 +7,9 @@ function useLyrics(currentSong) {
         queryKey: ['lyrics', currentSong?.id],
         queryFn: () => getLyrics(currentSong),
         enabled: !!currentSong?.id,
+        retry: false,
+        staleTime: Infinity,
+        refetchOnWindowFocus: false,
     }); 
 };
 

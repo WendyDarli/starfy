@@ -9,7 +9,8 @@ function usePlaylist(){
     return useQuery({
         queryKey: ['playlist', id],
         queryFn: () => getPlaylist(type, id),
-        enabled: !!id && !!type, 
+        enabled: !!id && !!type,
+        refetchOnWindowFocus: false,
     });
 };
 

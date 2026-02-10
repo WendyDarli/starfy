@@ -6,6 +6,8 @@ function useAuth() {
         queryKey: ['user'],
         queryFn: getUser,
         retry: false,
+        staleTime: Infinity,
+        refetchOnWindowFocus: false,
     });
 };
 

@@ -5,6 +5,7 @@ function useLibrary() {
     return useSuspenseQuery({
         queryKey: ['library'],
         queryFn: getUserLibrary,
+        refetchOnWindowFocus: false,
     });
 }
 
