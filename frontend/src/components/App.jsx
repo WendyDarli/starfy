@@ -15,9 +15,17 @@ import useSongControls from '../hooks/useSongControls.js';
 
 export default function App() {
     const [ songsList, setSongsList ] = useState(null);
-    const { isAuthenticated, user } = useAuth();
+    const { data: user, isLoading } = useAuth();
+
+    const isAuthenticated = !!user;
+
     const { currentSong, setCurrentSong, isPlaying, setIsPlaying} = useCurrentSong();
     const { nextSong, previousSong, randomSong } = useSongControls(currentSong, songsList);
+    
+    if(isLoading){
+        return <p>Loading...</p>
+    }
+
     return (
         <>
             <GlobalHeader user={user}/>
@@ -26,7 +34,7 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar />
                 <MainSection>
-                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, setSongsList }}/>
+                    <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying, setSongsList }}/>
                 </MainSection>  
             </div>
 

@@ -1,8 +1,6 @@
 import './LoginModal.css';
 import starfyIcon from '../../assets/whiteIcons/starfy.svg';
 
-import React, { useState } from 'react';
-
 function LoginModal(){
 
     return(

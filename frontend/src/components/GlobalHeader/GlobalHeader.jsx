@@ -8,7 +8,7 @@ function GlobalHeader ({ user }){
     const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState('');
     const buttonStyle = {
-    backgroundImage: `url(${user.images?.[0]?.url})`
+    backgroundImage: `url(${user?.images?.[0]?.url})`
     }
     return (
         <div className='headerContainer'>

@@ -76,7 +76,11 @@ async function login_callback_get(req, res){
 //check if user is authenticated by fetching spotify profile
 async function isAuthenticated_get(req, res){
     try{
-        const profile = await spotifyApi.get('/me');
+        const profile = await spotifyApi.get('/me',{
+            params: {
+                fields: 'id, display_name, images, product, followers.total, email, country'
+            }
+        });
         res.json(profile.data);
 
     } catch(err){

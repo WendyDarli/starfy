@@ -1,9 +1,12 @@
 import './UserProfile.css';
-import { useOutletContext } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 
 function UserProfile() {
-    const { user } = useOutletContext();
-    if (!user) return <div>Loading...</div>; 
+    const { data: user, isLoading, isError } = useAuth();
+
+    if (isLoading) return <div>Loading...</div>; 
+    if (isError) return <div>Error loading user profile.</div>;
+
     return (
         <div className='profileContainer'>
             <div className='profileHeader'>
