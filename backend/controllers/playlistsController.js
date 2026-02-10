@@ -4,8 +4,12 @@ const { formatSpotifyData } = require('../utils/formatSpotifyData');
 async function playlist_get(req, res){
     try{
         const id = req.params.id;
-        const playlistData = await spotifyApi.get(`/playlists/${id}`);
-        const playlistTracks = await spotifyApi.get(`/playlists/${id}/tracks?limit=50`);
+        const playlistData = await spotifyApi.get(`/playlists/${id}`, {
+            params: { fields: 'name,images,owner.display_name,tracks.total' }
+        });
+        const playlistTracks = await spotifyApi.get(`/playlists/${id}/tracks?limit=50`, {
+            params: { fields: 'items(track(id,name,artists(name,id),album(images)))' }
+        });
         
         const items = playlistTracks.data.items.map(i => ({
             ...i.track,

@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
-//define prev and next and shuffle song info based on current song id and songs array
+//define prev, next and shuffle song info based on current song id and songs array
 function useSongControls(currentSong, songsList ){
     const items = songsList ||null;
 

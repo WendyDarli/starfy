@@ -6,6 +6,7 @@ import PlayerFooter from './PlayerFooter/PlayerFooter.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
+import { Suspense } from 'react';
 import { useState } from 'react';
 import useAuth from '../hooks/useAuth.js';
 import { Outlet } from 'react-router';
@@ -32,7 +33,10 @@ export default function App() {
             {!isAuthenticated && <LoginModal />}
             
             <div id='appLayout'>
-                <LibrarySidebar />
+                <Suspense fallback={<p>Loading...</p>}>
+                    <LibrarySidebar />
+                </Suspense>
+
                 <MainSection>
                     <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying, setSongsList }}/>
                 </MainSection>  
