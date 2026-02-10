@@ -3,7 +3,7 @@ import './LibrarySidebar.css';
 //hooks
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
-import useLibrary from '../../hooks/useLibrary';
+import useLibrary from '../../hooks/query/useLibrary.js';
 
 //assets
 import defaultCover from '../../assets/playlists_default_cover.png';

@@ -1,4 +1,4 @@
-import getUserLibrary from "../api/getUserLibrary";
+import getUserLibrary from "../../api/getUserLibrary";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 function useLibrary() {

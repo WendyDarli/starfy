@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { usePagination } from '../../hooks/usePagination.js';
+import { usePagination } from '../../hooks/query/usePagination.js';
 import { useParams } from 'react-router';
 import './SearchResults.css';
 

@@ -2,7 +2,7 @@
 import './CollectionDisplay.css';
 
 //hooks
-import usePlaylist from '../../hooks/usePlaylist.js';
+import usePlaylist from '../../hooks/query/usePlaylist.js';
 
 //components
 import TrackList from '../TrackList/TrackList.jsx';

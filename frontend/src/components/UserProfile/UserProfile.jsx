@@ -1,5 +1,5 @@
 import './UserProfile.css';
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/query/useAuth';
 
 function UserProfile() {
     const { data: user, isLoading, isError } = useAuth();

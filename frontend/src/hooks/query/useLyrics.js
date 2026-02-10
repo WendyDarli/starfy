@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import getLyrics from '../api/getLyrics.js';
+import getLyrics from '../../api/getLyrics.js';
 
 function useLyrics(currentSong) {
 

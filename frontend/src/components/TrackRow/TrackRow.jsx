@@ -2,7 +2,7 @@ import './TrackRow.css';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useOutletContext } from 'react-router';
-import useUrlParams from '../../hooks/useUrlParams.js'
+import useUrlParams from '../../hooks/utils/useUrlParams.js'
 
 import getColumns from '../../utils/uiColumns';
 import formatDuration from '../../utils/formatDuration.js'

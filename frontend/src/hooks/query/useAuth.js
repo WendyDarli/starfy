@@ -1,4 +1,4 @@
-import getUser from '../api/getUser.js';
+import getUser from '../../api/getUser.js';
 import { useQuery } from '@tanstack/react-query';
 
 function useAuth() {

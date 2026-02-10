@@ -1,7 +1,7 @@
 import './PlaylistHeader.css';
 import { useEffect, useRef, useState } from 'react';
 import ColorThief from 'colorthief';
-import useUrlParams from '../../hooks/useUrlParams.js'
+import useUrlParams from '../../hooks/utils/useUrlParams.js'
 
 function PlaylistHeader( { header } ) {
     const { id, type } = useUrlParams();

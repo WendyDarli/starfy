@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 
 //hooks
-import useLyrics from '../../hooks/useLyrics.js';
+import useLyrics from '../../hooks/query/useLyrics.js';
 
 //components
 import SongInfo from './SongInfo';
@@ -15,7 +15,7 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
   const navigate = useNavigate();
   const url = useLocation();
 
-  const { data: lyrics, isError } = useLyrics(currentSong);
+  const { data: lyrics } = useLyrics(currentSong);
 
 
   //playback

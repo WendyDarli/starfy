@@ -8,10 +8,10 @@ import LoginModal from './LoginModal/LoginModal.jsx';
 //HOOKS
 import { Suspense } from 'react';
 import { useState } from 'react';
-import useAuth from '../hooks/useAuth.js';
+import useAuth from '../hooks/query/useAuth.js';
 import { Outlet } from 'react-router';
-import useCurrentSong from '../hooks/useCurrentSong.js';
-import useSongControls from '../hooks/useSongControls.js';
+import useCurrentSong from '../hooks/utils/useCurrentSong.js';
+import useSongControls from '../hooks/utils/useSongControls.js';
 
 
 export default function App() {

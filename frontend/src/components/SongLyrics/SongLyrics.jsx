@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router';
-import useLyrics from '../../hooks/useLyrics.js';
+import useLyrics from '../../hooks/query/useLyrics.js';
 import './SongLyrics.css';  
 
 function SongLyrics(){

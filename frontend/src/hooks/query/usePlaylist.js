@@ -1,6 +1,6 @@
-import getPlaylist from "../api/getPlaylist";
+import getPlaylist from "../../api/getPlaylist.js";
 import { useQuery } from "@tanstack/react-query";
-import useUrlParams from '../hooks/useUrlParams.js';
+import useUrlParams from '../utils/useUrlParams.js';
 
 
 function usePlaylist(){
