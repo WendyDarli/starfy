@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 function useCurrentSong(){
     const [ isPlaying, setIsPlaying ] = useState(false); //true or false
-    const [ lyrics, setLyrics ] = useState(null); 
     const [ currentSong, setCurrentSong ] = useState({
         artistsName: [],
         songName: '',
@@ -15,8 +14,6 @@ function useCurrentSong(){
         index: null,
         isLoadingAudio: false,
     });
-
-    const durationSeconds =  Math.floor(currentSong?.duration_ms / 1000);
 
     // fetch song audio url //move out
         useEffect(() => {
@@ -40,47 +37,8 @@ function useCurrentSong(){
             });
         }, [currentSong?.id]);
 
-    //fetch lyrics //move out
-    useEffect(() => {
-        const controller = new AbortController();
-        setLyrics(null);
 
-        if(currentSong?.id) {
-
-            const params = new URLSearchParams({
-                artist_name: currentSong?.artistsName?.[0]?.name,
-                track_name: currentSong?.songName,
-                album_name: currentSong?.albumName,
-                duration: durationSeconds
-            });
-
-            fetch(`http://127.0.0.1:3000/lyrics?${params.toString()}`,{
-            credentials: 'include',
-            signal: controller.signal,
-            })
-            .then(res => {
-                if(!res.ok) throw new Error('error fetching lyrics');
-                return res.json();
-            })
-            .then(data => {
-                setLyrics(data);
-            }
-            )
-            .catch((err) => {
-                if(err.name === 'AbortError') return;
-
-                if(process.env.NODE_ENV !== 'production' ){
-                    console.error('Fetch error:', err);
-                }
-                setLyrics(null);
-            })
-        }
-
-        return () => controller.abort();
-    }, [currentSong?.id]);
-
-
-    return {currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics};
+    return {currentSong, setCurrentSong, isPlaying, setIsPlaying};
 };
 
 export default useCurrentSong;

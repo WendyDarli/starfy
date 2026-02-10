@@ -2,15 +2,21 @@ import './PlayerFooter.css';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 
+//hooks
+import useLyrics from '../../hooks/useLyrics.js';
+
 //components
 import SongInfo from './SongInfo';
 import SongControls from './SongControls';
 import SongProgress from './SongProgress';
 import SongVolumeControls from './SongVolumeControls';
 
-function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong, lyrics}) { 
+function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong}) { 
   const navigate = useNavigate();
   const url = useLocation();
+
+  const { data: lyrics, isError } = useLyrics(currentSong);
+
 
   //playback
   const [ currTime, setCurrTime ] = useState(0); 
@@ -106,6 +112,8 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
   function handleLyricsPath(){
     url.pathname === '/lyrics' ? navigate(-1) : navigate('/lyrics');
   };
+  const isLyricsPage = url.pathname === '/lyrics';
+  const shouldDisableLyricsButton = !lyrics && !isLyricsPage;
 
   return (
     <div className='footerContainer'>
@@ -134,14 +142,12 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
 
       <div id='extraControls'>
         <button 
-          disabled={!lyrics}
+          disabled={shouldDisableLyricsButton}
           aria-label='open song lyrics' 
-          className={`lyrics noBgBttn ${url.pathname === '/lyrics' ? 'active' : ''}
-          ${lyrics ? '' : 'disabled'}`}
-          onClick={() => {
-            handleLyricsPath();
-            console.log('lyrics: ', lyrics);
-          }}
+          className={`lyrics noBgBttn 
+            ${isLyricsPage ? 'active' : ''}
+            ${shouldDisableLyricsButton ? 'disabled' : ''}`}
+          onClick={handleLyricsPath}
         />
         <SongVolumeControls audio={audioRef.current}/>
       </div>

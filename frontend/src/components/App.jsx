@@ -18,7 +18,7 @@ export default function App() {
     const [ songsList, setSongsList ] = useState(null);
     const { isAuthenticated, user } = useAuth();
     const library = useFetchUserLibrary();
-    const { currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics} = useCurrentSong();
+    const { currentSong, setCurrentSong, isPlaying, setIsPlaying} = useCurrentSong();
     const { nextSong, previousSong, randomSong } = useSongControls(currentSong, songsList);
     return (
         <>
@@ -28,7 +28,7 @@ export default function App() {
             <div id='appLayout'>
                 <LibrarySidebar library={library}/>
                 <MainSection>
-                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, lyrics, setSongsList }}/>
+                    <Outlet context={{user, currentSong, setCurrentSong, isPlaying, setIsPlaying, setSongsList }}/>
                 </MainSection>  
             </div>
 
@@ -40,7 +40,6 @@ export default function App() {
                 nextSong={nextSong} 
                 previousSong={previousSong} 
                 randomSong={randomSong} 
-                lyrics={lyrics}
             />  
         </>
 
