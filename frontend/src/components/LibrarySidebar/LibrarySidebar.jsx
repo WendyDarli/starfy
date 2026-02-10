@@ -1,11 +1,17 @@
 import './LibrarySidebar.css';
+
+//hooks
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
+import useLibrary from '../../hooks/useLibrary';
+
+//assets
 import defaultCover from '../../assets/playlists_default_cover.png';
 import likedSongsCover from '../../assets/liked_songs_cover.png'
 import episodesCover from '../../assets/episodes_cover.png';
 
-function LibrarySidebar({ library }) {
+function LibrarySidebar() {
+    const { data: library } = useLibrary();
     const [isExpanded, setExpanded] = useState(false);
     const { id } = useParams();
 
