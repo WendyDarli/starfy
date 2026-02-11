@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router';
 
 //hooks
 import useLyrics from '../../hooks/query/useLyrics.js';
+import useAudio from '../../hooks/query/useAudio.js';
 
 //components
 import SongInfo from './SongInfo';
@@ -17,6 +18,18 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
 
   const { data: lyrics } = useLyrics(currentSong);
 
+  //audio fetching
+  const isrc = currentSong?.external_ids || null;
+  const { data: audioData, isLoading } = useAudio(isrc);  
+
+  useEffect(() => {
+      setIsPlaying(false);
+      setCurrentSong(prev => ({
+          ...prev, 
+          audioUrl: audioData, 
+          isLoadingAudio: isLoading})); 
+
+  }, [audioData]);
 
   //playback
   const [ currTime, setCurrTime ] = useState(0); 
@@ -56,7 +69,7 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
       audio.pause();
     }
 
-  }, []);
+  }, [isPlaying]);
 
 
   function handleTimeUpdate(e){
