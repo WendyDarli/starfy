@@ -23,7 +23,6 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
   const { data: audioData, isLoading } = useAudio(isrc);  
 
   useEffect(() => {
-      setIsPlaying(false);
       setCurrentSong(prev => ({
           ...prev, 
           audioUrl: audioData, 

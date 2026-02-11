@@ -10,6 +10,7 @@ function GlobalHeader ({ user }){
     const buttonStyle = {
     backgroundImage: `url(${user?.images?.[0]?.url})`
     }
+
     return (
         <div className='headerContainer'>
             <img id='starfyIcon' src={starfyIcon} alt='starfy Icon'></img>
@@ -18,6 +19,7 @@ function GlobalHeader ({ user }){
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
+                        if (!searchValue?.trim()) return;
                         navigate(`/search/${searchValue}`)
                     }}>
                     <button id='searchBttn' type='submit'></button>
