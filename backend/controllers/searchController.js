@@ -29,14 +29,27 @@ async function search_get(req, res) {
         const response = formatSpotifyData({
             items: items
         });
-        res.json(response);
+
+        res.json({
+            ...response,
+            pagination: {
+                currentPage: page,
+                hasMore: searchResultsRes?.data?.tracks?.next !== null
+            }
+        });
         
     }catch(err) {
         return res
             .status(err.response?.status || 500)
             .json({
-                message: err.response?.data?.error || err.message ||  'Error searching songs.',
+                items: [],
+                pagination: {
+                    currentPage: page ?? 0,
+                    hasMore: false,
+                },
+                error: err.message
             });
+
     }
 };
 

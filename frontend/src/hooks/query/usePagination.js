@@ -1,58 +1,49 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams } from 'react-router';
+import { useRef, useCallback } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import getSearchResults from '../../api/getSearchResults';
 
-export function usePagination(fetchFn){
-    const [data, setdata] = useState({ tracks: { items: [] } });
-    const [page, setPage] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const { query } = useParams();
+function usePagination(query) {
 
-    const loadInitialResults = async (page) => {
-        setLoading(true);
-        const results = await fetchFn(page);
-        setdata(results);
-        setLoading(false);
-    };
-    
-    const loadMoreResults = async (page) => {
-        setLoading(true);
-        const newResults = await fetchFn(page);
-        setdata(prev => ({
-            tracks: {
-            ...newResults.tracks,        
-            items: [...prev.tracks.items, ...newResults.tracks.items]
-            }
-        }));
-        
-        setLoading(false);
-    };
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['searchResults', query],
+    queryFn: ({ pageParam }) => getSearchResults(query, pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage.pagination.hasMore
+        ? lastPage.pagination.currentPage + 1
+        : undefined;
+    },
+  });
 
-    useEffect(() => {
-        setPage(0);
-        loadInitialResults(0);
-    },[query]);
-    
-    useEffect(() => {
-        if(page === 0 ) return;
-        loadMoreResults(page);
-    }, [page]);
+  //observer for infinite scrolling
+  const observer = useRef(null);
+  const paginationTriggerRef = useCallback(
+    (node) => {
+      if (!node || isFetchingNextPage) return;
+      if (observer.current) observer.current.disconnect();
 
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
 
-    const observer = useRef(); 
-    const paginationTriggerRef = useCallback(
-        (node) => {
-        if (loading || !node) return;
-        if (observer.current) observer.current.disconnect();
+      observer.current.observe(node);
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
 
-        observer.current = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-            setPage((prevPage) => prevPage + 1);           
-            }
-        });
-
-        if (node) observer.current.observe(node);
-        },[loading]
-    );
-
-    return {data, paginationTriggerRef, loading, loadInitialResults}
+  return {
+    data,
+    isLoading,
+    paginationTriggerRef,
+  };
 }
+
+export default usePagination;
