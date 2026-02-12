@@ -16,6 +16,7 @@ function TracksHeader() {
                     <p>title</p>
                     {columns?.includes('album') ? <p>Album</p> : <p></p>}
                     {columns?.includes('date_added') ? <p>Date added</p> : <p></p>}
+                    <p></p>
                     <img className="clockIcon" src={clockIcon} />
                 </>
             }

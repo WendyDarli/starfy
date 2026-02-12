@@ -1,6 +1,6 @@
 .songsHeader{
     display: grid;
-    grid-template-columns: 13px 3fr minmax(0, 2fr) minmax(0, 2fr) 50px;
+    grid-template-columns: 13px 3fr minmax(0, 2fr) minmax(0, 2fr) 50px 50px;
     gap: 16px;
     justify-items: start;
     color: var(--gray-text);

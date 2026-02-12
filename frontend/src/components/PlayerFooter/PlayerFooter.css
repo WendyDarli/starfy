@@ -33,18 +33,6 @@
     display: inline;
 }
 
-.likeBttn{
-    background-image: url('../../assets/whiteIcons/heart.svg');
-    background-size: 20px;
-    width: 35px;
-    height: 35px;
-}
-
-.likeBttn:hover{
-    background-image: url('../../assets/blueIcons/heart.svg');
-}
-
-
 #songControls{
     display: flex;
     justify-self: center;

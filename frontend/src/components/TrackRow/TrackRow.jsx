@@ -93,6 +93,9 @@ function TrackRow({ item, index }) {
       : <p></p>}
 
       <p>{formatDate(item.added_at)}</p>
+      <button
+        className={`noBgBttn ${item?.isFavorite ? 'likedBttn' : 'likeBttn'}`}
+      />
       <p>{formatDuration(item.duration_ms)}</p>
     </div>
   );

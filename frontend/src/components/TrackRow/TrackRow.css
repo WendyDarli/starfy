@@ -1,6 +1,6 @@
 .songContainer{
     display: grid;
-    grid-template-columns: 13px 3fr minmax(0, 2fr) minmax(0, 2fr) 50px;
+    grid-template-columns: 13px 3fr minmax(0, 2fr) minmax(0, 2fr) 50px 50px;
     grid-auto-flow: column;
     align-items: center;
     gap: 16px;
@@ -11,6 +11,16 @@
 
 .songContainer:hover{
     background-color: var(--gray-bg-hover);
+}
+
+.songContainer .likeBttn,
+.songContainer .likedBttn{
+    opacity: 0;
+}
+
+.songContainer:hover .likeBttn,
+.songContainer:hover .likedBttn {
+  opacity: 1;
 }
 
 .songImg{

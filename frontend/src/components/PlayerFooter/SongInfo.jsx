@@ -23,7 +23,10 @@ function SongInfo({ currentSong }){
                 {renderArtists(currentSong?.artistsName)}
             </div> 
 
-            <button aria-label='Like Song' className='likeBttn noBgBttn'/>        
+            <button 
+                aria-label='Like Song' 
+                className={`noBgBttn ${isFavorite ? 'likedBttn' : 'likeBttn'}`}
+            />        
         </div>
     );
 }
