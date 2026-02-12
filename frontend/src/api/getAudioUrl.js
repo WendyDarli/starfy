@@ -1,5 +1,5 @@
 async function getAudio(isrc){
-    const response = await fetch(`http://127.0.0.1:3000/song/${isrc}/audio`,  
+    const response = await fetch(`http://127.0.0.1:3000/song/audio/${isrc}`,  
         { credentials: 'include' }
     );
 

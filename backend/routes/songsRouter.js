@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get('/:id', songsController.song_get);
 
-router.get('/:isrc/audio', songsController.song_audio_get);
+router.get('/audio/:isrc', songsController.song_audio_get);
 
 module.exports = router;

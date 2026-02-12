@@ -1,11 +1,11 @@
 const express = require('express');
-const libraryController = require('../controllers/libraryController');
+const collectionController = require('../controllers/collectionController');
 const router = express.Router();
 
-router.get('/', libraryController.library_get);
+router.get('/', collectionController.collection_get);
 
-router.get('/tracks', libraryController.tracks_get);
+router.get('/tracks', collectionController.tracks_get);
 
-router.get('/episodes', libraryController.episodes_get);
+router.get('/episodes', collectionController.episodes_get);
 
 module.exports = router;

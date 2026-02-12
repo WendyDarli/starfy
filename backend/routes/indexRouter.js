@@ -20,7 +20,6 @@ router.get('/login', authController.login_get);
 router.get('/callback', authController.login_callback_get);
 router.use(authGuard);
 router.get('/isAuthenticated', authController.isAuthenticated_get);
-router.use('/library', libraryRouter);
 router.use('/collection', libraryRouter);
 router.use('/playlist', playlistsRouter);
 router.use('/album', albumsRouter);

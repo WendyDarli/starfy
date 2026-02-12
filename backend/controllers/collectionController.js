@@ -2,7 +2,7 @@ const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 
 //fetches user playlists for sidebar
-async function library_get(req, res){
+async function collection_get(req, res){
     try {
         const [playlistsRes, tracksRes, episodesRes] = await Promise.all([
             spotifyApi.get('/me/playlists'),
@@ -109,4 +109,4 @@ async function episodes_get(req, res){
 };
 
 
-module.exports = { library_get, tracks_get, episodes_get };
+module.exports = { collection_get, tracks_get, episodes_get };

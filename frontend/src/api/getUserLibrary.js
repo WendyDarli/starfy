@@ -1,5 +1,5 @@
 async function getUserLibrary(){
-    const response = await fetch('http://127.0.0.1:3000/library', 
+    const response = await fetch('http://127.0.0.1:3000/collection', 
     { credentials: 'include' });
 
     if(!response.ok) {
