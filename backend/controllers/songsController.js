@@ -53,4 +53,16 @@ async function song_audio_get(req, res, next){
 
 }
 
-module.exports = { song_get, song_audio_get };
+async function put_favorite_song(req, res){
+    try{
+
+    }catch(err){
+        
+    };
+};
+
+async function delete_favorite_song(req, res){
+    try{}catch(err){};
+};
+
+module.exports = { song_get, song_audio_get, put_favorite_song , delete_favorite_song };
