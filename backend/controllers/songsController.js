@@ -46,23 +46,45 @@ async function song_audio_get(req, res, next){
        res.json(previewUrl)
 
     } catch(err){
-        console.error('error in the song_audio_get ', err.message)
-        console.log("Deezer API Error:", audioRes.data.error.message);
-
+        console.error('error in the song_audio_get ', err.message);
+        res.status(500).json({ error: 'Failed get song audio', details: err.message });
     }
 
 }
 
 async function put_favorite_song(req, res){
     try{
+        const { id, timeStamp } = req.body;
 
-    }catch(err){
-        
+        const saveFavoriteSong = await spotifyApi.put('/me/tracks', {
+            ids: [id],
+            timestamped_ids: [
+                {
+                    id,
+                    added_at: timeStamp
+                }
+            ]
+        });
+        console.log(saveFavoriteSong.data)
+        res.json(saveFavoriteSong.data);
+    } catch(err){
+        console.error('error in the put_favorite_song', err.message)
+        res.status(500).json({ error: 'Failed to save favorite song', details: err.message });
     };
 };
 
 async function delete_favorite_song(req, res){
-    try{}catch(err){};
+    try{
+        const id = req.body.id;
+        const deleteFavoriteSong = await spotifyApi.delete('/me/tracks', {
+            data: { ids: [id] },
+        });
+        res.json(deleteFavoriteSong.data);
+
+    } catch(err){
+        console.error('error in the delete_favorite_song', err.message)
+        res.status(500).json({ error: 'Failed to remove favorite song', details: err.message });
+    };
 };
 
 module.exports = { song_get, song_audio_get, put_favorite_song , delete_favorite_song };

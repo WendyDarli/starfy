@@ -16,6 +16,7 @@ async function login_get(req, res){
         playlist-read-private
         playlist-read-collaborative
         user-library-read
+        user-library-modify
         `;
 
     const auth_query_parameters = new URLSearchParams({

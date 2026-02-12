@@ -13,6 +13,7 @@ function useCurrentSong(){
         audioUrl: undefined,
         index: null,
         isLoadingAudio: false,
+        isFavorite: false,
     });
 
     return {currentSong, setCurrentSong, isPlaying, setIsPlaying};

@@ -46,7 +46,8 @@ async function tracks_get(req, res){
             })),
             added_at: i.added_at,
             albumOrShow: i.track.album, 
-            imageUrl: i.track.album.images[0].url 
+            imageUrl: i.track.album.images[0].url,
+            isFavorite: true, 
         }));
                     
         const response = formatSpotifyData({
@@ -83,7 +84,8 @@ async function episodes_get(req, res){
             })),
             added_at: i.added_at,
             albumOrShow: null, 
-            imageUrl: i.episode.images[0].url 
+            imageUrl: i.episode.images[0].url,
+            isFavorite: true,
         }));
 
         const response = formatSpotifyData({

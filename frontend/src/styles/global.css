@@ -103,3 +103,21 @@ hr{
 .active{
     color: var(--blue);
 }
+
+
+.likeBttn{
+    background-image: url('../assets/whiteIcons/heart.svg');
+    background-size: 20px;
+    width: 35px;
+    height: 35px;
+}
+.likeBttn:hover{
+    background-image: url('../assets/blueIcons/heart.svg');
+}
+
+.likedBttn{
+    background-image: url('../assets/blueIcons/heart.svg');
+    background-size: 20px;
+    width: 35px;
+    height: 35px;
+}
