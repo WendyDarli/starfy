@@ -1,5 +1,6 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 //fetches user playlists for sidebar
 async function collection_get(req, res){
@@ -24,6 +25,7 @@ async function collection_get(req, res){
 
         res.json(response);
     } catch(error){
+        console.error('error at collection_get:', err);
         return res
         .status(error.response?.status || 500)
         .json({
@@ -33,23 +35,16 @@ async function collection_get(req, res){
 }
 
 //user library related fetches
+//get saved favorite songs
 async function tracks_get(req, res){
     try{
         const me = await spotifyApi.get('/me');
 
         const tracksRes = await spotifyApi.get('/me/tracks?limit=50');
-        const items = tracksRes.data.items.map(i => ({
-            ...i.track,
-            artists: i.track.artists.map(a => ({
-                name: a.name,
-                id:a.id
-            })),
-            added_at: i.added_at,
-            albumOrShow: i.track.album, 
-            imageUrl: i.track.album.images[0].url,
-            isFavorite: true, 
+        const items = formatSpotifyItems(tracksRes.data.items, item => ({
+            isFavorite: true
         }));
-                    
+
         const response = formatSpotifyData({
             title: 'Playlist',
             name: 'Liked Songs',
@@ -57,35 +52,29 @@ async function tracks_get(req, res){
             owner: me.data.display_name,
             total: tracksRes.data.total,
             followers: null,
-            items: items
+            items: items,
         });
+
         return res.json(response);
 
     } catch(err){
+        console.error('error at tracks_get:', err);
         return res
         .status(err.response?.status || 500)
         .json({
             message: err.response?.data?.error || 'Error fetching user playlist songs.',
         });
     }
-
 };
 
+//get saved episodes
 async function episodes_get(req, res){
     try{
         const me = await spotifyApi.get('/me');
         
         const episodesRes = await spotifyApi.get('/me/episodes?limit=50');
-        const items = episodesRes.data.items.map(i => ({
-            ...i.episode,
-            artists: [i.episode.show].map(a => ({
-                name: a.name,
-                id:a.id
-            })),
-            added_at: i.added_at,
-            albumOrShow: null, 
-            imageUrl: i.episode.images[0].url,
-            isFavorite: true,
+        const items = formatSpotifyItems(episodesRes.data.items, item => ({
+            isFavorite: true
         }));
 
         const response = formatSpotifyData({
@@ -102,11 +91,13 @@ async function episodes_get(req, res){
         });
         return res.json(response);
     } catch (err){
+        console.error('error at episodes_get:', err);
         return res
         .status(err.response?.status || 500)
         .json({
             message: err.response?.data?.error || 'Error fetching user playlist songs.',
         });
+        
     }
 };
 

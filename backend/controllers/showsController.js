@@ -1,5 +1,6 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 async function show_get(req, res){
     try{
@@ -7,12 +8,8 @@ async function show_get(req, res){
         const showData = await spotifyApi.get(`/shows/${id}`);
         const showEpisodes = await spotifyApi.get(`/shows/${id}/episodes?limit=50`);
         
-        const items = showEpisodes.data.items.map(episode => ({
-            ...episode,
-            artists: [{ name: showData.data.name, id: showData.data.id }],
-            added_at: null,
-            albumOrShow: null,
-            imageUrl: episode.images?.[0]?.url,
+        let items = formatSpotifyItems(showEpisodes.data.items, item => ({
+            isFavorite: false
         }));
 
         const response = formatSpotifyData({
@@ -27,6 +24,7 @@ async function show_get(req, res){
         return res.json(response);
         
     }catch(err){
+        console.error('error in show_get: ', err)
         return res
         .status(err.response?.status || 500)
         .json({

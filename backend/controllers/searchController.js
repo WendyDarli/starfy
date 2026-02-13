@@ -1,11 +1,12 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 async function search_get(req, res) {
+    const query = req.params.query;
+    const page = parseInt(req.query._page) || 0;
+    
     try{
-        const query = req.params.query;
-        const page = parseInt(req.query._page) || 0;
-        
         const searchResultsRes = await spotifyApi.get('/search', {
             params: {
                 q: query, 
@@ -16,14 +17,8 @@ async function search_get(req, res) {
         });
 
         //format data
-        const items = searchResultsRes.data.tracks.items.map(track => ({
-            ...track,
-            artists: track.artists.map(a => ({
-                name: a.name,
-                id:a.id
-            })),
-            albumOrShow: track.album, 
-            imageUrl: track.album.images[0].url ?? null
+        let items = formatSpotifyItems(searchResultsRes.data.tracks.items, item => ({
+            isFavorite: false
         }));
 
         const response = formatSpotifyData({
@@ -39,6 +34,7 @@ async function search_get(req, res) {
         });
         
     }catch(err) {
+        console.error('error in search_get: ', err)
         return res
             .status(err.response?.status || 500)
             .json({

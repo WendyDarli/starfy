@@ -1,5 +1,6 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 async function artist_get(req, res){
     try{
@@ -7,15 +8,8 @@ async function artist_get(req, res){
         const artistData = await spotifyApi.get(`/artists/${id}`);
         const artistTopTracks = await spotifyApi.get(`/artists/${id}/top-tracks?market=US`);
         
-        const items = artistTopTracks.data.tracks.map(i => ({
-            ...i,
-            artists: i.artists.map(a => ({
-                name: a.name,
-                id:a.id
-            })),
-            added_at: null,
-            albumOrShow: null, 
-            imageUrl: i.album?.images?.[0]?.url || null 
+        let items = formatSpotifyItems(artistTopTracks.data.tracks, item => ({
+            isFavorite: false
         }));
 
         const response = formatSpotifyData({
@@ -30,6 +24,7 @@ async function artist_get(req, res){
         return res.json(response);
         
     }catch(err){
+        console.error('error in artist_get: ', err);
         return res
         .status(err.response?.status || 500)
         .json({

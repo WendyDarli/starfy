@@ -1,18 +1,16 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 async function episode_get(req, res){
     try{
         const id = req.params.id;        
         const episodeData = await spotifyApi.get(`/episodes/${id}`);
         
-        const items = [{
-            ...episodeData.data,
-            artists: [{ name: episodeData.data.show.name, id: episodeData.data.show.id }],
-            added_at: null,
-            albumOrShow: episodeData.data.show,
-            imageUrl: episodeData.data.images[0]?.url,
-        }];
+        let items = formatSpotifyItems([episodeData.data], item => ({
+            isFavorite: false
+        }));
+        
 
         const response = formatSpotifyData({
             title: 'Podcast Episode',
