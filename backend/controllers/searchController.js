@@ -1,6 +1,7 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 const formatSpotifyItems = require('../utils/formatSpotifyItems');
+const checkFavoriteStatus = require('../utils/checkFavoriteStatus');
 
 async function search_get(req, res) {
     const query = req.params.query;
@@ -20,7 +21,8 @@ async function search_get(req, res) {
         let items = formatSpotifyItems(searchResultsRes.data.tracks.items, item => ({
             isFavorite: false
         }));
-
+        items = await checkFavoriteStatus(items);
+        
         const response = formatSpotifyData({
             items: items
         });

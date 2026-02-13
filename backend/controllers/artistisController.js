@@ -1,6 +1,7 @@
 const spotifyApi = require('../config/axiosConfig');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 const formatSpotifyItems = require('../utils/formatSpotifyItems');
+const checkFavoriteStatus = require('../utils/checkFavoriteStatus');
 
 async function artist_get(req, res){
     try{
@@ -11,6 +12,7 @@ async function artist_get(req, res){
         let items = formatSpotifyItems(artistTopTracks.data.tracks, item => ({
             isFavorite: false
         }));
+        items = await checkFavoriteStatus(items);
 
         const response = formatSpotifyData({
             title: 'Artist',
