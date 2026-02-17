@@ -2,14 +2,24 @@ import './GlobalHeader.css';
 import starfyIcon from '../../assets/whiteIcons/starfy.svg';
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react'
 
 function GlobalHeader ({ user }){
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const [searchValue, setSearchValue] = useState('');
+
     const buttonStyle = {
     backgroundImage: `url(${user?.images?.[0]?.url})`
     }
+
+    //if user leaves search page clean search input
+    useEffect(() => {
+        if (!pathname.startsWith('/search')) {
+                setSearchValue('');
+            }  
+    }, [pathname]);
 
     return (
         <div className='headerContainer'>
