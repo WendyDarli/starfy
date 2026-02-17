@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { useOutletContext } from 'react-router';
 import useUrlParams from '../../hooks/utils/useUrlParams.js'
+import useToggleFavoriteSong from '../../hooks/ui/useToggleFavoriteSong.js';
 
 import getColumns from '../../utils/uiColumns';
 import formatDuration from '../../utils/formatDuration.js'
+
+
 
 import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
@@ -19,6 +22,8 @@ function TrackRow({ item, index }) {
   const [ isHovered, setIsHovered ] = useState(false);
   let isThisTheActiveSong = currentSong?.id === item?.id && currentSong?.index === index;
 
+  const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id )
+
   const currentSongObj = {
     artistsName: item.artists,
     songName: item.name,
@@ -26,10 +31,11 @@ function TrackRow({ item, index }) {
     img: item.imageUrl,
     duration_ms: item.duration_ms,
     albumName: item.albumOrShow?.name,
-    external_ids: item.external_ids?.isrc || null, //issue here
-    index: index
+    external_ids: item.external_ids?.isrc || null,
+    index: index,
+    isFavorite: item.isFavorite
   };
-
+ 
   function formatDate(dateString){
       if(!dateString) return '';
       const date = new Date(dateString);
@@ -44,6 +50,14 @@ function TrackRow({ item, index }) {
     } else {
       setIsPlaying(!isPlaying);
     };
+  };
+
+  function handleFavoriteClick(){
+    handleFavoriteToggle();
+    setCurrentSong(prev => ({
+        ...prev,
+        isFavorite: !prev.isFavorite
+    }))
   }
 
   function handleIconChange(){
@@ -91,10 +105,11 @@ function TrackRow({ item, index }) {
       {columns?.includes('album')
       ? ( <Link to={`/album/${item.albumOrShow?.id}`} className="grayLink"> {item.albumOrShow?.name} </Link> ) 
       : <p></p>}
-
       <p>{formatDate(item.added_at)}</p>
       <button
         className={`noBgBttn ${item?.isFavorite ? 'likedBttn' : 'likeBttn'}`}
+        onClick={handleFavoriteClick}
+        disabled={isLoading}
       />
       <p>{formatDuration(item.duration_ms)}</p>
     </div>

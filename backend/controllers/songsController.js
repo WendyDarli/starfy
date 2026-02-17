@@ -54,19 +54,12 @@ async function song_audio_get(req, res, next){
 
 async function put_favorite_song(req, res){
     try{
-        const { id, timeStamp } = req.body;
-
+        const { id } = req.body;
         const saveFavoriteSong = await spotifyApi.put('/me/tracks', {
-            ids: [id],
-            timestamped_ids: [
-                {
-                    id,
-                    added_at: timeStamp
-                }
-            ]
+            ids: [id]
         });
-        console.log(saveFavoriteSong.data)
         res.json(saveFavoriteSong.data);
+
     } catch(err){
         console.error('error in the put_favorite_song', err.message)
         res.status(500).json({ error: 'Failed to save favorite song', details: err.message });

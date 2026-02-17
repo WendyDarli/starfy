@@ -22,13 +22,19 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
   const isrc = currentSong?.external_ids || null;
   const { data: audioData, isLoading } = useAudio(isrc);  
 
-  useEffect(() => {
-      setCurrentSong(prev => ({
-          ...prev, 
-          audioUrl: audioData, 
-          isLoadingAudio: isLoading})); 
+useEffect(() => {
+  if (!audioData) return;
 
-  }, [audioData]);
+  setCurrentSong(prev => {
+    if (prev?.audioUrl === audioData) return prev; // prevent rerender
+    return {
+      ...prev,
+      audioUrl: audioData,
+      isLoadingAudio: isLoading
+    };
+  });
+}, [audioData, isLoading]);
+
 
   //playback
   const [ currTime, setCurrTime ] = useState(0); 
@@ -129,7 +135,7 @@ function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nex
 
   return (
     <div className='footerContainer'>
-      <SongInfo currentSong={currentSong} />
+      <SongInfo currentSong={currentSong} setCurrentSong={setCurrentSong}/>
 
       <div id='songControls'>
         <audio  ref={audioRef} src={currentSong?.audioUrl} autoPlay {...audioHandlers}></audio>

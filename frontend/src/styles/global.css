@@ -111,8 +111,13 @@ hr{
     width: 35px;
     height: 35px;
 }
-.likeBttn:hover{
+.likeBttn:hover:not(:disabled){
     background-image: url('../assets/blueIcons/heart.svg');
+}
+.likeBttn:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+
 }
 
 .likedBttn{
