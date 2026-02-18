@@ -1,4 +1,6 @@
+import './SongProgress.css';
 import { useEffect, useRef } from 'react';
+
 
 function SongProgress({ audio, currTime, setCurrTime, newTime, setNewTime, isSeeking, setIsSeeking }){
 

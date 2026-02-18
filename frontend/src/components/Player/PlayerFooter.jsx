@@ -7,10 +7,10 @@ import useLyrics from '../../hooks/query/useLyrics.js';
 import useAudio from '../../hooks/query/useAudio.js';
 
 //components
-import SongInfo from './SongInfo';
-import SongControls from './SongControls';
-import SongProgress from './SongProgress';
-import SongVolumeControls from './SongVolumeControls';
+import SongInfo from './SongInfo/SongInfo.jsx';
+import SongControls from './SongControls/SongControls.jsx';
+import SongProgress from './SongProgress/SongProgress.jsx';
+import SongVolumeControls from './SongVolumeControls/SongVolumeControls.jsx';
 
 function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong}) { 
   const navigate = useNavigate();

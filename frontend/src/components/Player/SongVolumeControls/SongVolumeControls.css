@@ -1,0 +1,53 @@
+.volumeControl{
+    appearance: none;
+    width: 100px;
+    height: 3px;
+    background-color: var(--gray-bg-hover);
+    cursor: pointer;
+    margin-bottom: 4px;
+}
+
+.volumeControl::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: url('../../../assets/whiteIcons/star.svg') no-repeat center center;
+    background-size: contain; 
+    border: none;
+    cursor: pointer;
+    margin-top: -2px;
+    opacity: 0;
+}
+
+.volumeControl:hover::-webkit-slider-thumb{
+    opacity: 100%;
+}
+
+.muteVolume{
+    background-image: url('../../../assets/grayIcons/mute.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.lowVolume{
+    background-image: url('../../../assets/grayIcons/low_volume.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.lowVolume:hover{
+    background-image: url('../../../assets/whiteIcons/low_volume.svg');
+}
+
+.highVolume{
+    background-image: url('../../../assets/grayIcons/high_volume.svg');
+    height: 20px;
+    width: auto;
+    background-size: 25px;
+}
+
+.highVolume:hover{
+    background-image: url('../../../assets/whiteIcons/high_volume.svg');
+}

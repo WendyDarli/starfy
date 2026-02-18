@@ -2,7 +2,7 @@
 import GlobalHeader from './GlobalHeader/GlobalHeader.jsx';
 import LibrarySidebar from './LibrarySidebar/LibrarySidebar.jsx';
 import MainSection from './MainSection/MainSection.jsx';
-import PlayerFooter from './PlayerFooter/PlayerFooter.jsx';
+import Player from './Player/PlayerFooter.jsx';
 import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
@@ -42,7 +42,7 @@ export default function App() {
                 </MainSection>  
             </div>
 
-            <PlayerFooter 
+            <Player 
                 currentSong={currentSong} 
                 setCurrentSong={setCurrentSong} 
                 isPlaying={isPlaying} 

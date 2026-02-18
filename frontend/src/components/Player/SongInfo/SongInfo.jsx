@@ -1,6 +1,6 @@
-import defaultSongCover from '../../assets/playlists_default_cover.png';
-import useToggleFavoriteSong from '../../hooks/ui/useToggleFavoriteSong';
-import useUrlParams from '../../hooks/utils/useUrlParams';
+import './SongInfo.css';
+import defaultSongCover from '../../../assets/playlists_default_cover.png';
+import useToggleFavoriteSong from '../../../hooks/ui/useToggleFavoriteSong';
 
 //this is reusable extract later
 function renderArtists(artists = []){

@@ -1,3 +1,5 @@
+import './SongControls.css';
+
 function SongControls({ audio, isPlaying, setIsPlaying, settings, toggleSetting, setCurrentSong, nextSong, previousSong }) {
 
     function handlePlayPause(){
@@ -24,17 +26,17 @@ function SongControls({ audio, isPlaying, setIsPlaying, settings, toggleSetting,
     };
 
     function handleOnRepeat() {
-    if (settings.isShufflePlaylist) {
-        toggleSetting('isShufflePlaylist');
+        if (settings.isShufflePlaylist) {
+            toggleSetting('isShufflePlaylist');
     }
-    toggleSetting('isOnRepeat');
+        toggleSetting('isOnRepeat');
     }
 
     function handleShuffle() {
-    if (settings.isOnRepeat) {
-        toggleSetting('isOnRepeat');
-    }
-    toggleSetting('isShufflePlaylist');
+        if (settings.isOnRepeat) {
+            toggleSetting('isOnRepeat');
+        }
+        toggleSetting('isShufflePlaylist');
     }
     
     return(

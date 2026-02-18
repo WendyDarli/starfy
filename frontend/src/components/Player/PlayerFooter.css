@@ -1,0 +1,45 @@
+.footerContainer{
+    width: 98%;
+    position: fixed;
+    bottom: 0;
+    color: var(--white);
+    padding: 0px 20px 6px 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#songControls{
+    display: flex;
+    justify-self: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    max-width: 545px;   
+}
+
+#extraControls{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+}
+
+.lyrics{
+    background-image: url('../../assets/grayIcons/microphone.svg');
+    height: 22px;
+    width: auto;
+    background-size: 24px;
+}
+.lyrics:hover:not(:disabled){
+    background-image: url('../../assets/whiteIcons/microphone.svg');
+}
+.lyrics.active{
+    background-image: url('../../assets/blueIcons/microphone.svg');
+}
+.lyrics.disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+

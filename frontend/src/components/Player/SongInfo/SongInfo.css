@@ -1,0 +1,22 @@
+#songInfoContainer{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.songCover{
+    width: 55px;
+    height: 55px;
+    border-radius: 5px;
+}
+
+#songName{
+    margin: 0px;
+}
+
+#songArtist{
+    margin: 0px;
+    color: var(--gray-text);
+    font-size: 14px;
+    display: inline;
+}

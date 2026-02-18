@@ -1,3 +1,4 @@
+import './SongVolumeControls.css';
 import {useState, useRef, useEffect} from 'react';
 
 function SongVolumeControls({ audio }){
