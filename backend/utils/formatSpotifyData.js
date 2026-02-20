@@ -4,7 +4,7 @@ function formatSpotifyData({
     images, 
     owner, 
     total, 
-
+    playlistId,
     //specific to artists
     followers,
     items,
@@ -17,6 +17,7 @@ function formatSpotifyData({
             owner,
             total,
             followers,
+            playlistId,
         },
         tracks: {
             items

@@ -7,7 +7,6 @@ import LoginModal from './LoginModal/LoginModal.jsx';
 
 //HOOKS
 import { Suspense } from 'react';
-import { useState } from 'react';
 import useAuth from '../hooks/query/useAuth.js';
 import { Outlet } from 'react-router';
 import useCurrentSong from '../hooks/utils/useCurrentSong.js';
@@ -15,13 +14,12 @@ import useSongControls from '../hooks/utils/useSongControls.js';
 
 
 export default function App() {
-    const [ songsList, setSongsList ] = useState(null);
     const { data: user, isLoading } = useAuth();
 
     const isAuthenticated = !!user;
 
     const { currentSong, setCurrentSong, isPlaying, setIsPlaying} = useCurrentSong();
-    const { nextSong, previousSong, randomSong } = useSongControls(currentSong, songsList);
+    const { nextSong, previousSong, randomSong } = useSongControls(currentSong);
     
     if(isLoading){
         return <p>Loading...</p>
@@ -38,7 +36,7 @@ export default function App() {
                 </Suspense>
 
                 <MainSection>
-                    <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying, setSongsList }}/>
+                    <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying }}/>
                 </MainSection>  
             </div>
 

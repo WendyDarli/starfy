@@ -1,18 +1,7 @@
 import './TrackList.css';
 import TrackRow from '../TrackRow/TrackRow.jsx';
-import { useEffect } from 'react';
-import { useOutletContext } from 'react-router';
 
-function TrackList({ songs }) { 
-        const { setSongsList } = useOutletContext();
-
-        //defines songs list in outlet context for prev/next song functionality
-        useEffect(() => {
-            if(songs?.items){
-                setSongsList(songs?.items);            
-            }
-        }, [songs, setSongsList])
-
+function TrackList({ songs, playlistId }) { 
 
     return (
         <div> 
@@ -22,6 +11,7 @@ function TrackList({ songs }) {
                     key={`${item.id }-${item.added_at || index}`}
                     item={item}
                     index={index}
+                    playlistId={playlistId}
                 />
             ))}
         </div>

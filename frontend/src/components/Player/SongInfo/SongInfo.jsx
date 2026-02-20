@@ -16,7 +16,7 @@ function SongInfo({ currentSong, setCurrentSong }){
     const img = currentSong?.img || defaultSongCover;
     const songName = currentSong?.songName || 'No Song Playing';
     const songId = currentSong?.id || null;
-    const isFavorite = currentSong.isFavorite;
+    const isFavorite = currentSong?.isFavorite;
   
     const { handleFavoriteToggle, isLoading } = useToggleFavoriteSong(  isFavorite, songId );
 
@@ -41,7 +41,7 @@ function SongInfo({ currentSong, setCurrentSong }){
                 aria-label='Like Song' 
                 className={`noBgBttn ${isFavorite ? 'likedBttn' : 'likeBttn'}`}
                 onClick={handleFavoriteClick}
-                disabled={!currentSong.id || isLoading}
+                disabled={!currentSong?.id || isLoading}
             />        
         </div>
     );

@@ -52,6 +52,7 @@ async function tracks_get(req, res){
             owner: me.data.display_name,
             total: tracksRes.data.total,
             followers: null,
+            playlistId: 'tracks',
             items: items,
         });
 

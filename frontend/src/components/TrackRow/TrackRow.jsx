@@ -14,27 +14,18 @@ import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
 import pauseIcon from '../../assets/whiteIcons/pause.svg';
 
-function TrackRow({ item, index }) {
+function TrackRow({ item, index, playlistId }) {
   const isEpisode = item.type === 'episode';
   const { currentSong, setCurrentSong, isPlaying, setIsPlaying } = useOutletContext();
   const { id, type } = useUrlParams();
   const columns = getColumns(id, type);
   const [ isHovered, setIsHovered ] = useState(false);
-  let isThisTheActiveSong = currentSong?.id === item?.id && currentSong?.index === index;
+  let isThisTheActiveSong =
+    currentSong?.id === item?.id &&
+    currentSong?.playlistId === playlistId;
 
+  
   const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id )
-
-  const currentSongObj = {
-    artistsName: item.artists,
-    songName: item.name,
-    id: item.id,
-    img: item.imageUrl,
-    duration_ms: item.duration_ms,
-    albumName: item.albumOrShow?.name,
-    external_ids: item.external_ids?.isrc || null,
-    index: index,
-    isFavorite: item.isFavorite
-  };
  
   function formatDate(dateString){
       if(!dateString) return '';
@@ -44,8 +35,19 @@ function TrackRow({ item, index }) {
   };
 
   function handlePlayClick() {
-    if (!currentSong || currentSong.id !== item.id) {
-      setCurrentSong(currentSongObj);
+    if (!currentSong || !isThisTheActiveSong) {
+      setCurrentSong({
+        artistsName: item.artists,
+        songName: item.name,
+        id: item.id,
+        img: item.imageUrl,
+        duration_ms: item.duration_ms,
+        albumName: item.albumOrShow?.name,
+        external_ids: item.external_ids?.isrc || null,
+        index,
+        isFavorite: item.isFavorite,
+        playlistId: playlistId
+      });
       setIsPlaying(true);
     } else {
       setIsPlaying(!isPlaying);
@@ -79,7 +81,7 @@ function TrackRow({ item, index }) {
       <button className='trackRowPlayBttn'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => {setCurrentSong(currentSongObj); handlePlayClick()}}>
+        onClick={() => {handlePlayClick()}}>
         {handleIconChange()}
       </button>
 
