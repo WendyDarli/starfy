@@ -1,5 +1,5 @@
 import './LibrarySidebar.css';
-
+import featureNotReadyMessage from '../../utils/featureNotReadyMessage.js';
 //hooks
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
@@ -27,7 +27,11 @@ function LibrarySidebar() {
                 <p>Your Library</p>                
             </div>
 
-            <button className='createBttn circularBttn'><span className='bttnText'>Create</span></button>
+            <button className='createBttn circularBttn'
+            onClick={featureNotReadyMessage}>
+                <span className='bttnText'>Create</span>
+            </button>
+
             <nav>
 
                 {library.episodes.total > 0 && 

@@ -1,3 +1,5 @@
+import { Toaster } from "react-hot-toast";
+
 //COMPONENTS
 import GlobalHeader from './GlobalHeader/GlobalHeader.jsx';
 import LibrarySidebar from './LibrarySidebar/LibrarySidebar.jsx';
@@ -27,6 +29,7 @@ export default function App() {
 
     return (
         <>
+            <Toaster position='bottom-center'/>
             <GlobalHeader user={user}/>
             {!isAuthenticated && <LoginModal />}
             

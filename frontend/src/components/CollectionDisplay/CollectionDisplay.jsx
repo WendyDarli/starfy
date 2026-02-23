@@ -1,5 +1,6 @@
 // this should receive a state from bttn with playlist id
 import './CollectionDisplay.css';
+import featureNotReadyMessage from '../../utils/featureNotReadyMessage.js';
 
 //hooks
 import usePlaylist from '../../hooks/query/usePlaylist.js';
@@ -16,12 +17,14 @@ function CollectionDisplay() {
     if(isLoading){
         return <p>Loading...</p>
     }
-        
     return(
         <div>
             <PlaylistHeader header={playlistInfo?.header} />
             <div className='songsContainer'>
-                <button className='circularBttn playPause playPausePlaylist'></button>
+                <button 
+                    className='circularBttn playPause playPausePlaylist'
+                    onClick={featureNotReadyMessage}
+                />
                 <TracksHeader/>
                 <hr></hr>
                 <TrackList songs={playlistInfo?.tracks} playlistId={playlistInfo?.header?.playlistId}/>
