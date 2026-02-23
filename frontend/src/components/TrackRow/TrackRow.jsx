@@ -27,6 +27,16 @@ function TrackRow({ item, index, playlistId }) {
   
   const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id )
  
+
+ 
+
+  //disable like and play bttn for episodes/shows
+  const isNonPlayableContent = () =>
+  (type === 'collection' && id === 'episodes') ||
+  type === 'show' ||
+  type === 'episode';
+
+
   function formatDate(dateString){
       if(!dateString) return '';
       const date = new Date(dateString);
@@ -72,6 +82,9 @@ function TrackRow({ item, index, playlistId }) {
     if (isHovered) {
       return <img src={playIcon} alt='play' />;
     }
+    if (isNonPlayableContent) {
+      return <img src={playIcon} alt='play' />;
+    }
     return <p className={`trackNumber ${isThisTheActiveSong ? 'active' : ''}`}>{index + 1}</p>;
   };
 
@@ -81,7 +94,8 @@ function TrackRow({ item, index, playlistId }) {
       <button className='trackRowPlayBttn'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => {handlePlayClick()}}>
+        onClick={() => {handlePlayClick()}}
+        disabled={isNonPlayableContent()}>
         {handleIconChange()}
       </button>
 
@@ -111,7 +125,7 @@ function TrackRow({ item, index, playlistId }) {
       <button
         className={`noBgBttn ${item?.isFavorite ? 'likedBttn' : 'likeBttn'}`}
         onClick={handleFavoriteClick}
-        disabled={isLoading}
+        disabled={isLoading || isNonPlayableContent()}
       />
       <p>{formatDuration(item.duration_ms)}</p>
     </div>
