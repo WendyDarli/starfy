@@ -1,11 +1,25 @@
 import './UserProfile.css';
 import useAuth from '../../hooks/query/useAuth';
+import { useNavigate } from 'react-router';
 
 function UserProfile() {
     const { data: user, isLoading, isError } = useAuth();
+    const navigate = useNavigate();
 
     if (isLoading) return <div>Loading...</div>; 
     if (isError) return <div>Error loading user profile.</div>;
+
+    async function logout() {
+        const response = await fetch('http://127.0.0.1:3000/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+        if (!response.ok) throw new Error('Failed logout');
+
+        if (response.ok) {
+            window.location.href = '/';
+        }
+    };
 
     return (
         <div className='profileContainer'>
@@ -22,10 +36,14 @@ function UserProfile() {
                 <label className='profileLabel' htmlFor='email'>Email: </label>
                 <input className='profileInput' id='email' type="email" value={user.email} disabled></input>
 
-                <label className='profileLabel' htmlFor='country'>Country:</label>
+                <label className='profileLabel' htmlFor='country'>Country: </label>
                 <input className='profileInput' id='country' type="text" value={user.country} disabled></input>
             </div>
-            
+            <button 
+                className='logout-button'
+                onClick={logout}>
+                Logout
+            </button>
         </div>
     )
 };

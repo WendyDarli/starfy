@@ -82,12 +82,25 @@ async function isAuthenticated_get(req, res){
                 fields: 'id, display_name, images, product, followers.total, email, country'
             }
         });
-        res.json(profile.data);
+        return res.json(profile.data);
 
     } catch(err){
-        res.status(err.response?.status || 500).json({ error: 'User not authenticated.' });
+        return res.status(err.response?.status || 500).json({ error: 'User not authenticated.' });
         next();
     }  
 }
 
-module.exports =  { login_get, login_callback_get, isAuthenticated_get };
+async function logout_post(req, res){
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Logout failed');
+        }
+
+        res.clearCookie('connect.sid');
+        res.status(200).json({ message: 'Logged out' })
+
+    });
+};
+
+module.exports =  { login_get, login_callback_get, isAuthenticated_get, logout_post };

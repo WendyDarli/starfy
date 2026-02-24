@@ -27,7 +27,7 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: 'lax',
-      secure: false //set to TRUE in production
+      secure: false //set to TRUE in production and add app.set('trust proxy', 1);
     }
   })
 );

@@ -30,28 +30,32 @@ export default function App() {
     return (
         <>
             <Toaster position='bottom-center'/>
-            <GlobalHeader user={user}/>
             {!isAuthenticated && <LoginModal />}
             
-            <div id='appLayout'>
-                <Suspense fallback={<p>Loading...</p>}>
-                    <LibrarySidebar />
-                </Suspense>
+            {isAuthenticated && (
+                <>
+                    <GlobalHeader user={user}/>
+                    <div id='appLayout'>
+                        <Suspense fallback={<p>Loading...</p>}>
+                            <LibrarySidebar />
+                        </Suspense>
 
-                <MainSection>
-                    <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying }}/>
-                </MainSection>  
-            </div>
+                        <MainSection>
+                            <Outlet context={{ currentSong, setCurrentSong, isPlaying, setIsPlaying }}/>
+                        </MainSection>  
+                    </div>
 
-            <Player 
-                currentSong={currentSong} 
-                setCurrentSong={setCurrentSong} 
-                isPlaying={isPlaying} 
-                setIsPlaying={setIsPlaying} 
-                nextSong={nextSong} 
-                previousSong={previousSong} 
-                randomSong={randomSong} 
-            />  
+                    <Player 
+                        currentSong={currentSong} 
+                        setCurrentSong={setCurrentSong} 
+                        isPlaying={isPlaying} 
+                        setIsPlaying={setIsPlaying} 
+                        nextSong={nextSong} 
+                        previousSong={previousSong} 
+                        randomSong={randomSong} 
+                    /> 
+                </>
+            )}
         </>
 
     );
