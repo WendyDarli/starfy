@@ -104,20 +104,14 @@ useEffect(() => {
   }, [currentSong]);
 
   function handleAudioEnded(){
-    
-    //repeat
-    if(settings.isOnRepeat){
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
+    const audio = audioRef.current;
+    if (!audio) return;
 
-    //shuffle
-    } else if(settings.isShufflePlaylist){
-      audioRef.current.pause();
-      setCurrentSong(randomSong);
+    if(settings.isShufflePlaylist){
+      setCurrentSong(getRandomSong());
     
     //normal next
     } else {
-      audioRef.current.pause();
       setCurrentSong(nextSong);
     }
   };
@@ -138,7 +132,7 @@ useEffect(() => {
       <SongInfo currentSong={currentSong} setCurrentSong={setCurrentSong}/>
 
       <div id='songControls'>
-        <audio  ref={audioRef} src={currentSong?.audioUrl} autoPlay {...audioHandlers}></audio>
+        <audio  key={currentSong?.audioUrl} ref={audioRef} src={currentSong?.audioUrl} autoPlay loop={settings.isOnRepeat} {...audioHandlers}></audio>
         <SongControls 
           audio={audioRef.current} 
           isPlaying={isPlaying} 

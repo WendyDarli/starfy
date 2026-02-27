@@ -15,13 +15,13 @@ function SongControls({ audio, isPlaying, setIsPlaying, settings, toggleSetting,
         if(audio.currentTime <= 1){
             audio.pause();
             setCurrentSong(previousSong);
+            audio.play();
         } else {
             audio.currentTime = 0;
         }
     };
 
     function handleNextSong(){
-        audio.pause();
         setCurrentSong(nextSong);
     };
 
