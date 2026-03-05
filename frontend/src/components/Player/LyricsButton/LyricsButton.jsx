@@ -1,3 +1,5 @@
+import './LyricsButton.css'
+
 import { useSong } from '../../../context/songContext.jsx';
 import useLyrics from '../../../hooks/query/useLyrics.js';
 import { useNavigate, useLocation } from 'react-router';

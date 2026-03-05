@@ -1,0 +1,16 @@
+.lyrics{
+    background-image: url('../../../assets/grayIcons/microphone.svg');
+    height: 22px;
+    width: auto;
+    background-size: 24px;
+}
+.lyrics:hover:not(:disabled){
+    background-image: url('../../../assets/whiteIcons/microphone.svg');
+}
+.lyrics.active{
+    background-image: url('../../../assets/blueIcons/microphone.svg');
+}
+.lyrics.disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
