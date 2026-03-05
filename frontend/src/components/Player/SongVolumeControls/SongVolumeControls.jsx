@@ -1,18 +1,17 @@
 import './SongVolumeControls.css';
 import {useState, useRef, useEffect} from 'react';
+import { useSong } from '../../../context/songContext';
 
-function SongVolumeControls({ audio }){
-    const [volumeLevel, setVolumeLevel] = useState(0.5);
+function SongVolumeControls(){
     const [isHoldingDown, setIsHoldingDown] = useState(false);
-
-    const previousVolume = useRef(volumeLevel); //remember value before mute
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        if(!audio) return;
-        audio.volume = volumeLevel;
+    const {
+        volumeLevel,
+        handleVolumeChange,
+        muteSong
+    } = useSong();
 
-    }, [volumeLevel]);
 
     function updateVolumePaint(){
         if(!inputRef.current) return;
@@ -31,20 +30,6 @@ function SongVolumeControls({ audio }){
         onMouseUp: () => setIsHoldingDown(false),
         onMouseLeave: () => setIsHoldingDown(false),
     }
-
-    function handleVolumeChange(e) {
-        setVolumeLevel(parseFloat(e.target.value));
-    };
-
-    function muteSong() {
-        if(!audio) return;
-        if(volumeLevel > 0) {
-            previousVolume.current = volumeLevel;
-            setVolumeLevel(0);
-        } else {
-            setVolumeLevel(previousVolume.current);
-        }
-    };
 
     function getVolumeIconClass() {
         if(volumeLevel == 0) {

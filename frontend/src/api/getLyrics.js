@@ -1,9 +1,9 @@
-async function getLyrics(currentSong) {
-    const durationSeconds =  Math.floor(currentSong?.duration_ms / 1000);
+async function getLyrics(currentSongData) {
+    const durationSeconds =  Math.floor(currentSongData?.duration_ms / 1000);
     const params = new URLSearchParams({
-                artist_name: currentSong?.artistsName?.[0]?.name,
-                track_name: currentSong?.songName,
-                album_name: currentSong?.albumName,
+                artist_name: currentSongData?.artists?.[0]?.name,
+                track_name: currentSongData?.name,
+                album_name: currentSongData?.album?.name,
                 duration: durationSeconds
             });
 

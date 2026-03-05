@@ -24,12 +24,21 @@ function useSongControls( currentSong ){
         playlistId
     } : null;
 
-    const randomSong = useMemo(() => {
+    const getRandomSong = () => {
         if (!items || items.length === 0) return null;
-        const randomIndex = Math.floor(Math.random() * items.length);
-
-        return mapSongToObj(items[randomIndex], randomIndex);
-    }, [items]);
+        
+        // Optional: Filter out the current song so you don't play the same one twice
+        const otherSongs = items.filter(s => s.id !== currentSong?.id);
+        const listToPickFrom = otherSongs.length > 0 ? otherSongs : items;
+        
+        const randomIndex = Math.floor(Math.random() * listToPickFrom.length);
+        const song = listToPickFrom[randomIndex];
+        
+        // Find the original index in the full items array
+        const originalIndex = items.findIndex(s => s.id === song.id);
+        
+        return mapSongToObj(song, originalIndex);
+    };
 
     const nextSong = useMemo(() => {
         if (!currentSong || !items) return null;
@@ -48,7 +57,7 @@ function useSongControls( currentSong ){
         return mapSongToObj(items[prevSongIndex], prevSongIndex);
     }, [currentSong, items]);
 
-    return { nextSong, previousSong, randomSong };
+    return { nextSong, previousSong, getRandomSong };
 };
 
 export default useSongControls;

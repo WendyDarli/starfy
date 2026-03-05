@@ -1,10 +1,12 @@
-import { useOutletContext } from 'react-router';
+import { useSong } from '../../context/songContext.jsx';
 import useLyrics from '../../hooks/query/useLyrics.js';
 import './SongLyrics.css';  
 
 function SongLyrics(){
-    const currentSong = useOutletContext().currentSong;
-    const { data: lyrics, isError } = useLyrics(currentSong);
+    
+    const { currentSongData } = useSong();
+    const { data: lyrics, isError } = useLyrics(currentSongData);
+
 
     return(
         <div className='lyricsContainer'>

@@ -1,7 +1,7 @@
 import './TrackRow.css';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useOutletContext } from 'react-router';
+import { useSong } from '../../context/songContext.jsx';
 import useUrlParams from '../../hooks/utils/useUrlParams.js'
 import useToggleFavoriteSong from '../../hooks/ui/useToggleFavoriteSong.js';
 
@@ -9,32 +9,36 @@ import getColumns from '../../utils/uiColumns';
 import formatDuration from '../../utils/formatDuration.js'
 
 
-
 import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
 import pauseIcon from '../../assets/whiteIcons/pause.svg';
 
 function TrackRow({ item, index, playlistId }) {
+
+    const {
+      currentSongRef,
+      setCurrentSongRef,
+      isPlaying,
+      setIsPlaying,
+  } = useSong();
+
+
   const isEpisode = item.type === 'episode';
-  const { currentSong, setCurrentSong, isPlaying, setIsPlaying } = useOutletContext();
   const { id, type } = useUrlParams();
   const columns = getColumns(id, type);
   const [ isHovered, setIsHovered ] = useState(false);
   let isThisTheActiveSong =
-    currentSong?.id === item?.id &&
-    currentSong?.playlistId === playlistId;
+    currentSongRef?.id === item?.id &&
+    currentSongRef?.playlistId === playlistId;
 
   
   const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id )
  
-
- 
-
   //disable like and play bttn for episodes/shows
   const isNonPlayableContent = () =>
-  (type === 'collection' && id === 'episodes') ||
-  type === 'show' ||
-  type === 'episode';
+    (type === 'collection' && id === 'episodes') ||
+    type === 'show' ||
+    type === 'episode';
 
 
   function formatDate(dateString){
@@ -45,18 +49,10 @@ function TrackRow({ item, index, playlistId }) {
   };
 
   function handlePlayClick() {
-    if (!currentSong || !isThisTheActiveSong) {
-      setCurrentSong({
-        artistsName: item.artists,
-        songName: item.name,
+    if (!currentSongRef || !isThisTheActiveSong) {
+      setCurrentSongRef({
+        playlistId: playlistId,
         id: item.id,
-        img: item.imageUrl,
-        duration_ms: item.duration_ms,
-        albumName: item.albumOrShow?.name,
-        external_ids: item.external_ids?.isrc || null,
-        index,
-        isFavorite: item.isFavorite,
-        playlistId: playlistId
       });
       setIsPlaying(true);
     } else {
@@ -66,7 +62,7 @@ function TrackRow({ item, index, playlistId }) {
 
   function handleFavoriteClick(){
     handleFavoriteToggle();
-    setCurrentSong(prev => ({
+    setCurrentSongRef(prev => ({
         ...prev,
         isFavorite: !prev.isFavorite
     }))
@@ -131,4 +127,5 @@ function TrackRow({ item, index, playlistId }) {
     </div>
   );
 };
+
 export default TrackRow;

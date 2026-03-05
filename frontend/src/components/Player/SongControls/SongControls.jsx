@@ -1,43 +1,35 @@
 import './SongControls.css';
+import { useSong } from '../../../context/songContext';
 
-function SongControls({ audio, isPlaying, setIsPlaying, settings, toggleSetting, setCurrentSong, nextSong, previousSong }) {
+function SongControls() {
+    
+    const {
+        isPlaying,
+        playNext,
+        playPrevious,
+        settings,
+        audioRef,
+        handleOnRepeat, 
+        handleShuffle,
+        handlePlayPause
 
-    function handlePlayPause(){
-        if (!audio) return;
-        setIsPlaying(!isPlaying);  
-    };
+    } = useSong();
+
+    const audio = audioRef?.current;
 
     function handlePrevSong(){
-        if(previousSong == null) {
+        if(playPrevious == null) {
             audio.currentTime = 0;
             return;
         }
         if(audio.currentTime <= 1){
             audio.pause();
-            setCurrentSong(previousSong);
+            playPrevious();
             audio.play();
         } else {
             audio.currentTime = 0;
         }
     };
-
-    function handleNextSong(){
-        setCurrentSong(nextSong);
-    };
-
-    function handleOnRepeat() {
-        if (settings.isShufflePlaylist) {
-            toggleSetting('isShufflePlaylist');
-    }
-        toggleSetting('isOnRepeat');
-    }
-
-    function handleShuffle() {
-        if (settings.isOnRepeat) {
-            toggleSetting('isOnRepeat');
-        }
-        toggleSetting('isShufflePlaylist');
-    }
     
     return(
         <div id='customPlayer'>
@@ -56,10 +48,10 @@ function SongControls({ audio, isPlaying, setIsPlaying, settings, toggleSetting,
                 className={`circularBttn footerPlay ${isPlaying ? 'pause' : 'play'}`} 
                 onClick={handlePlayPause}
             />
-            <button disabled={nextSong == null}
+            <button disabled={playNext == null}
                 aria-label='next song' 
                 className='next noBgBttn'
-                onClick={handleNextSong}
+                onClick={() => playNext()}
             />
             <button 
                 aria-label='repeat Song' 

@@ -1,172 +1,31 @@
 import './PlayerFooter.css';
-import { useRef, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
 
-//hooks
-import useLyrics from '../../hooks/query/useLyrics.js';
-import useAudio from '../../hooks/query/useAudio.js';
-
-//components
+// components
 import SongInfo from './SongInfo/SongInfo.jsx';
 import SongControls from './SongControls/SongControls.jsx';
 import SongProgress from './SongProgress/SongProgress.jsx';
+import LyricsButon from './LyricsButton/LyricsButton.jsx'
 import SongVolumeControls from './SongVolumeControls/SongVolumeControls.jsx';
+import AudioPlayer from './AudioPlayer/AudioPlayer.jsx';
 
-function PlayerFooter({currentSong, setCurrentSong, isPlaying, setIsPlaying, nextSong, previousSong, randomSong}) { 
-  const navigate = useNavigate();
-  const url = useLocation();
-
-  const { data: lyrics } = useLyrics(currentSong);
-
-  //audio fetching
-  const isrc = currentSong?.external_ids || null;
-  const { data: audioData, isLoading } = useAudio(isrc);  
-
-useEffect(() => {
-  if (!audioData) return;
-
-  setCurrentSong(prev => {
-    if (prev?.audioUrl === audioData) return prev; // prevent rerender
-    return {
-      ...prev,
-      audioUrl: audioData,
-      isLoadingAudio: isLoading
-    };
-  });
-}, [audioData, isLoading]);
-
-
-  //playback
-  const [ currTime, setCurrTime ] = useState(0); 
-  const [ newTime, setNewTime ] = useState(0);
-  const [ isSeeking, setIsSeeking ] = useState(false);
-
-  const audioRef = useRef(null);
-
-  //sync isPlaying state with audio element
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateIsPlaying = () => {
-    const playing = !audio.paused && !audio.ended && audio.readyState > 2;
-    setIsPlaying(prev => (prev !== playing ? playing : prev));
-  };
-
-    audio.addEventListener('play', updateIsPlaying);
-    audio.addEventListener('pause', updateIsPlaying);
-    audio.addEventListener('ended', updateIsPlaying);
-
-    return () => {
-      audio.removeEventListener('play', updateIsPlaying);
-      audio.removeEventListener('pause', updateIsPlaying);
-      audio.removeEventListener('ended', updateIsPlaying);
-    };
-  }, [isPlaying]);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-    }
-
-  }, [isPlaying]);
-
-
-  function handleTimeUpdate(e){
-    if(!isSeeking){
-      setCurrTime(e.currentTarget.currentTime);
-    }
-  };
-
-  const [settings, setSettings] = useState({
-      isOnRepeat: false,
-      isShufflePlaylist: false,
-  });
-
-  //define if is onReapeat or shuffle
-  const toggleSetting = (key) => {
-      setSettings(prev => ({
-      ...prev,
-      [key]: typeof prev[key] === 'boolean' ? !prev[key] : prev[key]
-      }));
-  };
-
-  useEffect(() => {
-    // If we have a song object but the audioUrl is missing/null skip
-    if (currentSong && !currentSong.isLoadingAudio && currentSong.audioUrl === null) {
-      setCurrentSong(nextSong); 
-    }
-  }, [currentSong]);
-
-  function handleAudioEnded(){
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if(settings.isShufflePlaylist){
-      setCurrentSong(getRandomSong());
-    
-    //normal next
-    } else {
-      setCurrentSong(nextSong);
-    }
-  };
-
-  const audioHandlers = {
-    onTimeUpdate: handleTimeUpdate,
-    onEnded: handleAudioEnded,
-  };
-
-  function handleLyricsPath(){
-    url.pathname === '/lyrics' ? navigate(-1) : navigate('/lyrics');
-  };
-  const isLyricsPage = url.pathname === '/lyrics';
-  const shouldDisableLyricsButton = !lyrics && !isLyricsPage;
+function PlayerFooter() {
 
   return (
     <div className='footerContainer'>
-      <SongInfo currentSong={currentSong} setCurrentSong={setCurrentSong}/>
+      <SongInfo />
+      <AudioPlayer />
 
       <div id='songControls'>
-        <audio  key={currentSong?.audioUrl} ref={audioRef} src={currentSong?.audioUrl} autoPlay loop={settings.isOnRepeat} {...audioHandlers}></audio>
-        <SongControls 
-          audio={audioRef.current} 
-          isPlaying={isPlaying} 
-          setIsPlaying={setIsPlaying}
-          settings={settings}
-          toggleSetting={toggleSetting}
-          setCurrentSong={setCurrentSong}
-          nextSong={nextSong}
-          previousSong={previousSong}
-        />
-        <SongProgress audio={audioRef.current} 
-          setNewTime={setNewTime}
-          newTime={newTime} 
-          isSeeking={isSeeking}
-          setCurrTime={setCurrTime}
-          currTime={currTime}
-          setIsSeeking={setIsSeeking}/>
+        <SongControls />
+        <SongProgress />
       </div>
 
       <div id='extraControls'>
-        <button 
-          disabled={shouldDisableLyricsButton}
-          aria-label='open song lyrics' 
-          className={`lyrics noBgBttn 
-            ${isLyricsPage ? 'active' : ''}
-            ${shouldDisableLyricsButton ? 'disabled' : ''}`}
-          onClick={handleLyricsPath}
-        />
-        <SongVolumeControls audio={audioRef.current}/>
+        <LyricsButon />
+        <SongVolumeControls />
       </div>
-
-
     </div>
-  )
+  );
 }
 
 export default PlayerFooter;
