@@ -3,17 +3,18 @@ import { useSong } from '../../../context/songContext';
 
 function SongControls() {
     
-    const {
-        isPlaying,
-        playNext,
-        playPrevious,
-        settings,
-        audioRef,
-        handleOnRepeat, 
-        handleShuffle,
-        handlePlayPause
+    const { 
+        isPlaying, 
+        audioRef, 
 
+        handlePlayPause, 
+        playNext, 
+        playPrevious, 
+        handleOnRepeat, 
+        handleShuffle, 
+        settings
     } = useSong();
+
 
     const audio = audioRef?.current;
 
