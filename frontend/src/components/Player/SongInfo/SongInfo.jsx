@@ -3,17 +3,22 @@ import defaultSongCover from '../../../assets/playlists_default_cover.png';
 import useToggleFavoriteSong from '../../../hooks/ui/useToggleFavoriteSong';
 import { useSong } from '../../../context/songContext';
 import renderArtists from '../../../utils/renderArtists'
+import usePlaylist from '../../../hooks/query/usePlaylist.js';
 
 function SongInfo(){
 
-    const { currentSongData } = useSong();
+    const { nowPlaying,  } = useSong();
 
-    const img = currentSongData?.imageUrl || defaultSongCover;
-    const songId = currentSongData?.id || null;
-    const songName = currentSongData?.name || 'No Song Playing';
-    const isFavorite = currentSongData?.isFavorite;
-    
-    const { handleFavoriteToggle, isLoading } = useToggleFavoriteSong(  isFavorite, songId );
+    const img = nowPlaying?.imageUrl || defaultSongCover;
+    const songId = nowPlaying?.id || null;
+    const songName = nowPlaying?.name || 'No Song Playing';
+
+    // Derive isFavorite from playlist data
+    const { data: playlistInfo } = usePlaylist();
+    const findSongInPlaylist = playlistInfo?.tracks?.items.find(s => s.id === songId);
+    const isFavorite = findSongInPlaylist?.isFavorite;
+
+    const { handleFavoriteToggle, isLoading } = useToggleFavoriteSong( isFavorite, songId );
 
     return(
         <div id='songInfoContainer'>
@@ -21,14 +26,14 @@ function SongInfo(){
             
             <div className='songInfo'>
                 <p id='songName'>{songName}</p>
-                {renderArtists(currentSongData?.artists)}
+                {renderArtists(nowPlaying?.artists)}
             </div> 
 
             <button 
                 aria-label='Like Song' 
                 className={`noBgBttn ${isFavorite ? 'likedBttn' : 'likeBttn'}`}
                 onClick={() => handleFavoriteToggle()}
-                disabled={!currentSongData?.id || isLoading}
+                disabled={!nowPlaying?.id || isLoading}
             />        
         </div>
     );

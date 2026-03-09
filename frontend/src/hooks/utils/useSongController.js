@@ -4,16 +4,18 @@
 // - Actions: play, pause, next, prev, shuffle
 // - Status: isPlaying, currentTime, percent, seeking
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
 
 
-function useSongController(audioRef) {
+function useSongController() {
   // Song ids for ref
   const [currentSongRef, setCurrentSongRef] = useState({
     playlistId: '',
     id: '',
   });
+
+  const [ nowPlaying, setNowPlaying ] = useState(null);
 
   // Status
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,15 +26,27 @@ function useSongController(audioRef) {
   const playlistId = currentSongRef?.playlistId;
   const data = playlistId ? queryClient.getQueryData(['playlist', playlistId]) : undefined;
   const items = data?.tracks?.items ?? [];
-  const currentSongData = items.find((s) => s.id === currentSongRef.id);
+
+
+  //sets nowPlaying
+  useEffect(() => {
+    if(currentSongRef.id){
+      const currentSongData = items.find((s) => s.id === currentSongRef.id); 
+      if(currentSongData){
+        setNowPlaying(currentSongData);
+      }
+    }
+  }, [currentSongRef.id, items])
+
+
 
 
   return {
-    currentSongData,
     currentSongRef,
     setCurrentSongRef,
     isPlaying,
     setIsPlaying,
+    nowPlaying,
 
     items,
     playlistId,

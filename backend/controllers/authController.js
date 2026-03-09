@@ -66,6 +66,9 @@ async function login_callback_get(req, res){
 
 
     } catch (error){
+        console.error('error on login_callback_get', error.message )
+        console.error("SPOTIFY ERROR:", error.response?.data)
+        console.error("STATUS:", error.response?.status)
           return res
             .status(error.response?.status || 500)
             .json({

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 function AudioPlayer() {
   const { 
-    currentSongData, 
+    nowPlaying, 
     settings, 
     isPlaying, 
     setIsPlaying, 
@@ -14,7 +14,7 @@ function AudioPlayer() {
   } = useSong();
 
   // Fetch audio URL
-  const isrc = currentSongData?.external_ids?.isrc || null;
+  const isrc = nowPlaying?.external_ids?.isrc || null;
   const { data: audioUrl } = useAudio(isrc);
 
   // Sync isPlaying with the audio element
