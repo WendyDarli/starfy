@@ -1,4 +1,5 @@
 import './SongInfo.css';
+import toast from "react-hot-toast";
 import defaultSongCover from '../../../assets/playlists_default_cover.png';
 import useToggleFavoriteSong from '../../../hooks/ui/useToggleFavoriteSong';
 import { useSong } from '../../../context/songContext';
@@ -20,6 +21,17 @@ function SongInfo(){
 
     const { handleFavoriteToggle, isLoading } = useToggleFavoriteSong( isFavorite, songId );
 
+    function handleLiked(){
+        const result = handleFavoriteToggle();
+
+        if(result === 'added'){
+            toast.success('Added to favorites');
+        }
+        if(result === 'removed'){
+            toast('Removed from favorites');
+        }
+    }
+
     return(
         <div id='songInfoContainer'>
             <img src={img} alt='Song Cover' className='songCover' />
@@ -32,7 +44,7 @@ function SongInfo(){
             <button 
                 aria-label='Like Song' 
                 className={`noBgBttn ${isFavorite ? 'likedBttn' : 'likeBttn'}`}
-                onClick={() => handleFavoriteToggle()}
+                onClick={() => handleLiked()}
                 disabled={!nowPlaying?.id || isLoading}
             />        
         </div>

@@ -1,4 +1,5 @@
 import './TrackRow.css';
+import toast from "react-hot-toast";
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useSong } from '../../context/songContext.jsx';
@@ -7,7 +8,6 @@ import useToggleFavoriteSong from '../../hooks/ui/useToggleFavoriteSong.js';
 
 import getColumns from '../../utils/uiColumns';
 import formatDuration from '../../utils/formatDuration.js'
-
 
 import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
@@ -31,10 +31,21 @@ function TrackRow({ item, index, playlistId }) {
     currentSongRef?.id === item?.id &&
     currentSongRef?.playlistId === playlistId;
 
-  
-  const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id )
- 
-  //disable like and play bttn for episodes/shows
+  // Toggle favorite and show toast
+  const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id );
+
+    function handleLiked(){
+        const result = handleFavoriteToggle();
+
+        if(result === 'added'){
+            toast.success('Added to favorites');
+        }
+        if(result === 'removed'){
+            toast('Removed from favorites');
+        }
+    }
+
+  // Disable like and play bttn for episodes/shows
   const isNonPlayableContent = () =>
     (type === 'collection' && id === 'episodes') ||
     type === 'show' ||
@@ -60,13 +71,6 @@ function TrackRow({ item, index, playlistId }) {
     };
   };
 
-  function handleFavoriteClick(){
-    handleFavoriteToggle();
-    setCurrentSongRef(prev => ({
-        ...prev,
-        isFavorite: !prev.isFavorite
-    }))
-  }
 
   function handleIconChange(){
     if (isThisTheActiveSong && isPlaying && isHovered) {
@@ -120,7 +124,7 @@ function TrackRow({ item, index, playlistId }) {
       <p>{formatDate(item.added_at)}</p>
       <button
         className={`noBgBttn ${item?.isFavorite ? 'likedBttn' : 'likeBttn'}`}
-        onClick={handleFavoriteClick}
+        onClick={() => handleLiked()}
         disabled={isLoading || isNonPlayableContent()}
       />
       <p>{formatDuration(item.duration_ms)}</p>

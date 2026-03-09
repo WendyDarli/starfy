@@ -9,8 +9,10 @@ function useToggleFavoriteSong( isFavorite, songId){
 
      if(isFavorite){
             unfavorite.mutate({ id: songId });
+            return 'removed';
         } else {
             favorite.mutate({ id: songId });
+            return "added";
         }
   };
   return {handleFavoriteToggle, isLoading};

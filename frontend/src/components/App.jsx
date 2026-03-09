@@ -27,7 +27,10 @@ export default function App() {
     return (
         <>
             <SongProvider>
-                <Toaster position='bottom-center'/>
+                <Toaster position='bottom-center' 
+                containerStyle={{
+                    bottom: 100
+                }}/>
                 {!isAuthenticated && <LoginModal />}
                 
                 {isAuthenticated && (
