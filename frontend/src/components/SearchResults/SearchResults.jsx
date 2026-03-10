@@ -24,7 +24,7 @@ function SearchResults(){
             {isLoading && <p>Loading...</p>}
             <TracksHeader/>
             <hr></hr>
-            <TrackList songs={consolidatedSongs}/>
+            <TrackList source={{ type: 'search', id: query }} songs={consolidatedSongs}/>
             <div ref={paginationTriggerRef }/>
         </div>        
     )

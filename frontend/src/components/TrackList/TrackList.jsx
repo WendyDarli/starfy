@@ -1,7 +1,7 @@
 import './TrackList.css';
 import TrackRow from '../TrackRow/TrackRow.jsx';
 
-function TrackList({ songs, playlistId }) { 
+function TrackList({ songs, source }) { 
 
     return (
         <div> 
@@ -11,7 +11,7 @@ function TrackList({ songs, playlistId }) {
                     key={`${item.id }-${item.added_at || index}`}
                     item={item}
                     index={index}
-                    playlistId={playlistId}
+                    source={source}
                 />
             ))}
         </div>

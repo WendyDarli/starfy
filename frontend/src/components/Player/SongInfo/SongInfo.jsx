@@ -8,11 +8,11 @@ import usePlaylist from '../../../hooks/query/usePlaylist.js';
 
 function SongInfo(){
 
-    const { nowPlaying,  } = useSong();
+    const { nowPlaying } = useSong();
 
     const img = nowPlaying?.imageUrl || defaultSongCover;
     const songId = nowPlaying?.id || null;
-    const songName = nowPlaying?.name || 'No Song Playing';
+    const songName = nowPlaying?.name || 'Nothing Playing';
 
     // Derive isFavorite from playlist data
     const { data: playlistInfo } = usePlaylist();

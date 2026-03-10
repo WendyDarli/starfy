@@ -1,5 +1,6 @@
 import { useMatch, useParams } from 'react-router';
     
+// This hook figures out what page the user is bassed on the URL params
 export default function useUrlParams(){
     const { id } = useParams();
     

@@ -13,7 +13,7 @@ import equalizer from '../../assets/blueIcons/equalizer.gif';
 import playIcon from '../../assets/whiteIcons/play-arrow.svg';
 import pauseIcon from '../../assets/whiteIcons/pause.svg';
 
-function TrackRow({ item, index, playlistId }) {
+function TrackRow({ item, index, source }) {
 
     const {
       currentSongRef,
@@ -29,7 +29,7 @@ function TrackRow({ item, index, playlistId }) {
   const [ isHovered, setIsHovered ] = useState(false);
   let isThisTheActiveSong =
     currentSongRef?.id === item?.id &&
-    currentSongRef?.playlistId === playlistId;
+    currentSongRef?.sourceId === source?.id;
 
   // Toggle favorite and show toast
   const {handleFavoriteToggle, isLoading} = useToggleFavoriteSong( item.isFavorite, item.id );
@@ -62,7 +62,8 @@ function TrackRow({ item, index, playlistId }) {
   function handlePlayClick() {
     if (!currentSongRef || !isThisTheActiveSong) {
       setCurrentSongRef({
-        playlistId: playlistId,
+        source: source.type,
+        sourceId: source.id,
         id: item.id,
       });
       setIsPlaying(true);

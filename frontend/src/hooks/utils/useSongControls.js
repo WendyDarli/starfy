@@ -8,8 +8,7 @@ function useSongControls(audioRef, settings, setSettings, song) {
         setIsPlaying, 
         items, 
         currentSongRef, 
-        setCurrentSongRef, 
-        playlistId 
+        setCurrentSongRef,
     } = song;
 
     const audio = audioRef?.current;
@@ -24,14 +23,14 @@ function useSongControls(audioRef, settings, setSettings, song) {
     const playNext = () => {
         const index = items.findIndex((s) => s.id === currentSongRef?.id);
         const next = items[index + 1];
-        if (next) setCurrentSongRef({ playlistId, id: next.id });
+        if (next) setCurrentSongRef({ ...currentSongRef, id: next.id });
     };
     
 
     const playPrevious = () => {
         const index = items.findIndex((s) => s.id === currentSongRef?.id);
         const prev = items[index - 1];
-        if (prev) setCurrentSongRef({ playlistId, id: prev.id });
+        if (prev) setCurrentSongRef({ ...currentSongRef, id: prev.id });
     };
     
 
@@ -39,7 +38,7 @@ function useSongControls(audioRef, settings, setSettings, song) {
         const otherSongs = items.filter((s) => s.id !== currentSongRef?.id);
         const list = otherSongs.length > 0 ? otherSongs : items;
         const random = list[Math.floor(Math.random() * list.length)];
-        setCurrentSongRef({ playlistId, id: random.id });
+        setCurrentSongRef({ ...currentSongRef, id: random.id });
     };
     
 

@@ -13,7 +13,8 @@ import PlaylistHeader from '../PlaylistHeader/PlaylistHeader.jsx';
 
 function CollectionDisplay() {
     const { data: playlistInfo, isLoading } = usePlaylist();
-    
+    const playlistId= playlistInfo?.header?.playlistId;
+
     if(isLoading){
         return <p>Loading...</p>
     }
@@ -27,7 +28,7 @@ function CollectionDisplay() {
                 />
                 <TracksHeader/>
                 <hr></hr>
-                <TrackList songs={playlistInfo?.tracks} playlistId={playlistInfo?.header?.playlistId}/>
+                <TrackList songs={playlistInfo?.tracks} source={{type: 'playlist', id: playlistId}}/>
             </div>
         </div>
     )
