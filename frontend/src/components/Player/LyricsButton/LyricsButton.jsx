@@ -11,11 +11,11 @@ function LyricsButton(){
     const location = useLocation();
     const isLyricsPage = location.pathname === '/lyrics';
 
-    const { currentSongData } = useSong();
+    const { nowPlaying } = useSong();
 
 
     //fetchLyrics
-    const { data: lyrics } = useLyrics(currentSongData);
+    const { data: lyrics } = useLyrics(nowPlaying);
 
     const shouldDisableLyricsButton = !lyrics && !isLyricsPage;
     const handleLyricsPath = () => {

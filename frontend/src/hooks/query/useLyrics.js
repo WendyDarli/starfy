@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import getLyrics from '../../api/getLyrics.js';
 
-function useLyrics(currentSongData) {
+function useLyrics(nowPlaying) {
 
     return useQuery({
-        queryKey: ['lyrics', currentSongData?.name],
-        queryFn: () => getLyrics(currentSongData),
-        enabled: !!currentSongData?.name,
+        queryKey: ['lyrics', nowPlaying?.name],
+        queryFn: () => getLyrics(nowPlaying),
+        enabled: !!nowPlaying?.name,
         retry: false,
         staleTime: Infinity,
         refetchOnWindowFocus: false,

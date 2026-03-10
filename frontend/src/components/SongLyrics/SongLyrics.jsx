@@ -4,8 +4,8 @@ import './SongLyrics.css';
 
 function SongLyrics(){
     
-    const { currentSongData } = useSong();
-    const { data: lyrics, isError } = useLyrics(currentSongData);
+    const { nowPlaying } = useSong();
+    const { data: lyrics, isError } = useLyrics(nowPlaying);
 
 
     return(
