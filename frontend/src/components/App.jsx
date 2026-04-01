@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 
 // COMPONENTS
+import LoadingScreen from "./LoadingScreen/LoadingScreen.jsx";
 import GlobalHeader from './GlobalHeader/GlobalHeader.jsx';
 import LibrarySidebar from './LibrarySidebar/LibrarySidebar.jsx';
 import MainSection from './MainSection/MainSection.jsx';
@@ -35,6 +36,7 @@ export default function App() {
                 
                 {isAuthenticated && (
                     <>
+                        <LoadingScreen onFinish={() => setShowLoading(false)} />
                         <GlobalHeader user={user}/>
                         <div id='appLayout'>
                             <Suspense fallback={<p>Loading...</p>}>
