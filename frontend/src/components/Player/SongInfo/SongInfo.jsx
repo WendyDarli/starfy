@@ -4,7 +4,7 @@ import defaultSongCover from '../../../assets/playlists_default_cover.png';
 import useToggleFavoriteSong from '../../../hooks/ui/useToggleFavoriteSong';
 import { useSong } from '../../../context/songContext';
 import renderArtists from '../../../utils/renderArtists'
-import usePlaylist from '../../../hooks/query/usePlaylist.js';
+import useLikedSongs from '../../../hooks/query/useLikedSongs';
 
 function SongInfo(){
 
@@ -14,10 +14,9 @@ function SongInfo(){
     const songId = nowPlaying?.id || null;
     const songName = nowPlaying?.name || 'Nothing Playing';
 
-    // Derive isFavorite from playlist data
-    const { data: playlistInfo } = usePlaylist();
-    const findSongInPlaylist = playlistInfo?.tracks?.items.find(s => s.id === songId);
-    const isFavorite = findSongInPlaylist?.isFavorite;
+    // Check if song is in liked songs
+    const { data: likedSongs } = useLikedSongs();
+    const isFavorite = likedSongs?.tracks?.items?.some(song => song.id === songId);
 
     const { handleFavoriteToggle, isLoading } = useToggleFavoriteSong( isFavorite, songId );
 

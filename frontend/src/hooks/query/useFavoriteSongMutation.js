@@ -18,6 +18,9 @@
                 queryClient.invalidateQueries({
                     queryKey: ['searchResults', query]
             });
+                queryClient.invalidateQueries({
+                    queryKey: ['likedSongs']
+                });
         }
         });
 
@@ -28,6 +31,9 @@
                 });
              queryClient.invalidateQueries({
                 queryKey: ['searchResults', query]
+                });
+             queryClient.invalidateQueries({
+                queryKey: ['likedSongs']
                 });
         
             }
