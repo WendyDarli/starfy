@@ -4,6 +4,7 @@ import featureNotReadyMessage from '../../utils/featureNotReadyMessage.js';
 
 //hooks
 import usePlaylist from '../../hooks/query/usePlaylist.js';
+import useUrlParams from '../../hooks/utils/useUrlParams.js';
 
 
 //components
@@ -13,7 +14,9 @@ import PlaylistHeader from '../PlaylistHeader/PlaylistHeader.jsx';
 
 function CollectionDisplay() {
     const { data: playlistInfo, isLoading } = usePlaylist();
-    const playlistId= playlistInfo?.header?.playlistId;
+    const { id, type } = useUrlParams();
+    const sourceId = playlistInfo?.header?.playlistId || id;
+    const sourceType = type === 'artist' ? 'artist' : 'playlist';
 
     if(isLoading){
         return <p>Loading...</p>
@@ -28,7 +31,7 @@ function CollectionDisplay() {
                 />
                 <TracksHeader/>
                 <hr></hr>
-                <TrackList songs={playlistInfo?.tracks} source={{type: 'playlist', id: playlistId}}/>
+                <TrackList songs={playlistInfo?.tracks} source={{type: sourceType, id: sourceId}}/>
             </div>
         </div>
     )

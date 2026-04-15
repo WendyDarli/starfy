@@ -40,27 +40,21 @@ async function tracks_get(req, res){
     try{
         const me = await spotifyApi.get('/me');
 
-        let allItems = [];
-        let url = '/me/tracks?limit=50';
+        const tracksRes = await spotifyApi.get('/me/tracks?limit=50');
 
-        while (url) {
-            const tracksRes = await spotifyApi.get(url);
-            const items = formatSpotifyItems(tracksRes.data.items, item => ({
-                isFavorite: true
-            }));
-            allItems = allItems.concat(items);
-            url = tracksRes.data.next ? tracksRes.data.next.replace('https://api.spotify.com/v1', '') : null;
-        }
+        const items = formatSpotifyItems(tracksRes.data.items, item => ({
+            isFavorite: true
+        }));
 
         const response = formatSpotifyData({
             title: 'Playlist',
             name: 'Liked Songs',
             images: [],
             owner: me.data.display_name,
-            total: allItems.length,
+            total: items.length,
             followers: null,
             playlistId: 'tracks',
-            items: allItems,
+            items,
         });
 
         return res.json(response);

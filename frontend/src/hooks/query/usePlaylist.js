@@ -11,6 +11,7 @@ function usePlaylist(){
         queryFn: () => getPlaylist(type, id),
         enabled: !!id && !!type,
         refetchOnWindowFocus: false,
+        refetchInterval: 1000,
     });
 };
 
