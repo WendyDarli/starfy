@@ -25,9 +25,10 @@
 
 .progress::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 24px;
-    height: 24px;
-    background: url('../../assets/whiteIcons/star.svg') no-repeat center center;
+    width: 10px;
+    height: 10px;
+    background: var(--blue);
+    border-radius: 50%;
     background-size: contain;
     border: none;
     cursor: pointer;
@@ -37,7 +38,7 @@
 }
 
 .progress:hover::-webkit-slider-thumb{
-    opacity: 100%;
+    opacity: 1;
 }
 
 /* styles for firefox */
