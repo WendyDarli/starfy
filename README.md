@@ -1,5 +1,5 @@
 # starfy
-*Live demo not available.*
+*Live demo not available. Preview available on my portfolio.*
 
 ## About this project
 
@@ -32,8 +32,8 @@ Instead of focusing on design novelty, the project breaks a complex product into
 
 
 ## Tech stack
-<img alt="CSS" height="30" src="https://img.shields.io/badge/CSS-00674F?style=for-the-badge&logo=css&logoColor=white" /> &nbsp;
 <img alt="JavaScript" height="30" src="https://img.shields.io/badge/JavaScript-00674F?style=for-the-badge&logo=javascript&logoColor=white" /> &nbsp;
+<img alt="CSS" height="30" src="https://img.shields.io/badge/CSS-00674F?style=for-the-badge&logo=css&logoColor=white" /> &nbsp;
 <img alt="React" height="30" src="https://img.shields.io/badge/React-00674F?style=for-the-badge&logo=react&logoColor=white" /> &nbsp;
 <img alt="Node.js" height="30" src="https://img.shields.io/badge/Node.js-00674F?style=for-the-badge&logo=node.js&logoColor=white" /> &nbsp;
 <img alt="Express" height="30" src="https://img.shields.io/badge/Express-00674F?style=for-the-badge&logo=express&logoColor=white" /> &nbsp;
