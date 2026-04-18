@@ -26,7 +26,7 @@ Instead of focusing on design novelty, the project breaks a complex product into
 - RESTful API design
 - Separation between client and server
 - MVC backend structure
-- Authentication using tokens with Redis-based session storage and HTTP-only cookies
+- Token-based authentication with Redis session storage, HTTP-only cookies, and automatic session refresh on expiry
 - State management with TanStack Query (server-state handling and request caching)
 - Infinite pagination for search results
 
