@@ -1,8 +1,11 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require('express');
 const indexRouter = require('./routes/indexRouter');
 const cors = require('cors');
-
+const { handleNotFound, errorHandler } = require('./middlewares/errorHandler')
 
 //redis
 const session = require('express-session');
@@ -32,12 +35,22 @@ app.use(
   })
 );
 
+process.on('uncaughtException', (err) => {
+    console.log('UNCAUGHT EXCEPTION! Shutting down...');
+    console.log(err.name, err.message);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+    console.log('UNHANDLED REJECTION! Shutting down...');
+    console.log(err.name, err.message);
+    process.exit(1); 
+});
+
 app.use ('/', indexRouter),
 
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send(err);
-});
+app.use(handleNotFound);
+app.use(errorHandler);
 
 app.listen(3000, '127.0.0.1', () => {
   console.log('Server running on http://localhost:3000');
