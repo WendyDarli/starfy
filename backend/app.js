@@ -1,39 +1,24 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
-}
+};
 
 const express = require('express');
 const indexRouter = require('./routes/indexRouter');
-const cors = require('cors');
-const { handleNotFound, errorHandler } = require('./middlewares/errorHandler')
 
-//redis
-const session = require('express-session');
-const { RedisStore } = require('connect-redis'); 
-const redisClient = require('./redis');
+const cors = require('cors');
+const sessionMiddleware = require("./infrastructure/redis/redisSession.js");
+
+const { handleNotFound, errorHandler } = require('./middlewares/errorHandler');
+const errorLogger = require('./utils/errorLogger.js')
 
 const app = express();
-app.use(express.json());
 
+
+app.use(express.json());
 app.use(cors({
   origin: 'http://127.0.0.1:5173',
   credentials: true,
 }));
-
-//redis
-app.use(
-  session({
-    store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: false //set to TRUE in production and add app.set('trust proxy', 1);
-    }
-  })
-);
 
 process.on('uncaughtException', (err) => {
     console.log('UNCAUGHT EXCEPTION! Shutting down...');
@@ -48,6 +33,8 @@ process.on('unhandledRejection', (err) => {
 });
 
 app.use ('/', indexRouter),
+app.use(sessionMiddleware());
+app.use ('/', indexRouter);
 
 app.use(handleNotFound);
 app.use(errorHandler);

@@ -1,5 +1,5 @@
 const { createClient } = require('redis');
-const redisClient = createClient({ url: 'redis://localhost:6379', legacyMode: true });
+const redisClient = createClient({ url: process.env.REDIS_URL, legacyMode: true });
 
 redisClient.connect().catch(console.error);
 
