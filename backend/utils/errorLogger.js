@@ -1,16 +1,23 @@
 const pino = require('pino');
 
-const isDev = process.env.NODE_ENV !== "production";
+const isDev = process.env.NODE_ENV !== 'production';
 
-const logger = pino(
-  isDev
+const errorLogger = pino({
+  level: process.env.LOG_LEVEL || 'info',
+  formatters: {
+    level: (label) => ({ level: label }),
+  },
+  serializers: {
+    err: pino.stdSerializers.err,
+  },
+  redact: ['req.headers.authorization', 'context.password'],
+  transport: isDev
     ? {
-        transport: {
-          target: "pino-pretty",
-          options: { colorize: true },
-        },
+        target: "pino-pretty",
+        options: { colorize: true },
       }
-    : {}
-);
+    : undefined,
 
-module.exports = logger;
+});
+
+module.exports = errorLogger;
