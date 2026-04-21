@@ -20,7 +20,7 @@ spotifyClient.interceptors.request.use(async (config) => {
 
 spotifyClient.interceptors.response.use(
   (response) => response,
-  normalizeError
+  (err) => { throw(normalizeError(err)) }
 );
 
 module.exports = spotifyClient;

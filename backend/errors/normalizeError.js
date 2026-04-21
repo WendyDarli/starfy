@@ -23,9 +23,9 @@ const errorMap = {
 
 const normalizeError = (err) => {
     const status = err.response?.status;
-    const ErrorClass  = errorMap[status] || 'External service error';
+    const ErrorClass  = errorMap[status] || ExternalServiceError;
 
-    return Promise.reject(new ErrorClass());
+    return new ErrorClass();
 }
 
 module.exports = normalizeError;
