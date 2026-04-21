@@ -1,6 +1,6 @@
 const spotifyClient = require("../../api/axiosConfig");
 const checkFavoriteStatus = require('../../utils/checkFavoriteStatus');
-const { formatSpotifyData } = require('../../utils/formatSpotifyData');
+const formatSpotifyData = require('../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../utils/formatSpotifyItems');
 const getLoggerContext = require('../../utils/getLoggerContext');
 

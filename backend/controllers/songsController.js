@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 const spotifyApi = require('../config/axiosConfig');
-const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyData = require('../utils/formatSpotifyData');
 
 async function song_get(req, res){
     try{

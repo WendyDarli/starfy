@@ -25,4 +25,4 @@ function formatSpotifyData({
     };
 };
 
-module.exports = { formatSpotifyData };
+module.exports = formatSpotifyData;

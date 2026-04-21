@@ -1,4 +1,4 @@
-const { formatSpotifyData } = require('../../utils/formatSpotifyData');
+const formatSpotifyData = require('../../utils/formatSpotifyData');
 const spotifyClient = require('../../api/axiosConfig');
 const formatSpotifyItems = require('../../utils/formatSpotifyItems');
 const checkFavoriteStatus = require('../../utils/checkFavoriteStatus')

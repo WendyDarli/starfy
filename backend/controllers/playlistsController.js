@@ -1,5 +1,5 @@
 const spotifyApi = require('../config/axiosConfig');
-const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyData = require('../utils/formatSpotifyData');
 const formatSpotifyItems = require('../utils/formatSpotifyItems');
 const checkFavoriteStatus = require('../utils/checkFavoriteStatus');
 

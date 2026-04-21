@@ -4,7 +4,7 @@ const getLikedSongsPage = require('../services/spotify/getLikedSongsPage');
 const getLikedEpisodesPage = require('../services/spotify/getLikedEpisodesPage');
 
 const asyncHandler = require('../utils/asyncHandler');
-const { formatSpotifyData } = require('../utils/formatSpotifyData');
+const formatSpotifyData = require('../utils/formatSpotifyData');
 const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 // Get user library summary for sidebar (playlists, tracks, episodes)
