@@ -7,9 +7,11 @@ const indexRouter = require('./routes/indexRouter');
 
 const cors = require('cors');
 const sessionMiddleware = require("./infrastructure/redis/redisSession.js");
-
+// Middlewares
 const { handleNotFound, errorHandler } = require('./middlewares/errorHandler');
 const errorLogger = require('./utils/errorLogger.js')
+const correlationId = require('./middlewares/correlationID.js');
+
 const gracefulShutdown = require('./utils/gracefulShutdown.js');
 
 const app = express();
@@ -22,6 +24,7 @@ app.use(cors({
 }));
 
 app.use(sessionMiddleware());
+app.use(correlationId);
 app.use ('/', indexRouter);
 
 app.use(handleNotFound);
