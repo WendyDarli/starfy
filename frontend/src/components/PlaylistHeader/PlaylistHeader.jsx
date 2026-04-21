@@ -22,7 +22,7 @@ function PlaylistHeader( { header } ) {
             followersText = ` • ${formatFollowers(header.followers)}`;
             label = 'Followers';
             break;
-        case isShow && header?.total != null:
+        case header?.name === 'Your Episodes':
             followersText = ` • ${header.total}`;
             label = 'Episodes';
             break;
