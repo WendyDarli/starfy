@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get('/', collectionController.collection_get);
 
-router.get('/tracks', collectionController.tracks_get);
+router.get('/tracks', collectionController.likedSongs_get);
 
-router.get('/episodes', collectionController.episodes_get);
+router.get('/episodes', collectionController.likedEpisodes_get);
 
 module.exports = router;

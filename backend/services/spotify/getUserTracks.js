@@ -6,7 +6,7 @@ async function getUserTracks(){
     const logger = getLoggerContext({action: 'getUserTracks'});
     logger.info('Fetching user tracks from Spotify');
 
-    const userTracks = await spotifyClient.get('/me/tracks');
+    const userTracks = await spotifyClient.get('/me/tracks?limit=50');
     return userTracks.data;
 }
 
