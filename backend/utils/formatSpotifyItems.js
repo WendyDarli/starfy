@@ -1,5 +1,8 @@
 
-function formatSpotifyItems(items, extra = {}){
+function formatSpotifyItems(items = [], extra = () => ({})){
+    if (!Array.isArray(items)) return [];
+    
+    
     return items.map(item => {
         const source = item.track ?? item.episode ?? item;
 
