@@ -1,5 +1,6 @@
 const { AppError } = require('../errors/appError');
-const errorLogger = require("../utils/errorLogger");
+const getLoggerContext = require("../utils/getLoggerContext");
+const als = require('../utils/alsContext');
      
 // Catch 404 and forward to error handler
 function handleNotFound(req, res, next) {
@@ -11,23 +12,9 @@ function handleNotFound(req, res, next) {
 function errorHandler(err, req, res, next) {
     const isDev = req.app.get('env') === 'development';
 
-    const logContext = {
-        requestId: req.id,
-        userId: req.user?.id,
-        method: req.method,
-        url: req.originalUrl,
-        ip: req.ip,
-        input: {
-            body: req.body,
-            query: req.query,
-            params: req.params
-        }
-    };
-
-
+    const logger  = getLoggerContext();
     if(err instanceof AppError){
-        errorLogger.warn({
-            ...logContext,
+        logger.warn({
             error: err.name,
             msg: err.message,
             stack: err.stack,
@@ -35,7 +22,7 @@ function errorHandler(err, req, res, next) {
             context: err.context,
             path: err.path,
         });
-            
+     
         return res.status(err.statusCode).json({
             success: false,
             error: {
@@ -46,8 +33,7 @@ function errorHandler(err, req, res, next) {
         });
     }
 
-    errorLogger.error({
-        ...logContext,
+    logger.error({
         err: err,
         path: req.path,
     }, 'Unexpected error');

@@ -1,8 +1,9 @@
 const pino = require('pino');
+const REDACT_PATHS = require('../config/logRedadct');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const errorLogger = pino({
+const logger = pino({
   level: process.env.LOG_LEVEL || 'info',
   formatters: {
     level: (label) => ({ level: label }),
@@ -10,7 +11,7 @@ const errorLogger = pino({
   serializers: {
     err: pino.stdSerializers.err,
   },
-  redact: ['req.headers.authorization', 'context.password'],
+  redact: REDACT_PATHS,
   transport: isDev
     ? {
         target: "pino-pretty",
@@ -20,4 +21,4 @@ const errorLogger = pino({
 
 });
 
-module.exports = errorLogger;
+module.exports = logger;

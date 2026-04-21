@@ -1,15 +1,15 @@
 let isShuttingDown = false;
 const redisClient = require('../infrastructure/redis/redisClient');
-const  errorLogger = require('./errorLogger');
+const  logger = require('./logger');
 
 async function gracefulShutdown(server, exitCode) {
   if (isShuttingDown) return;
   isShuttingDown = true;
 
-  errorLogger.info('Graceful shutdown initiated', { exitCode });
+  logger.info('Graceful shutdown initiated', { exitCode });
 
   const shutdownTimeout = setTimeout(() => {
-    errorLogger.error("Shutdown timed out — forcing exit");
+    logger.error("Shutdown timed out — forcing exit");
     process.exit(1);
   }, 10000);
 
@@ -25,12 +25,12 @@ async function gracefulShutdown(server, exitCode) {
     // Drain existing work
     await redisClient?.quit?.().catch(() => {});
 
-    errorLogger.info("Clean shutdown complete");
+    logger.info("Clean shutdown complete");
     clearTimeout(shutdownTimeout);
     process.exit(exitCode);
 
   } catch (err) {
-    errorLogger.error("Error during shutdown", { error: err });
+    logger.error("Error during shutdown", { error: err });
     clearTimeout(shutdownTimeout);
     process.exit(1);
   }

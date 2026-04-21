@@ -9,9 +9,9 @@ const cors = require('cors');
 const sessionMiddleware = require("./infrastructure/redis/redisSession.js");
 // Middlewares
 const { handleNotFound, errorHandler } = require('./middlewares/errorHandler');
-const errorLogger = require('./utils/errorLogger.js')
 const correlationId = require('./middlewares/correlationID.js');
 
+const logger = require('./utils/logger.js')
 const gracefulShutdown = require('./utils/gracefulShutdown.js');
 
 const app = express();
@@ -35,7 +35,7 @@ const server = app.listen(3000, '127.0.0.1', () => {
 });
 
 process.on('unhandledRejection', (reason) => {
-  errorLogger.fatal("Unhandled rejection", {
+  logger.fatal("Unhandled rejection", {
     reason: reason instanceof Error ? reason.stack : String(reason),
   });
   // Throw to convert to uncaughtException for unified handling
@@ -43,7 +43,7 @@ process.on('unhandledRejection', (reason) => {
 });
 
 process.on('uncaughtException', (err) => {
-  errorLogger.fatal("Uncaught exception, initiating shutdown...", {
+  logger.fatal("Uncaught exception, initiating shutdown...", {
     error: err.message,
     stack: err.stack,
   });
