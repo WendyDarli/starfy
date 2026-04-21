@@ -1,4 +1,4 @@
-const spotifyStore = require('../utils/context');
+const als = require('../utils/alsContext');
 const axios = require('axios');
 const normalizeError = require('../errors/normalizeError');
 
@@ -7,7 +7,7 @@ const normalizeError = require('../errors/normalizeError');
 const spotifyClient = axios.create({ baseURL: 'https://api.spotify.com/v1' });
 
 spotifyClient.interceptors.request.use(async (config) => {
-  const store = spotifyStore.getStore(); 
+  const store = als.getStore(); 
   const token = await store?.token;
   
   if (token) {
