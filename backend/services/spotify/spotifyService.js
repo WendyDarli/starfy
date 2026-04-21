@@ -1,6 +1,5 @@
-const redisClient =  require('../redis');
+const redisClient =  require('../../infrastructure/redis/redisClient');
 const axios = require('axios');
-require('dotenv').config();
 
 //this fn checks if token is valid, if not it refreshes the token and saves it to redis
 async function ensureValidSpotifyToken(userId){
@@ -32,10 +31,7 @@ async function ensureValidSpotifyToken(userId){
       await redisClient.set(`tokens:user:${userId}:access_token`, new_access_token, 'EX', 3600);
       return new_access_token;
     }catch(err){
-       
-      console.error('refresh token failed: ', err.response?.data);
-      console.log(refreshToken)
-      throw new Error('Spotify session expired. Please login again.');
+      throw new AppError('Session expired. Please log in again.', 401);
     }
   }
 };
