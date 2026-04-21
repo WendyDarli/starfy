@@ -1,4 +1,4 @@
-const spotifyApi = require('../config/axiosConfig');
+const spotifyApi = require('../api/axiosConfig');
 
 //enrich songs with isFavorite
 async function checkFavoriteStatus(songs){
