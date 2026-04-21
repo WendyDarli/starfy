@@ -1,46 +1,22 @@
-const spotifyApi = require('../config/axiosConfig');
+const spotifyClient = require('../api/axiosConfig');
+const getUserCollection = require('../services/spotify/getUserCollection');
+const asyncHandler = require('../utils/asyncHandler');
 const { formatSpotifyData } = require('../utils/formatSpotifyData');
 const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
-//fetches user playlists for sidebar
-async function collection_get(req, res){
-    try {
-        const [playlistsRes, tracksRes, episodesRes] = await Promise.all([
-            spotifyApi.get('/me/playlists'),
-            spotifyApi.get('/me/tracks'),
-            spotifyApi.get('/me/episodes'),
-        ]);
-
-        const response = {
-            episodes: {
-                href: episodesRes.data.href,
-                total: episodesRes.data.total,
-        },
-            tracks: {
-                href: tracksRes.data.href,
-                total: tracksRes.data.total,
-        },
-            playlists: playlistsRes.data.items,
-        };
-
-        res.json(response);
-    } catch(error){
-        console.error('error at collection_get:', err);
-        return res
-        .status(error.response?.status || 500)
-        .json({
-            message: error.response?.data?.error || 'Error fetching user playlists.',
-        });
-    }
-}
+// Fetch user library summary for sidebar (playlists, tracks, episodes)
+const collection_get = asyncHandler(async (req, res, next) => {
+    const response = await getUserCollection();
+    return res.json(response);
+});
 
 //user library related fetches
 //get saved favorite songs
 async function tracks_get(req, res){
     try{
-        const me = await spotifyApi.get('/me');
+        const me = await spotifyClient.get('/me');
 
-        const tracksRes = await spotifyApi.get('/me/tracks?limit=50');
+        const tracksRes = await spotifyClient.get('/me/tracks?limit=50');
 
         const items = formatSpotifyItems(tracksRes.data.items, item => ({
             isFavorite: true
@@ -72,9 +48,9 @@ async function tracks_get(req, res){
 //get saved episodes
 async function episodes_get(req, res){
     try{
-        const me = await spotifyApi.get('/me');
+        const me = await spotifyClient.get('/me');
         
-        const episodesRes = await spotifyApi.get('/me/episodes?limit=50');
+        const episodesRes = await spotifyClient.get('/me/episodes?limit=50');
         const items = formatSpotifyItems(episodesRes.data.items, item => ({
             isFavorite: true
         }));
