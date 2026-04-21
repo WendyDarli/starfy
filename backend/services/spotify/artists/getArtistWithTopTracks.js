@@ -1,8 +1,8 @@
-const spotifyClient = require("../../api/axiosConfig");
-const checkFavoriteStatus = require('../../utils/checkFavoriteStatus');
-const formatSpotifyData = require('../../utils/formatSpotifyData');
-const formatSpotifyItems = require('../../utils/formatSpotifyItems');
-const getLoggerContext = require('../../utils/getLoggerContext');
+const spotifyClient = require("../../../api/axiosConfig");
+const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
+const formatSpotifyData = require('../../../utils/formatSpotifyData');
+const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
+const getLoggerContext = require('../../../utils/getLoggerContext');
 
 async function getArtistWithTopTracks(id){
     const logger = getLoggerContext({ artistId: id, action: 'getArtistWithTopTracks' });

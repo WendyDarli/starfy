@@ -1,7 +1,7 @@
 const spotifyClient = require('../api/axiosConfig');
-const getUserCollection = require('../services/spotify/getUserCollection');
-const getLikedSongsPage = require('../services/spotify/getLikedSongsPage');
-const getLikedEpisodesPage = require('../services/spotify/getLikedEpisodesPage');
+const getUserCollection = require('../services/spotify/collection/getUserCollection');
+const getLikedSongsPage = require('../services/spotify/collection/getLikedSongsPage');
+const getLikedEpisodesPage = require('../services/spotify/collection/getLikedEpisodesPage');
 
 const asyncHandler = require('../utils/asyncHandler');
 const formatSpotifyData = require('../utils/formatSpotifyData');

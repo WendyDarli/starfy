@@ -1,8 +1,8 @@
-const getLoggerContext = require('../../utils/getLoggerContext');
+const getLoggerContext = require('../../../utils/getLoggerContext');
 
-const spotifyClient = require('../../api/axiosConfig');
-const getUserTracks = require('./getUserTracks');
-const getUserEpisodes = require('./getUserEpisodes');
+const spotifyClient = require('../../../api/axiosConfig');
+const getUserTracks = require('../tracks/getUserTracks');
+const getUserEpisodes = require('../episodes/getUserEpisodes');
 
 // Fetches user playlists and aggregates with tracks and episodes
 async function getUserCollection(){

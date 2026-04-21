@@ -1,9 +1,9 @@
-const formatSpotifyData = require('../../utils/formatSpotifyData');
-const formatSpotifyItems = require('../../utils/formatSpotifyItems');
-const getLoggerContext = require('../../utils/getLoggerContext');
+const formatSpotifyData = require('../../../utils/formatSpotifyData');
+const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
+const getLoggerContext = require('../../../utils/getLoggerContext');
 
-const getUserEpisodes = require('./getUserEpisodes');
-const getUserProfile = require('./getUserProfile');
+const getUserEpisodes = require('../episodes/getUserEpisodes');
+const getUserProfile = require('../user/getUserProfile');
 
 async function getLikedEpisodesPage(){
     const logger = getLoggerContext({action: 'getLikedEpisodesPage'})

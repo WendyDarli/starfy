@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "startfrontend": "npm --prefix frontend run dev",
-    "startbackend": "npm --prefix backend run start",
+    "f": "npm --prefix frontend run dev",
+    "b": "npm --prefix backend run start",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

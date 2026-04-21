@@ -1,5 +1,5 @@
-const getLoggerContext = require('../../utils/getLoggerContext');
-const spotifyClient = require('../../api/axiosConfig');
+const getLoggerContext = require('../../../utils/getLoggerContext');
+const spotifyClient = require('../../../api/axiosConfig');
 
 
 async function getUserTracks(){
