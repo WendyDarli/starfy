@@ -9,7 +9,7 @@ async function gracefulShutdown(server, exitCode) {
   logger.info('Graceful shutdown initiated', { exitCode });
 
   const shutdownTimeout = setTimeout(() => {
-    logger.error("Shutdown timed out — forcing exit");
+    logger.error("Shutdown timed out, forcing exit");
     process.exit(1);
   }, 10000);
 
