@@ -5,7 +5,7 @@ const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus')
 const getLoggerContext = require('../../../utils/getLoggerContext');
 
 async function getAlbumDataWithTracks(id){
-    const logger = getLoggerContext({albumsId: id, action: 'getAlbumDataWithTracks'})
+    const logger = getLoggerContext({albumId: id, action: 'getAlbumDataWithTracks'})
     logger.info('Fetching album data from Spotify');
 
     const [albumData, albumTracks] = await Promise.all([

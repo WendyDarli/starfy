@@ -4,7 +4,7 @@ const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
 
 async function getEpisode(id){
-    const logger = getLoggerContext({action: 'getEpisode'});
+    const logger = getLoggerContext({episodeId: id, action: 'getEpisode'});
     logger.info('Fetching episode from Spotify');
 
     const episode = await spotifyClient.get(`/episodes/${id}`);
