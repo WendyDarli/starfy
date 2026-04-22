@@ -3,28 +3,17 @@ const spotifyClient = require('../api/axiosConfig');
 const formatSpotifyData = require('../utils/formatSpotifyData');
 const asyncHandler = require('../utils/asyncHandler')
 const getTrack = require('../services/spotify/tracks/getTrack');
+const getTrackPreviewAudio = require('../services/deezer/tracks/getTrackPreviewAudio.js');
 
 const track_get = asyncHandler(async (req, res) => {
     const response = await getTrack(req.params.id);
     return res.json(response);
 });
 
-async function track_audio_get(req, res, next){
-    try{
-        if(!req.params.isrc) return
-        const isrcId = req.params.isrc;
- 
-        const audioRes = await axios.get(`https://api.deezer.com/track/isrc:${isrcId}`);
-        const previewUrl = audioRes.data.preview;
-
-       res.json(previewUrl)
-
-    } catch(err){
-        console.error('error in the song_audio_get ', err.message);
-        res.status(500).json({ error: 'Failed get song audio', details: err.message });
-    }
-
-}
+const track_audio_get = asyncHandler(async (req, res) => {
+    const response = await getTrackPreviewAudio(req.params.isrc);
+    return res.json(response);
+});
 
 async function put_favorite_track(req, res){
     try{
