@@ -1,24 +1,9 @@
-const axios = require('axios');
+const getLyrics = require('../services/lrclib/getLyrics');
+const asyncHandler = require('../utils/asyncHandler');
 
-async function lyrics_get(req, res) {
-    try{
-        const fetchLyrics = await axios.get('https://lrclib.net/api/get', {
-            params: req.query,
-        });
-        
-        const plainLyrics = fetchLyrics.data.plainLyrics;
-        res.json(plainLyrics);
-
-    } catch(err){
-        console.error('error in lyrics_get: ', err.message);
-
-        if(err.response){
-            return res.status(err.response.status).json({
-                error: 'Lyrics not found for this song.'
-            });
-        }
-        res.status(500).json({ error: 'Internal server error' })
-    }
-};
+const lyrics_get = asyncHandler(async (req, res, next) => {
+    const response = await getLyrics(req.query);
+    res.json(response);
+});
 
 module.exports = { lyrics_get };
