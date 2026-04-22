@@ -1,54 +1,12 @@
-const spotifyApi = require('../config/axiosConfig');
-const formatSpotifyData = require('../utils/formatSpotifyData');
-const formatSpotifyItems = require('../utils/formatSpotifyItems');
-const checkFavoriteStatus = require('../utils/checkFavoriteStatus');
+const asyncHandler = require('../utils/asyncHandler');
+const searchTracks = require('../services/spotify/search/searchTracks')
 
-async function search_get(req, res) {
+const search_get = asyncHandler(async (req, res, next) => {
     const query = req.params.query;
     const page = parseInt(req.query._page) || 0;
     
-    try{
-        const searchResultsRes = await spotifyApi.get('/search', {
-            params: {
-                q: query, 
-                type: 'track',
-                limit: 20,
-                offset: page * 20
-            }
-        });
-
-        //format data
-        let items = formatSpotifyItems(searchResultsRes.data.tracks.items, item => ({
-            isFavorite: false
-        }));
-        items = await checkFavoriteStatus(items);
-        
-        const response = formatSpotifyData({
-            items: items
-        });
-
-        res.json({
-            ...response,
-            pagination: {
-                currentPage: page,
-                hasMore: searchResultsRes?.data?.tracks?.next !== null
-            }
-        });
-        
-    }catch(err) {
-        console.error('error in search_get: ', err)
-        return res
-            .status(err.response?.status || 500)
-            .json({
-                items: [],
-                pagination: {
-                    currentPage: page ?? 0,
-                    hasMore: false,
-                },
-                error: err.message
-            });
-
-    }
-};
+    const response = await searchTracks(query, page);
+    res.json(response);
+});
 
 module.exports = { search_get };
