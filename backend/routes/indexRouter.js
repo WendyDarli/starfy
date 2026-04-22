@@ -11,7 +11,7 @@ const playlistsRouter = require('./playlistsRouter');
 const artistsRouter = require('./artistsRouter');
 const albumsRouter = require('./albumsRouter');
 const showsRouter = require('./showsRouter');
-const songsRouter = require('./songsRouter');
+const tracksRouter = require('./tracksRouter');
 const episodesRouter = require('./episodesRouter');
 const searchRouter = require('./searchRouter');
 const lyricsRouter = require('./lyricsRouter')
@@ -33,7 +33,7 @@ router.use('/playlist', playlistsRouter);
 router.use('/album', albumsRouter);
 router.use('/show', showsRouter );
 router.use('/artist', artistsRouter);
-router.use('/song', songsRouter);
+router.use('/song', tracksRouter);
 router.use('/episode', episodesRouter);
 router.use('/search', searchRouter);
 router.use('/lyrics', lyricsRouter);
