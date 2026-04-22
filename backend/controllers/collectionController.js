@@ -1,11 +1,7 @@
-const spotifyClient = require('../api/axiosConfig');
 const getUserCollection = require('../services/spotify/collection/getUserCollection');
 const getLikedSongsPage = require('../services/spotify/collection/getLikedSongsPage');
 const getLikedEpisodesPage = require('../services/spotify/collection/getLikedEpisodesPage');
-
 const asyncHandler = require('../utils/asyncHandler');
-const formatSpotifyData = require('../utils/formatSpotifyData');
-const formatSpotifyItems = require('../utils/formatSpotifyItems');
 
 // Get user library summary for sidebar (playlists, tracks, episodes)
 const collection_get = asyncHandler(async (req, res, next) => {
