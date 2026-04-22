@@ -6,7 +6,7 @@ const search_get = asyncHandler(async (req, res, next) => {
     const page = parseInt(req.query._page) || 0;
     
     const response = await searchTracks(query, page);
-    res.json(response);
+    return res.json(response);
 });
 
 module.exports = { search_get };

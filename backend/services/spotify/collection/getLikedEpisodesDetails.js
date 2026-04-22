@@ -5,8 +5,8 @@ const getLoggerContext = require('../../../utils/getLoggerContext');
 const getUserEpisodes = require('../episodes/getUserEpisodes');
 const getUserProfile = require('../user/getUserProfile');
 
-async function getLikedEpisodesPage(){
-    const logger = getLoggerContext({action: 'getLikedEpisodesPage'})
+async function getLikedEpisodesDetails(){
+    const logger = getLoggerContext({action: 'getLikedEpisodesDetails'})
     logger.info('Fetching user liked episodes page data');
 
     const [me, userEpisodes] = await Promise.all([
@@ -34,4 +34,4 @@ async function getLikedEpisodesPage(){
     return response;
 }
 
-module.exports = getLikedEpisodesPage;
+module.exports = getLikedEpisodesDetails;

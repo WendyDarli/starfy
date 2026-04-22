@@ -5,8 +5,8 @@ const getLoggerContext = require('../../../utils/getLoggerContext');
 const getUserTracks = require('../tracks/getUserTracks');
 const getUserProfile = require('../user/getUserProfile');
 
-async function getLikedSongsPage(){
-    const logger = getLoggerContext({action: 'getLikedSongsPage'})
+async function getLikedTracksDetails(){
+    const logger = getLoggerContext({action: 'getLikedTracksDetails'})
     logger.info('Fetching user liked songs page data');
 
     const [me, userTracks] = await Promise.all([
@@ -32,4 +32,4 @@ async function getLikedSongsPage(){
     return response;
 }
 
-module.exports = getLikedSongsPage;
+module.exports = getLikedTracksDetails;

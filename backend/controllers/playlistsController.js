@@ -1,9 +1,9 @@
 const asyncHandler = require('../utils/asyncHandler');
-const getPlaylistDataWithTracks = require('../services/spotify/playlists/getPlaylistDataWithTracks')
+const getPlaylistDetails = require('../services/spotify/playlists/getPlaylistDetails')
 
 async function playlist_get(req, res, next){
-    const response = await getPlaylistDataWithTracks(req.params.id);
-    res.json(response);
+    const response = await getPlaylistDetails(req.params.id);
+    return res.json(response);
 };
 
 module.exports = { playlist_get };

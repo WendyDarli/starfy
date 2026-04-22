@@ -1,8 +1,8 @@
 const asyncHandler = require('../utils/asyncHandler');
-const getAlbumDataWithTracks = require('../services/spotify/albums/getAlbumDataWithTracks');
+const getAlbumDetails = require('../services/spotify/albums/getAlbumDetails');
 
 const album_get = asyncHandler(async (req, res, next) => {
-    const response = await getAlbumDataWithTracks(req.params.id);
+    const response = await getAlbumDetails(req.params.id);
     return res.json(response);
 });
 

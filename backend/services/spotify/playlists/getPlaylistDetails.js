@@ -4,8 +4,8 @@ const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
 
-async function getPlaylistDataWithTracks(id) {
-    const logger = getLoggerContext({playlistId: id, action: 'getPlaylistDataWithTracks'})
+async function getPlaylistDetails(id) {
+    const logger = getLoggerContext({playlistId: id, action: 'getPlaylistDetails'})
     logger.info('Fetching playlist data from Spotify');
 
     const [playlistData, playlistTracks] = await Promise.all([
@@ -34,4 +34,4 @@ async function getPlaylistDataWithTracks(id) {
     return response;
 };
 
-module.exports = getPlaylistDataWithTracks;
+module.exports = getPlaylistDetails;

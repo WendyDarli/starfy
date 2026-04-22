@@ -1,6 +1,3 @@
-const { default: axios } = require('axios');
-const spotifyClient = require('../api/axiosConfig');
-const formatSpotifyData = require('../utils/formatSpotifyData');
 const asyncHandler = require('../utils/asyncHandler')
 const getTrack = require('../services/spotify/tracks/getTrack');
 const getTrackPreviewAudio = require('../services/deezer/tracks/getTrackPreviewAudio.js');
