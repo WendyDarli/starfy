@@ -1,5 +1,6 @@
 let isShuttingDown = false;
 const redisClient = require('../infrastructure/redis/redisClient');
+const { sdk } = require('../config/instrumentation.js');
 const  logger = require('./logger');
 
 async function gracefulShutdown(server, exitCode) {
@@ -14,6 +15,8 @@ async function gracefulShutdown(server, exitCode) {
   }, 10000);
 
   try {
+    await sdk.shutdown();
+
     // Stop accepting new connections
     await new Promise((resolve, reject) => {
         server.close((err) => {

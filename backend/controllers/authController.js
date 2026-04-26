@@ -1,8 +1,8 @@
 const axios = require('axios');
 require('dotenv').config();
 const { fetchSpotifyProfile } = require('../utils/fetchSpotifyProfile')
-const redisClient = require('../redis');
-const spotifyApi = require('../config/axiosConfig')
+const redisClient = require('../infrastructure/redis/redisClient');
+const spotifyApi = require('../api/axiosConfig')
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;

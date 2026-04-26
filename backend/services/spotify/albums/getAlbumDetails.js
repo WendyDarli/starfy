@@ -1,12 +1,11 @@
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const spotifyClient = require('../../../api/axiosConfig');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
-const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus')
-const getLoggerContext = require('../../../utils/getLoggerContext');
+const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
+const logger = require('../../../utils/logger');
 
-async function getAlbumDataWithTracks(id){
-    const logger = getLoggerContext({albumId: id, action: 'getAlbumDataWithTracks'})
-    logger.info('Fetching album data from Spotify');
+async function getAlbumDataWithTracks(id) {
+    logger.info({albumId: id, action: 'getAlbumDataWithTracks'}, 'Fetching album data from Spotify');
 
     const [albumData, albumTracks] = await Promise.all([
         spotifyClient.get(`/albums/${id}`),

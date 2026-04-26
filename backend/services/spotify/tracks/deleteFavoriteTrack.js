@@ -1,9 +1,8 @@
-const getLoggerContext = require('../../../utils/getLoggerContext');
 const spotifyClient = require('../../../api/axiosConfig');
+const logger = require('../../../utils/logger');
 
-async function deleteFavoriteTrack(id){
-    const logger = getLoggerContext({trackId: id, action: 'deleteFavoriteTrack'});
-    logger.info('Deleting track from Spotify favorites');
+async function deleteFavoriteTrack(id) {
+    logger.info({trackId: id, action: 'deleteFavoriteTrack'}, 'Deleting track from Spotify favorites');
 
     const deleteTrack = await spotifyClient.delete('/me/tracks', {
         data: { ids: [id] }

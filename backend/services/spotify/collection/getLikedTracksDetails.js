@@ -1,13 +1,12 @@
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
-const getLoggerContext = require('../../../utils/getLoggerContext');
+const logger = require('../../../utils/logger');
 
 const getUserTracks = require('../tracks/getUserTracks');
 const getUserProfile = require('../user/getUserProfile');
 
-async function getLikedTracksDetails(){
-    const logger = getLoggerContext({action: 'getLikedTracksDetails'})
-    logger.info('Fetching user liked songs page data');
+async function getLikedTracksDetails() {
+    logger.info({action: 'getLikedTracksDetails'}, 'Fetching user liked songs page data');
 
     const [me, userTracks] = await Promise.all([
         getUserProfile(),

@@ -14,8 +14,8 @@ const showsRouter = require('./showsRouter');
 const tracksRouter = require('./tracksRouter');
 const episodesRouter = require('./episodesRouter');
 const searchRouter = require('./searchRouter');
-const lyricsRouter = require('./lyricsRouter')
-
+const lyricsRouter = require('./lyricsRouter');
+const adminRoter = require('./adminRouter.js');
 // Important: ensure login/callback remain mounted before authGuard if moved do carefully and preserve order
 
 // Public routes
@@ -37,5 +37,6 @@ router.use('/song', tracksRouter);
 router.use('/episode', episodesRouter);
 router.use('/search', searchRouter);
 router.use('/lyrics', lyricsRouter);
+router.use('/admin', adminRoter);
 
 module.exports = router;

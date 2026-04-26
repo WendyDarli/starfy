@@ -1,13 +1,11 @@
-const getLoggerContext = require('../../../utils/getLoggerContext');
-
 const spotifyClient = require('../../../api/axiosConfig');
 const getUserTracks = require('../tracks/getUserTracks');
 const getUserEpisodes = require('../episodes/getUserEpisodes');
+const logger = require('../../../utils/logger');
 
 // Fetches user playlists and aggregates with tracks and episodes
-async function getUserCollection(){
-    const logger = getLoggerContext({action: 'getUserCollection'});
-    logger.info('Fetching user collection from Spotify');
+async function getUserCollection() {
+    logger.info({action: 'getUserCollection'}, 'Fetching user collection from Spotify');
 
     const [playlists, tracks, episodes] = await Promise.all([
         spotifyClient.get('/me/playlists'),

@@ -1,6 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-};
+require('dotenv').config();
+require('./config/instrumentation.js');
 
 const express = require('express');
 const indexRouter = require('./routes/indexRouter');
@@ -9,10 +8,13 @@ const cors = require('cors');
 const sessionMiddleware = require("./infrastructure/redis/redisSession.js");
 // Middlewares
 const { handleNotFound, errorHandler } = require('./middlewares/errorHandler');
-const correlationId = require('./middlewares/correlationID.js');
 
 const logger = require('./utils/logger.js')
 const gracefulShutdown = require('./utils/gracefulShutdown.js');
+
+
+const { trace } = require('@opentelemetry/api');
+const tracer = trace.getTracer('starfy-server');
 
 const app = express();
 
@@ -24,7 +26,6 @@ app.use(cors({
 }));
 
 app.use(sessionMiddleware());
-app.use(correlationId);
 app.use ('/', indexRouter);
 
 app.use(handleNotFound);

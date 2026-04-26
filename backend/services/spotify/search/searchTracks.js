@@ -2,11 +2,10 @@ const spotifyClient = require('../../../api/axiosConfig');
 const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
-const getLoggerContext = require('../../../utils/getLoggerContext');
+const logger = require('../../../utils/logger');
 
-async function searchTracks(query, page){
-    const logger = getLoggerContext({action: 'searchTracks'});
-    logger.info('Searching tracks from Spotify');
+async function searchTracks(query, page) {
+    logger.info({action: 'searchTracks'}, 'Searching tracks from Spotify');
 
     const searchResults = await spotifyClient.get('/search', {
         params: {

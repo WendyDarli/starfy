@@ -1,11 +1,10 @@
-const getLoggerContext = require('../../../utils/getLoggerContext');
 const spotifyClient = require('../../../api/axiosConfig');
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
+const logger = require('../../../utils/logger');
 
-async function getTrack(id){
-    const logger = getLoggerContext({trackId: id, action: 'getTrack'});
-    logger.info('Fetching track from Spotify');
+async function getTrack(id) {
+    logger.info({trackId: id, action: 'getTrack'}, 'Fetching track from Spotify');
 
     const track = await spotifyClient.get(`/tracks/${id}`);
 

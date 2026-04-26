@@ -1,10 +1,9 @@
 const spotifyClient = require('../../../api/axiosConfig');
-const getLoggerContext = require('../../../utils/getLoggerContext');
+const logger = require('../../../utils/logger');
 
 
 async function getUserProfile() {
-    const logger = getLoggerContext({ action: 'getUserTracks' });
-    logger.info('Fetching user profile from Spotify');
+    logger.info({action: 'getUserProfile'}, 'Fetching user profile from Spotify');
 
     const userProfile = await spotifyClient.get('me');
     return userProfile.data;

@@ -1,9 +1,8 @@
 const axios = require('axios');
-const getLoggerContext = require('../../utils/getLoggerContext');
+const logger = require('../../utils/logger');
 
 async function getLyrics(query) {
-    const logger = getLoggerContext({action: 'getLyrics'});
-    logger.info('Fetching track lyrics from irclib');
+    logger.info({action: 'getLyrics'}, 'Fetching track lyrics from irclib');
 
     const lyrics = await axios.get('https://lrclib.net/api/get', {
                        params: query,

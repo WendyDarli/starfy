@@ -1,0 +1,71 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+    spike_limit_mib: 128
+
+  batch:
+    timeout: 5s
+    send_batch_size: 1024
+    send_batch_max_size: 2048
+
+  resource:
+    attributes:
+      - key: cluster.name
+        value: prod-us-east-1
+        action: upsert
+
+  # Tail-based sampling — sample 100% of error traces, 5% of success
+  tail_sampling:
+    decision_wait: 10s
+    num_traces: 100000
+    expected_new_traces_per_sec: 1000
+    policies:
+      - name: errors-policy
+        type: status_code
+        status_code: { status_codes: [ERROR] }
+      - name: slow-traces-policy
+        type: latency
+        latency: { threshold_ms: 2000 }
+      - name: sample-remaining
+        type: probabilistic
+        probabilistic: { sampling_percentage: 5 }
+
+exporters:
+  otlp/tempo:
+    endpoint: tempo.monitoring.svc.cluster.local:4317
+    tls:
+      insecure: false
+      ca_file: /etc/ssl/certs/ca.crt
+
+  logging:
+    verbosity: basic
+
+extensions:
+  basicauth/server:
+    htpasswd:
+      file: /etc/otelcol/htpasswd
+  health_check:
+    endpoint: 0.0.0.0:13133
+  pprof:
+    endpoint: 0.0.0.0:1777
+
+service:
+  extensions: [basicauth/server, health_check, pprof]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, tail_sampling, batch]
+      exporters: [otlp/tempo]
+  telemetry:
+    metrics:
+      address: 0.0.0.0:8888
