@@ -50,5 +50,18 @@ services:
     volumes:
       - redis_data:/data
 
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib
+    volumes:
+      - ./otel-collector-config.yml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317"
+  
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    command:
+      - "--collector.otlp.grpc.host-port=0.0.0.0:4317"
+    ports:
+      - "16686:16686"
 volumes:
   redis_data:

@@ -29,7 +29,6 @@ const resource = resourceFromAttributes({
 
 // OTLP gRPC exporter — configure via env or programmatically
 const traceExporter = new OTLPTraceExporter({
-  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'grpc://localhost:4317',
   credentials: isProd
     ? credentials.createSsl()
     : credentials.createInsecure(),
@@ -62,6 +61,7 @@ const sdk = new NodeSDK({
   instrumentations: [
     getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-http': {
+        enabled: true,
         ignoreIncomingRequestHook: (req) => {
           // Don't trace health checks or readiness probes
           const ignored = ['/health', '/ready', '/metrics', '/favicon.ico'];
@@ -92,7 +92,6 @@ const sdk = new NodeSDK({
       },
       '@opentelemetry/instrumentation-fs': { enabled: false },
       '@opentelemetry/instrumentation-dns': { enabled: false },
-      '@opentelemetry/instrumentation-http': { enabled: true },
       '@opentelemetry/instrumentation-https': { enabled: true },
       '@opentelemetry/instrumentation-express': { enabled: true },
       '@opentelemetry/instrumentation-redis': { enabled: true },

@@ -3,7 +3,6 @@ receivers:
     protocols:
       grpc:
         endpoint: 0.0.0.0:4317
-
       http:
         endpoint: 0.0.0.0:4318
 
@@ -16,19 +15,17 @@ processors:
   batch:
     timeout: 5s
     send_batch_size: 1024
-    send_batch_max_size: 2048
 
   resource:
     attributes:
       - key: cluster.name
-        value: prod-us-east-1
+        value: local-dev
         action: upsert
 
-  # Tail-based sampling — sample 100% of error traces, 5% of success
   tail_sampling:
     decision_wait: 10s
-    num_traces: 100000
-    expected_new_traces_per_sec: 1000
+    num_traces: 10000
+    expected_new_traces_per_sec: 100
     policies:
       - name: errors-policy
         type: status_code
@@ -38,34 +35,33 @@ processors:
         latency: { threshold_ms: 2000 }
       - name: sample-remaining
         type: probabilistic
-        probabilistic: { sampling_percentage: 5 }
+        probabilistic: { sampling_percentage: 100 }  # 100% locally so you see everything
 
 exporters:
-  otlp/tempo:
-    endpoint: tempo.monitoring.svc.cluster.local:4317
+  otlp/jaeger:
+    endpoint: jaeger:4317   # Jaeger v1.35+ accepts OTLP on port 4317
     tls:
-      insecure: false
-      ca_file: /etc/ssl/certs/ca.crt
+      insecure: true
 
-  logging:
+  debug:                    # replaces the old "logging" exporter
     verbosity: basic
 
 extensions:
-  basicauth/server:
-    htpasswd:
-      file: /etc/otelcol/htpasswd
   health_check:
     endpoint: 0.0.0.0:13133
-  pprof:
-    endpoint: 0.0.0.0:1777
 
 service:
-  extensions: [basicauth/server, health_check, pprof]
+  extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, resource, tail_sampling, batch]
-      exporters: [otlp/tempo]
+      exporters: [otlp/jaeger, debug]
   telemetry:
     metrics:
-      address: 0.0.0.0:8888
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: 0.0.0.0
+                port: 8888
