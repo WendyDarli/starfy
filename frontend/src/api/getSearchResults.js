@@ -1,5 +1,6 @@
 async function getSearchResults(query, page){
-    const response = await fetch(`http://127.0.0.1:3000/search/${query}?_page=${page}`, 
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${baseUrl}/search/${query}?_page=${page}`, 
         { credentials: 'include' });
 
     if (!response.ok) {

@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router';
 function UserProfile() {
     const { data: user, isLoading, isError } = useAuth();
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_API_URL;
 
     if (isLoading) return <div>Loading...</div>; 
     if (isError) return <div>Error loading user profile.</div>;
 
     async function logout() {
-        const response = await fetch('http://127.0.0.1:3000/logout', {
+        const response = await fetch(`${baseUrl}/logout`, {
             method: 'POST',
             credentials: 'include'
         });

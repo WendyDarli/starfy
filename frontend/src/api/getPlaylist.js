@@ -1,5 +1,6 @@
 async function getPlaylist(type, id){
-    const response = await fetch(`http://127.0.0.1:3000/${type}/${id}`,
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${baseUrl}/${type}/${id}`,
         { credentials: 'include' })
 
     if(!response.ok){

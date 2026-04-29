@@ -1,5 +1,6 @@
 async function getAudio(isrc){
-    const response = await fetch(`http://127.0.0.1:3000/song/audio/${isrc}`,  
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${baseUrl}/song/audio/${isrc}`,  
         { credentials: 'include' }
     );
 

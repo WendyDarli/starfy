@@ -1,4 +1,5 @@
 async function getLyrics(nowPlaying) {
+    const baseUrl = import.meta.env.VITE_API_URL;
     const durationSeconds =  Math.floor(nowPlaying?.duration_ms / 1000);
     const params = new URLSearchParams({
                 artist_name: nowPlaying?.artists?.[0]?.name,
@@ -7,7 +8,7 @@ async function getLyrics(nowPlaying) {
                 duration: durationSeconds
             });
 
-    const response = await fetch(`http://127.0.0.1:3000/lyrics?${params.toString()}`,
+    const response = await fetch(`${baseUrl}/lyrics?${params.toString()}`,
                     { credentials: 'include' }
                 );
     const data = await response.json();

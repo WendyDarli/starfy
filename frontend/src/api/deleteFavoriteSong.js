@@ -1,5 +1,6 @@
 async function deleteFavoriteSong(id) {
-    const response = await fetch(`http://127.0.0.1:3000/song/favorite/${id}`, {
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${baseUrl}/song/favorite/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

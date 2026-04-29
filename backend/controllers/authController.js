@@ -62,7 +62,7 @@ async function login_callback_get(req, res){
         await redisClient.set(`tokens:user:${userId}:access_token`, access_token, { EX: 3600 });
         await redisClient.set(`tokens:user:${userId}:refresh_token`, refresh_token);
 
-        res.redirect('http://127.0.0.1:5173');
+        res.redirect(process.env.VITE_API_URL);
 
 
     } catch (error){
