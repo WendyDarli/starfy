@@ -71,13 +71,6 @@ services:
       - tempo_data:/var/tempo
     ports:
       - "3200:3200"
-      
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3200/ready"]
-      interval: 5s
-      timeout: 3s
-      retries: 15
-      start_period: 10s
 
   grafana:
     image: grafana/grafana:latest
@@ -91,7 +84,7 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     depends_on:
       tempo:
-        condition: service_healthy
+        condition: service_started
 
 volumes:
   redis_data:
