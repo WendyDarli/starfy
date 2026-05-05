@@ -39,7 +39,7 @@ spotifyClient.interceptors.response.use(
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                 return spotifyClient(originalRequest);
             } catch (refreshError) {
-                return Promise.reject(refreshError); // already an AppError from refreshSpotifyToken
+                return Promise.reject(refreshError);
             }
         }
 

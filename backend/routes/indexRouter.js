@@ -3,7 +3,7 @@ const router = express.Router();
 
 //controllers
 const authController = require('../controllers/authController');
-const authGuard = require('../controllers/authGuard');
+const authGuard = require('../middlewares/authGuard.js');
 
 //routers
 const libraryRouter = require('./libraryRouter');

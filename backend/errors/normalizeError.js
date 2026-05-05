@@ -23,9 +23,13 @@ const errorMap = {
 
 const normalizeError = (err) => {
     const status = err.response?.status;
-    const ErrorClass  = errorMap[status] || ExternalServiceError;
+    const message = err.response?.data?.error?.message
+        ?? err.response?.data?.message
+        ?? err.message
+        ?? null;
 
-    return new ErrorClass();
-}
+    const ErrorClass = errorMap[status] || ExternalServiceError;
+    return new ErrorClass(message);
+};
 
 module.exports = normalizeError;

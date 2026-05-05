@@ -1,15 +1,12 @@
 const asyncHandler = require('../utils/asyncHandler');
-
 const spotifyLogin = require('../services/spotify/auth/spotifyLogin');
 const getSpotifyTokens = require('../services/spotify/auth/getSpotifyTokens');
 const getUserProfile = require('../services/spotify/user/getUserProfile');
 const storeSpotifyTokens = require('../services/redis/storeSpotifyTokens');
-    
 
-const login_get = asyncHandler(async(req, res) => {
+const login_get = asyncHandler(async (req, res) => {
     const url = spotifyLogin();
     return res.redirect(url);
-
 });
 
 const login_callback_get = asyncHandler(async (req, res) => {
@@ -23,21 +20,17 @@ const login_callback_get = asyncHandler(async (req, res) => {
     res.redirect(process.env.VITE_FRONTEND_URL);
 });
 
-
-//check if user is authenticated by fetching spotify profile
-const  isAuthenticated_get = asyncHandler(async (req, res) => {
+const isAuthenticated_get = asyncHandler(async (req, res) => {
     const userProfile = await getUserProfile();
     return res.json(userProfile);
 });
 
-
 const logout_post = asyncHandler(async (req, res) => {
-  await new Promise((resolve, reject) => {
-    req.session.destroy(err => err ? reject(err) : resolve());
-  });
-
-  res.clearCookie('connect.sid');
-  res.json({ message: 'Logged out' });
+    await new Promise((resolve, reject) => {
+        req.session.destroy(err => err ? reject(err) : resolve());
+    });
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logged out' });
 });
 
 module.exports = { login_get, login_callback_get, isAuthenticated_get, logout_post };
