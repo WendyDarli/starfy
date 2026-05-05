@@ -7,7 +7,7 @@ This is a Spotify-inspired music player focused on scalable, maintainable archit
 
 The goal was to understand how a production-level system is structured and how its components interact in a real-world full-stack application.
 
-Instead of focusing on design novelty, the project breaks a complex product into smaller systems and rebuilds it to understand API design, backend structure, caching, and data flow.
+Instead of focusing on design novelty, the project breaks a complex product into smaller systems and rebuilds it to understand API design, backend structure, caching, data flow, and system visibility.
 
 ## Features
 - Playlist pages, songs, albums, artists, and episodes views
@@ -29,7 +29,18 @@ Instead of focusing on design novelty, the project breaks a complex product into
 - Token-based authentication with Redis session storage, HTTP-only cookies, and automatic session refresh on expiry
 - State management with TanStack Query (server-state handling and request caching)
 - Infinite pagination for search results
+- Containerized full-stack environment with Docker
+- Observability with structured logging and request monitoring
 
+## Observability
+The system includes basic observability practices to improve debugging and system insight:
+
+- Structured logging in the backend (request lifecycle, errors, auth flow)
+- Centralized logs via Docker containers
+- HTTP request tracking for performance visibility
+- Error tracing for API failures and third-party integrations (Spotify / Deezer)
+
+This enables easier debugging of distributed components and mimics real-world production monitoring patterns.
 
 ## Tech stack
 <img alt="JavaScript" height="30" src="https://img.shields.io/badge/JavaScript-00674F?style=for-the-badge&logo=javascript&logoColor=white" /> &nbsp;
@@ -41,13 +52,12 @@ Instead of focusing on design novelty, the project breaks a complex product into
 <img alt="Redis" height="30" src="https://img.shields.io/badge/Redis-00674F?style=for-the-badge&logo=redis&logoColor=white" /> &nbsp;
 
 ## How to run locally
+
 ### ⚠️ Warning
 Spotify API access may require a Premium Spotify account depending on endpoint restrictions and recent API changes (2026 update).
 
 ### Prerequisites:
-- Docker Installed.
-- Node.JS Installed.
-- A code editor (like VS Code)
+- Docker + Docker Compose installed
 
 ### 1. Clone repository
 ```bash
@@ -55,26 +65,12 @@ git clone https://github.com/WendyDarli/starfy.git
 cd starfy
 ```
 
-### 2. Set up Infrastructure
-This project uses Docker to run Redis in a consistent environment.
+### 2. Environment Variables
 
-```bash
-docker compose up -d
-```
+Rename .env.example to .env and fill in required values.
 
-### 3. Environment Variables
-Rename .env.example to .env and populate the fields using the inline comments as a reference.
+### 3. Run the full application
+```docker compose up --build```
 
-### 4. Execution
-To launch the application, run the following commands in your terminal:
-```bash
-# Launch Backend (Port 3000)
-npm run startbackend
-
-# Launch Frontend (Port 5173)
-npm run startfrontend
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-
-
+### 4. Access the app
+http://localhost:5173
