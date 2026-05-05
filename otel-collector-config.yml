@@ -35,15 +35,15 @@ processors:
         latency: { threshold_ms: 2000 }
       - name: sample-remaining
         type: probabilistic
-        probabilistic: { sampling_percentage: 100 }  # 100% locally so you see everything
+        probabilistic: { sampling_percentage: 100 }
 
 exporters:
-  otlp/jaeger:
-    endpoint: jaeger:4317   # Jaeger v1.35+ accepts OTLP on port 4317
+  otlp/tempo:
+    endpoint: tempo:4317
     tls:
       insecure: true
 
-  debug:                    # replaces the old "logging" exporter
+  debug:
     verbosity: basic
 
 extensions:
@@ -56,7 +56,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, resource, tail_sampling, batch]
-      exporters: [otlp/jaeger, debug]
+      exporters: [otlp/tempo, debug]
   telemetry:
     metrics:
       readers:

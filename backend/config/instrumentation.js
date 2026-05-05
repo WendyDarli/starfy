@@ -11,7 +11,6 @@ const isProd = process.env.NODE_ENV === 'production';
 
 /*
 Auto-instrumentation for HTTP, Redis, Express, Pino logging
-Sampling (100% dev, 10% prod) for performance
 Sensitive data masking (Redis credentials)
 Graceful shutdown to flush pending spans
 Resource metadata (service name, version, environment)
@@ -44,20 +43,11 @@ const spanProcessor = new BatchSpanProcessor(traceExporter, {
   exportTimeoutMillis: 30_000,
 });
 
-// Sampling: 100% in dev, 10% in prod (parent-based to keep trace continuity)
-const sampler = new ParentBasedSampler({
-  root: isProd
-    ? new TraceIdRatioBasedSampler(
-        parseFloat(process.env.OTEL_TRACES_SAMPLER_ARG || '0.1')
-      )
-    : new TraceIdRatioBasedSampler(1.0),
-});
 
 const sdk = new NodeSDK({
   resource,
   traceExporter,
   spanProcessor,
-  sampler,
   instrumentations: [
     getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-http': {
