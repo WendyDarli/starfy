@@ -1,8 +1,8 @@
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
-const spotifyClient = require('../../../api/axiosConfig');
+const spotifyClient = require('../../../api/spotifyClient');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
 const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
-const logger = require('../../../utils/logger');
+const logger = require('../../../lib/logger');
 
 async function getAlbumDataWithTracks(id) {
     logger.info({albumId: id, action: 'getAlbumDataWithTracks'}, 'Fetching album data from Spotify');

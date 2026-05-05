@@ -1,7 +1,7 @@
 const getUserCollection = require('../services/spotify/collection/getUserCollection');
 const getLikedTracksDetails = require('../services/spotify/collection/getLikedTracksDetails');
 const getLikedEpisodesDetails = require('../services/spotify/collection/getLikedEpisodesDetails');
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('../lib/asyncHandler');
 
 // Get user library summary for sidebar (playlists, tracks, episodes)
 const collection_get = asyncHandler(async (req, res, next) => {

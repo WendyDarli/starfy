@@ -1,5 +1,5 @@
-const spotifyClient = require('../../../api/axiosConfig');
-const logger = require('../../../utils/logger');
+const spotifyClient = require('../../../api/spotifyClient');
+const logger = require('../../../lib/logger');
 const als = require('../../../utils/alsContext');
 
 async function getUserProfile(access_token = null) {

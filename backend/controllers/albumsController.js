@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('../lib/asyncHandler');
 const getAlbumDetails = require('../services/spotify/albums/getAlbumDetails');
 
 const album_get = asyncHandler(async (req, res, next) => {

@@ -1,8 +1,8 @@
-const spotifyClient = require("../../../api/axiosConfig");
+const spotifyClient = require("../../../api/spotifyClient");
 const checkFavoriteStatus = require('../../../utils/checkFavoriteStatus');
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
-const logger = require('../../../utils/logger');
+const logger = require('../../../lib/logger');
 
 async function getArtistWithTopTracks(id) {
     logger.info({artistId: id, action: 'getArtistWithTopTracks'}, 'Fetching artist data from Spotify');

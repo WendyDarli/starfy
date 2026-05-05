@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler')
+const asyncHandler = require('../lib/asyncHandler.js')
 const getTrack = require('../services/spotify/tracks/getTrack');
 const getTrackPreviewAudio = require('../services/deezer/tracks/getTrackPreviewAudio.js');
 const deleteFavoriteTrack = require('../services/spotify/tracks/deleteFavoriteTrack.js')

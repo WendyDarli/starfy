@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('../../utils/logger');
+const logger = require('../../lib/logger');
 
 async function getLyrics(query) {
     logger.info({action: 'getLyrics'}, 'Fetching track lyrics from irclib');

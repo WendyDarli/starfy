@@ -1,5 +1,5 @@
-const asyncHandler = require('../utils/asyncHandler');
-const getPlaylistDetails = require('../services/spotify/playlists/getPlaylistDetails')
+const asyncHandler = require('../lib/asyncHandler');
+const getPlaylistDetails = require('../services/spotify/playlists/getPlaylistDetails');
 
 async function playlist_get(req, res, next){
     const response = await getPlaylistDetails(req.params.id);

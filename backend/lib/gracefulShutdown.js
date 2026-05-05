@@ -1,7 +1,7 @@
 let isShuttingDown = false;
 const redisClient = require('../infrastructure/redis/redisClient');
 const { sdk } = require('../config/instrumentation.js');
-const  logger = require('./logger');
+const  logger = require('../lib/logger.js');
 
 async function gracefulShutdown(server, exitCode) {
   if (isShuttingDown) return;

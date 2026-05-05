@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('../lib/asyncHandler');
 const spotifyLogin = require('../services/spotify/auth/spotifyLogin');
 const getSpotifyTokens = require('../services/spotify/auth/getSpotifyTokens');
 const getUserProfile = require('../services/spotify/user/getUserProfile');

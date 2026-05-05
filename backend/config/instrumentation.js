@@ -1,41 +1,28 @@
 const { NodeSDK } = require('@opentelemetry/sdk-node');
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-grpc');
-const { BatchSpanProcessor, ParentBasedSampler, TraceIdRatioBasedSampler, ConsoleSpanExporter } = require('@opentelemetry/sdk-trace-base');
+const { BatchSpanProcessor } = require('@opentelemetry/sdk-trace-base');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
 const { resourceFromAttributes } = require('@opentelemetry/resources');
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
-const { credentials, CompressionAlgorithms } = require('@grpc/grpc-js');
+const { credentials } = require('@grpc/grpc-js');
 const { PinoInstrumentation } = require('@opentelemetry/instrumentation-pino');
+const os = require('os');
 
 const isProd = process.env.NODE_ENV === 'production';
 
-/*
-Auto-instrumentation for HTTP, Redis, Express, Pino logging
-Sensitive data masking (Redis credentials)
-Graceful shutdown to flush pending spans
-Resource metadata (service name, version, environment)
-Batch processing for efficiency
-*/
-
-
-// Resource describes this service instance
 const resource = resourceFromAttributes({
-  [SemanticResourceAttributes.SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'my-service',
+  [SemanticResourceAttributes.SERVICE_NAME]: process.env.OTEL_SERVICE_NAME || 'starfy-backend',
   [SemanticResourceAttributes.SERVICE_VERSION]: process.env.npm_package_version || '0.0.0',
   [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV || 'development',
-  [SemanticResourceAttributes.SERVICE_INSTANCE_ID]: process.env.HOSTNAME || require('os').hostname(),
+  [SemanticResourceAttributes.SERVICE_INSTANCE_ID]: process.env.HOSTNAME || os.hostname(),
 });
 
-// OTLP gRPC exporter — configure via env or programmatically
 const traceExporter = new OTLPTraceExporter({
-  credentials: isProd
-    ? credentials.createSsl()
-    : credentials.createInsecure(),
+  credentials: isProd ? credentials.createSsl() : credentials.createInsecure(),
   compression: 'gzip',
   timeoutMillis: 10_000,
 });
 
-// BatchSpanProcessor buffers spans and exports in batches
 const spanProcessor = new BatchSpanProcessor(traceExporter, {
   maxQueueSize: isProd ? 2048 : 512,
   maxExportBatchSize: isProd ? 512 : 128,
@@ -43,56 +30,50 @@ const spanProcessor = new BatchSpanProcessor(traceExporter, {
   exportTimeoutMillis: 30_000,
 });
 
-
 const sdk = new NodeSDK({
   resource,
-  traceExporter,
-  spanProcessor,
+  spanProcessors: [spanProcessor],
   instrumentations: [
     getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-http': {
         enabled: true,
         ignoreIncomingRequestHook: (req) => {
-          // Don't trace health checks or readiness probes
           const ignored = ['/health', '/ready', '/metrics', '/favicon.ico'];
           return ignored.some((path) => req.url?.startsWith(path));
         },
-        ignoreOutgoingRequestHook: (req) => {
-          // Don't trace calls to internal metadata services
-          return req.hostname === '169.254.169.254';
-        },
+        ignoreOutgoingRequestHook: (req) => req.hostname === '169.254.169.254',
         headersToSpanAttributes: {
-          server: {
-            requestHeaders: ['x-request-id', 'x-tenant-id'],
-          },
+          server: { requestHeaders: ['x-request-id', 'x-tenant-id'] },
         },
       },
+
       '@opentelemetry/instrumentation-redis': {
+        enabled: true,
         dbStatementSerializer: (cmdName, cmdArgs) => {
-          // Mask sensitive Redis commands — log command name only
           const sensitive = ['auth', 'set', 'setex', 'mset'];
-          if (sensitive.includes(cmdName.toLowerCase())) {
-            return `${cmdName} [REDACTED]`;
-          }
+          if (sensitive.includes(cmdName.toLowerCase())) return `${cmdName} [REDACTED]`;
           return `${cmdName} ${cmdArgs.join(' ')}`;
         },
       },
+
       '@opentelemetry/instrumentation-express': {
+        enabled: true,
         ignoreLayers: [/^cors$/, /^compression$/],
       },
       '@opentelemetry/instrumentation-fs': { enabled: false },
       '@opentelemetry/instrumentation-dns': { enabled: false },
       '@opentelemetry/instrumentation-https': { enabled: true },
-      '@opentelemetry/instrumentation-express': { enabled: true },
-      '@opentelemetry/instrumentation-redis': { enabled: true },
       '@opentelemetry/instrumentation-net': { enabled: false },
     }),
-    new PinoInstrumentation({})
+    new PinoInstrumentation({}),
   ],
 });
 
-// Start the SDK before importing any instrumented libraries
 sdk.start();
 console.log('[otel] Tracing initialized');
+
+// Graceful shutdown
+process.on('SIGTERM', () => sdk.shutdown().finally(() => process.exit(0)));
+process.on('SIGINT', () => sdk.shutdown().finally(() => process.exit(0)));
 
 module.exports = { sdk };

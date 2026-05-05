@@ -1,5 +1,5 @@
-const spotifyClient = require('../../../api/axiosConfig');
-const logger = require('../../../utils/logger');
+const spotifyClient = require('../../../api/spotifyClient');
+const logger = require('../../../lib/logger');
 
 async function putFavoriteTrack(id) {
     logger.info({trackId: id, action: 'putFavoriteTrack'}, 'Adding track to Spotify favorites');

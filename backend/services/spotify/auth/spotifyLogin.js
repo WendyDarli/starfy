@@ -1,4 +1,4 @@
-const logger = require('../../../utils/logger');
+const logger = require('../../../lib/logger');
 
 function spotifyLogin(){
     logger.info({action: 'spotifyLogin'}, 'Logging user with Spotify');

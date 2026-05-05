@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('../lib/asyncHandler');
 
 const log_level_put = asyncHandler(async (req, res, next) => {
     const { level } = req.body;

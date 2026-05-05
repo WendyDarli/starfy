@@ -1,6 +1,6 @@
 const formatSpotifyData = require('../../../utils/formatSpotifyData');
 const formatSpotifyItems = require('../../../utils/formatSpotifyItems');
-const logger = require('../../../utils/logger');
+const logger = require('../../../lib/logger');
 
 const getUserEpisodes = require('../episodes/getUserEpisodes');
 const getUserProfile = require('../user/getUserProfile');

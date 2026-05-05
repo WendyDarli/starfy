@@ -1,5 +1,5 @@
 const { AppError } = require('../errors/appError');
-const logger = require('../utils/logger');
+const logger = require('../lib/logger');
      
 // Catch 404 and forward to error handler
 function handleNotFound(req, res, next) {

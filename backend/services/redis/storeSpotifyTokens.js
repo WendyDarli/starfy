@@ -1,4 +1,4 @@
-const logger = require('../../utils/logger');
+const logger = require('../../lib/logger');
 const redisClient = require('../../infrastructure/redis/redisClient');
 
 async function storeSpotifyTokens(userId, access_token, refresh_token ){

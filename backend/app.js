@@ -9,8 +9,8 @@ const sessionMiddleware = require("./infrastructure/redis/redisSession.js");
 // Middlewares
 const { handleNotFound, errorHandler } = require('./middlewares/errorHandler');
 
-const logger = require('./utils/logger.js')
-const gracefulShutdown = require('./utils/gracefulShutdown.js');
+const logger = require('./lib/logger.js')
+const gracefulShutdown = require('./lib/gracefulShutdown.js');
 
 
 const { trace } = require('@opentelemetry/api');
